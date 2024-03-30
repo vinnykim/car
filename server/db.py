@@ -1,6 +1,7 @@
 import pymongo
 from datetime import datetime
 import requests
+import json
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 
@@ -65,7 +66,7 @@ def bookService(server=None,user=None,book_data=None,id=None):
         }
 
         response = requests.post(server+":8081/api/models/user/Book",
-            data=book_data,
+            json=book_data,
             headers = headers
         )
         if response.status_code == 200:
@@ -80,7 +81,7 @@ def Login(username,password,server=None):
         'password':password
     }
     if server != None:
-        response = requests.post(server+":8081/api/auth",data=data)
+        response = requests.post(server+":8081/api/auth",json=data)
         if response.status_code == 200:
             result = response.json()
             return result
@@ -90,16 +91,17 @@ def Register(username,password,email,phone,server=None):
     db = myDB()
     if server:
         data = {
-            'name':usernanme,
+            'name':username,
             'phone':phone,
             'email':email,
             'password':password,
         }
-        response = requests.post(server+":8081/api/users/register",data=data)
-        if response.status_code == 200:
-            result = response.json()
-            return result
-    return False
+    
+    response = requests.post(server+":8081/api/users/register",json=data)
+    if response.status_code == 200:
+        result = response.json()
+        return result
+    return response.json()
     
 def getVehicles():
     file = open("vehicles.list","r")
@@ -112,7 +114,7 @@ def getCategories(id=None,server=None,key=None):
         return []
     
     categories =[]
-    response = requests.post(server+":8081/api/models/user/getCategories/"+id,data={})
+    response = requests.post(server+":8081/api/models/user/getCategories/"+id)
     if response.status_code == 200:
         res = response.json()
         for x in res["categories"]:
@@ -122,7 +124,7 @@ def getCategories(id=None,server=None,key=None):
         return False
 def getServices(server=None):
     db = myDB()
-    response = requests.post(server+":8081/api/models/user/getServices",data={})
+    response = requests.post(server+":8081/api/models/user/getServices",json={})
     services = []
     if response.status_code == 200:
         res = response.json()
