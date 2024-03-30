@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Selling Website</title>
+    <!-- Swiper css CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='app.css')}}">
+    <!-- BoxIcon CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="out-box">
+            <div class="inside-box">
+                <div class="col-1">
+                    <span><i class='bx bxs-envelope'></i><a href="mailto:mratikrishna@gmail.com" style="text-decoration: none; color: white;">mratikrishna@gmail.com</a></span>
+                    <span><i class='bx bxs-phone-call' ></i><a href="tel:+91 1234567890" style="text-decoration: none; color: white;">+91 1234567890</a></span>
+                    <span><i class='bx bx-alarm' ></i>Sun - Fri (08 AM - 10 PM)</span>
+                </div>
+
+                <div class="col-2">
+                    <a href="login.html"><i class='bx bx-arrow-to-right'></i>Login</a>
+                    <a href="signup.html"><i class='bx bxs-user'></i>Register</a>
+                    <span>Follow Us:</span>
+                    <div class="social">
+                        <i class='bx bxl-facebook-circle' ></i>
+                        <i class='bx bxl-twitter' ></i>
+                        <i class="bx bxl-instagram"></i>
+                        <i class="bx bxl-linkedin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar Section Start -->
+    <header class="header">
+        <div class="logo">
+            <img src="img/logo/logo.png" alt="">
+        </div>
+        <nav>
+            <div class="navbar">
+                
+                    <ul class="navLink">
+                        
+                        <li><a href="#">Pages<i class='bx bxs-chevron-down'></i></a>
+                            <ul class="drop-down">
+                                <li><a href="inventory.html">Inventory</a></li>
+                                <li><a href="price.html">Subscription</a></li>
+                                <li><a href="calculator.html">Calculator</a></li>
+                                <li><a href="price.html">Our Team</a></li>
+                                <li><a href="reset.html">Reset Password</a></li>
+                                <li><a href="blog-single.html">Blog Single</a></li>
+                                <li><a href="inventory-single.html">Inventory Single</a></li>
+                                <li><a href="shop-single.html">Shop Single</a></li>
+                                <li><a href="shop_checkout.html">Shop Checkout</a></li>
+                                <li><a href="services_single.html">Services Single</a></li>
+                            </ul>
+                        </li>
+                       
+                    </ul>
+            </div>
+            <div class="others">
+                <i class='bx bx-search-alt-2' ></i>
+                <a href="shop_cart.html"><i class='bx bx-cart-download cart'></i></a>
+                <!---<button class="addBtn"><i class='bx bx-plus-circle'></i>Add Listing</button>--->
+                
+            </div>
+        </nav>
+    </header>
+
+   
+
+    <!-- Shop Section -->
+    {%block content%}
+    {%endblock%}
+
+    <!-- Footer Section Start -->
+    <div class="footer">
+        
+        <div class="footer-bottom">
+            <p>&copy; Copyright 2024 <span>MOTOB</span> All Right Reserved.</p>
+            <div class="social">
+                <i class="bx bxl-facebook"></i>
+                <i class="bx bxl-twitter"></i>
+                <i class="bx bxl-linkedin"></i>
+                <i class="bx bxl-youtube"></i>
+            </div>
+        </div>
+
+        <!-- Scroll Top Animation -->
+        <a href="#" class="scrollBtn">
+            <i class="bx bxs-chevrons-up"></i>
+        </a>
+    </div>
+
+
+
+
+
+    <!-- Swiper JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Custom JS File -->
+    <script src="{{url_for('static',filename='script.js')}}"></script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+{%extends 'main.html'%}
+    {%block content%}
+    <!-- Shop Checkout Section Start -->
+    <div class="checkout">
+        <div class="billing">
+            <div class="left">
+                <h2>Billing Address</h2>
+                <div class="row">
+                    <div class="inputBx">
+                        <label for="">First Name</label>
+                        <input type="text" placeholder="Your First Name">
+                    </div>
+                    <div class="inputBx">
+                        <label for="">Last Name</label>
+                        <input type="text" placeholder="Your Last Name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="inputBx">
+                        <label for="">Phone</label>
+                        <input type="text" placeholder="Your Phone">
+                    </div>
+                    <div class="inputBx">
+                        <label for="">Email</label>
+                        <input type="text" placeholder="Your Email">
+                    </div>
+                </div>
+                <div class="inputBx">
+                    <label for="">Address</label>
+                    <input type="text" placeholder="Your Address">
+                </div>
+            </div>
+
+            <div class="right">
+                <h2>Cart Summary</h2>
+                <div class="summary_info">
+                    <div class="sum-col">
+                        <p>Product Qty:</p>
+                        <span>5</span>
+                    </div>
+                    <div class="sum-col">
+                        <p>Shipping Cost:</p>
+                        <span>&#x20b9; 25.00</span>
+                    </div>
+                    <div class="sum-col">
+                        <p>Discount:</p>
+                        <span>&#x20b9; 5.00</span>
+                    </div>
+                    <div class="sum-col">
+                        <p>Vat:</p>
+                        <span>&#x20b9; 5.00</span>
+                    </div>
+                    <div class="sum-col">
+                        <p>Sub Total:</p>
+                        <span>&#x20b9; 4,560.00</span>
+                    </div>
+                    <div class="sum-col amount">
+                        <p>Total Pay:</p>
+                        <span class="total">&#x20b9; 4,560.00</span>
+                    </div>
+
+                    <a href="payment.html">
+                        confirm Payment
+                        <i class="bx bx-right-arrow-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Info Section Start -->
+        <div class="payment">
+            <h2>Payment  Information</h2>
+            <div class="row">
+                <div class="inputBx">
+                    <label for="">Card Holder Name</label>
+                    <input type="text" placeholder="Name On Card">
+                </div>
+                <div class="inputBx">
+                    <label for="">Card Number</label>
+                    <input type="text" placeholder="Your Card Number">
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputBx">
+                    <label for="">Expire Date</label>
+                    <input type="text" placeholder="Expire">
+                </div>
+                <div class="inputBx">
+                    <label for="">CVV</label>
+                    <input type="password" placeholder="CVV">
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipping Section Start -->
+        <div class="shipping">
+            <h2>Shipping Address</h2>
+            <div class="row">
+                <div class="inputBx">
+                    <label for="">First Name</label>
+                    <input type="text" placeholder="Your First Name">
+                </div>
+                <div class="inputBx">
+                    <label for="">Last Name</label>
+                    <input type="text" placeholder="Your Last Name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputBx">
+                    <label for="">Phone</label>
+                    <input type="text" placeholder="Phone Number">
+                </div>
+                <div class="inputBx">
+                    <label for="">Email</label>
+                    <input type="text" placeholder="Your Email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputBx">
+                    <label for="">Address 1</label>
+                    <input type="text" placeholder="Your Address">
+                </div>
+                <div class="inputBx">
+                    <label for="">Address 2</label>
+                    <input type="text" placeholder="Your Address">
+                </div>
+            </div>
+            <div class="inputBx">
+                <label for="">Additional Info</label>
+                <textarea cols="30" rows="5" placeholder="Additional Info"></textarea>
+            </div>
+        </div>
+    </div>
+
+    {%endblock%}

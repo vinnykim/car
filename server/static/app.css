@@ -1,0 +1,15 @@
+.flexdisplay{
+    display: flex;
+    flex-direction: row;
+    
+    flex-wrap: nowrap;
+}
+.oberflow-x{
+    overflow-x:scroll auto; 
+}
+.overflow-y{
+    overflow-y: scroll auto;
+}
+.flexrow{
+    flex: auto;
+}
