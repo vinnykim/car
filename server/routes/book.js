@@ -17,6 +17,7 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('../config/default.json')
 const auth = require('../middlewares/auth')
+const Company = require('../models/Company')
 
 //@route GET api/booking
 //@description Get all bookings
@@ -26,23 +27,19 @@ router.get('/getBookings', auth, async (req, res) => {
   try {
 	const userid = req.user.id
     const bookings = await Book.find({ user:userid })
-	const found = []
+	const result = {}
+	result.bookings = []
 	for(const booking of bookings){
-		const park = {}
-		const spot = await Spot.findById(booking.spot);
-		const active = await Active.findOne({booking:booking._id});
-		const parking = await Parking.findById(spot.parking)
-		const invoice = await Invoice.findById(booking.invoice)
-		const vehicle = await Vehicle.findById(booking.vehicle);
-		if(!invoice){continue}
-		
-		if(spot) park.spot = spot
-		if(active) park.active = active
-		if(parking) park.parking = parking
-		if(vehicle) park.vehicle = vehicle
-		park.booking = booking
-		park.invoice = invoice
-		found.push(park)		
+		const r = {}
+		const invoice = await Invoice.findOne({booking:booking._id})
+		const user = await User.findById(booking.user).select("-password")
+		const vehicle = await Vehicle.findById(booking.vehicle)
+		const company = await Company.findById(booking.company).select("-password")
+		r.invoice = invoice
+		r.user = user
+		r.vehicle = vehicle
+		r.company = company
+		result.bookings.push(result)		
 	}
     return res.status(200).json(found)
   } catch (error) {
@@ -55,25 +52,24 @@ router.get('/getBooking/:id', auth, async (req, res) => {
     
     const userid = req.user.id
 	const bookid = req.params.id
-	
+	const result = {}
     try {
 		const booking = await Book.findById(bookid)
 		if(!booking){
 			return res.status(404).json({message:"No booking found"})
 		}
 		if(booking){
-			const park = {}
-			const spot = await Spot.findById(booking.spot);
-			const parking = await Parking.findById(spot.parking)
-			const active = await Active.findOne({booking:booking})
-			const invoice = await Invoice.findById(booking.invoice)
-			const vehicle = await Vehicle.findById(booking.vehicle);
-			if(spot) park.spot = spot
-			if(parking) park.parking = parking
-			if(vehicle) park.vehicle = vehicle
-			park.active = active
-			park.booking = booking
-			return res.status(200).json(park)
+			result.message = "success"
+			result.book = booking
+			const invoice = await Invoice.findOne({booking:booking._id})
+			const user = await User.findById(booking.user).select("-password")
+			const vehicle = await Vehicle.findById(booking.vehicle)
+			const company = await Company.findById(booking.company).select("-password")
+			result.invoice = invoice
+			result.user = user
+			result.vehicle = vehicle
+			result.company = company
+			return res.status(200).json(result)
 		}
     } catch (error) {
       console.log(error.message)
@@ -108,110 +104,34 @@ router.put('/updateBooking/:id', auth, async (req, res) => {
 //@access Private
 
 router.post('/newBooking/:id', auth, async (req, res) => {
-    
-    const userid = req.user.id
-	const spotid = req.params.id
-	let {checkin,checkout,vehicle,payment} = req.body
-	var dc = new Date(checkin)
-	var dt = new Date(checkout)
-	if(dt.getTime() < dc.getTime()){return res.status(404).json({message:"Invalid Date period"})}
-	const fields= {complete:false} 
-    try {
-	  const location = await Parking.findById(spotid)
-	  if (!location) {
-		return res.status(404).json({message:"Invalid spot"})
-	  }
-	  const sl = await Spot.find({parking:location._id})
-	  var avl = 0
-	  for(var l of sl){
-		const bk = await Book.findOne({spot:l._id})
-		if(!bk){avl+=1}  
-	  }
-	  if(avl === 0){
-		return res.status(404).json({message:`No slots In ${location.name} Location`})  
-	  }
-      const user = await User.findById(userid)
-	  if (!user) {
-		return res.status(404).json({message:"Invalid user "})
-	  }
-	  const spots = await Spot.findOne({parking:location._id,booked:false})
-	  
-	  if(!spots){
-		 return res.status(404).json({message:"No slots available for selected location"})
-	  }
-	  let avail_slots = spots
-	 
-	  const curr_spot =  avail_slots//[Math.floor(Math.random() * avail_slots.length)];
-	  if(!curr_spot._id){
-		return res.status(404).json({message:"No Slot"})
-	  }
-	  let booked = await Book.findOne({spot:curr_spot._id})
-	  if(booked){
-		return res.status(404).json({message:"Spot already booked"})
-	  }
-      const car = await Vehicle.findById(vehicle)
-	  
-	  if(!car){
-		return res.status(404).json({message:"Invalid vehicle"})
-	  }
-	  let bookin = await Book.findOne({user:userid,parking:location._id,vehicle:car._id})
-	  if(bookin){
-		return res.status(404).json({message:"Parking already booked"})
-	  }
-	  
-	  const fields = {}
-	  fields.user = userid
-	  fields.parking = location._id
-	  fields.amount = location.price
-	  if(checkin) fields.due = checkin
-	  fields.company = location.company
-	  if(payment){
-		  const pay = await Payment.findById(payment)
-		  if(!pay){
-			return res.status(404).json({message:"Invalid payment option"})
-		  }
-		  fields.payment = pay._id
-	  }
-		const invoice = new Invoice(fields)
-	    var book = new Book(fields)
-		
-		invoice.booking = book._id
-		invoice.rate = location.rate
-		book.spot = curr_spot._id
-		invoice.booking = book._id
-		book.user = userid	  
-		book.parking = location._id 
-		book.vehicle = car._id
-		book.invoice = invoice._id
-		book.complete = false
-		if(checkin)book.checkin = checkin
-		if(checkout)book.checkout = checkout
-		let slot = await Spot.findById(curr_spot._id)
-		
-		if(slot.booked === false){
-						
-			if(book && invoice){
-				await invoice.save()
-				book = await book.save()
-				await Spot.findByIdAndUpdate(
-					curr_spot._id,
-				  { $set: {booked:true} },
-				  { new: true },  
-				)
-				
-				const history = new Notification({description:`Made booking to ${location.name} parking for vehicle ${car.name}| Amount ${location.price} @ ${location.rate}`})
-				history.user = userid
-				await history.save()
-			}
-		}else{
-			return res.status(404).json({message:"Slot not available try again"})
+    try{
+		const data = req.body
+		const vehicle_id = req.params.id
+		const vehicle = await Vehicle.findById(vehicle_id)
+		if(!vehicle){
+			return res.status(404).json({message:"Vehicle not found"})
 		}
-		return res.status(200).json(book)
+		const book = await Book.find({vehicle:vehicle_id})
+		if(book.length > vehicle.description.vehicleMax){
+			return res.status(400).json({message:"Maximum orders already fullfilled"})
+		}
+		const invoice = new Invoice()
+		const order = new Book()
+		order.vehicle = vehicle_id
+		order.user = req.user.id
+		order.description = data
+		invoice.company = vehicle.company
+		invoice.user = vehicle.user
+		invoice.booking = order._id
+		invoice.amount = vehicle.description.vehiclePrice
+		await invoice.save()
+		await order.save()
+		return res.status(200).json({book:order,message:"Order placed successfully"})
 
-    } catch (error) {
-      console.log(error.message)
-      res.status(500).send('Server Error '+error.message)
-    }
+	}catch(e){
+		console.error(err.message)
+    res.status(500).send('Server Error')
+	}
  })
 
 router.delete('/deleteBooking/:id', auth, async (req, res) => {
@@ -233,15 +153,7 @@ router.delete('/deleteBooking/:id', auth, async (req, res) => {
 	  { $set: {deleted:true,date:Date.now()} },
 	  { new: true },
 	)
-	const history = History.findOne({user:userid,booking:bookid})
-	if(history){
-		await History.findByIdAndUpdate(
-			history._id,
-		  { $set: {deleted:true,date:Date.now()} },
-		  { new: true },
-		)
-	}
-
+	
     return res.status(200).json({ message: 'Booking removed' })
   } catch (err) {
     console.error(err.message)

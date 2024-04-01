@@ -6,9 +6,9 @@
 	<meta name="robots" content="index, follow">
    
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+	<title>Customers</title>
     <!-- Favicon icon -->
-	<link rel="icon" type="image/png" sizes="16x16" href="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/favicon.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/brand/01.png">
 	
 		
 		 <link href="assets/css/jqvmap.min.css" rel="stylesheet" type="text/css">	
@@ -18,7 +18,9 @@
 		 <link href="assets/css/bootstrap-select.min.css" rel="stylesheet" type="text/css">		
 		
 		 <link href="assets/css/style.css" rel="stylesheet" type="text/css">		
-	
+		 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		 <script src="https://kit.fontawesome.com/c63faa1f51.js" crossorigin="anonymous"></script>>
+		 <script src="assets/js/models/models.js"></script>
 <style type="text/css">
 
 @keyframes opaque {
@@ -96,9 +98,9 @@
 ***********************************-->
 <div class="nav-header">
     <a href="index.html" class="brand-logo">
-        <img class="logo-abbr" src="assets/images/logo.png" alt="/">
-        <img class="logo-compact" src="assets/images/logo-text.png" alt="/">
-        <img class="brand-title" src="assets/images/logo-text.png" alt="/">
+        <img class="logo-abbr" src="assets/brand/01.png" alt="/">
+        <img class="logo-compact" src="assets/brand/02.png" alt="/">
+        <img class="brand-title" src="assets/brand/02.png" alt="/">
     </a>
 
     <div class="nav-control">
@@ -117,107 +119,16 @@
 	<div class="custom-tab-1">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item" role="presentation">
-				<a class="nav-link" data-bs-toggle="tab" href="#notes" aria-selected="false" role="tab" tabindex="-1">Notes</a>
+				<a class="nav-link" data-bs-toggle="tab" href="#alerts" aria-selected="false" role="tab" tabindex="-1">Notes</a>
 			</li>
+			
 			<li class="nav-item" role="presentation">
-				<a class="nav-link" data-bs-toggle="tab" href="#alerts" aria-selected="false" role="tab" tabindex="-1">Alerts</a>
+				<a class="nav-link" data-bs-toggle="tab" href="#notes" aria-selected="false" role="tab" tabindex="-1">Alerts</a>
 			</li>
-			<li class="nav-item" role="presentation">
-				<a class="nav-link active" data-bs-toggle="tab" href="#chat" aria-selected="true" role="tab">Chat</a>
-			</li>
+		
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane fade active show" id="chat" role="tabpanel">
-				<div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
-					<div class="card-header chat-list-header text-center">
-						<a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"></rect><rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) " x="4" y="11" width="16" height="2" rx="1"></rect></g></svg></a>
-						<div>
-							<h6 class="mb-1">Chat List</h6>
-							<p class="mb-0">Show All</p>
-						</div>
-						<a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
-					</div>
-					<div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
-						<ul class="contacts">
-							<li class="name-first-letter">A</li>
-							<li class="active dz-chat-user">
-								<div class="d-flex bd-highlight">
-									<div class="img_cont">
-										<img src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/avatar/1.jpg" class="rounded-circle user_img" alt="/">
-										<span class="online_icon"></span>
-									</div>
-									<div class="user_info">
-										<span>Archie Parker</span>
-										<p>Kalid is online</p>
-									</div>
-								</div>
-							</li>
-							
-							<li class="dz-chat-user">
-								<div class="d-flex bd-highlight">
-									<div class="img_cont">
-										<img src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/avatar/5.jpg" class="rounded-circle user_img" alt="/">
-										<span class="online_icon offline"></span>
-									</div>
-									<div class="user_info">
-										<span>Oscar Weston</span>
-										<p>Rashid left 50 mins ago</p>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="card chat dz-chat-history-box d-none">
-					<div class="card-header chat-list-header text-center">
-						<a href="javascript:void(0);" class="dz-chat-history-back">
-							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><polygon points="0 0 24 0 24 24 0 24"></polygon><rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000) " x="14" y="7" width="2" height="10" rx="1"></rect><path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997) "></path></g></svg>
-						</a>
-						<div>
-							<h6 class="mb-1">Chat with Khelesh</h6>
-							<p class="mb-0 text-success">Online</p>
-						</div>							
-						<div class="dropdown">
-							<a href="javascript:void(0);" data-bs-toggle="dropdown"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
-							<ul class="dropdown-menu dropdown-menu-end">
-								<li class="dropdown-item"><i class="fas fa-user-circle text-primary me-2"></i> View profile</li>
-								<li class="dropdown-item"><i class="fas fa-users text-primary me-2"></i> Add to close friends</li>
-								<li class="dropdown-item"><i class="fas fa-plus text-primary me-2"></i> Add to group</li>
-								<li class="dropdown-item"><i class="fas fa-ban text-primary me-2"></i> Block</li>
-							</ul>
-						</div>
-					</div>
-					<div class="card-body msg_card_body dz-scroll" id="DZ_W_Contacts_Body3">
-						<div class="d-flex justify-content-start mb-4">
-							<div class="img_cont_msg">
-								<img src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="/">
-							</div>
-							<div class="msg_cotainer">
-								Hi, how are you samim?
-								<span class="msg_time">8:40 AM, Today</span>
-							</div>
-						</div>
-						<div class="d-flex justify-content-end mb-4">
-							<div class="msg_cotainer_send">
-								Hi Khalid i am good tnx how about you?
-								<span class="msg_time_send">8:55 AM, Today</span>
-							</div>
-							<div class="img_cont_msg">
-						<img src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="/">
-							</div>
-						</div>
-						
-					</div>
-					<div class="card-footer type_msg">
-						<div class="input-group">
-							<textarea class="form-control" placeholder="Type your message..."></textarea>
-							<div class="input-group-append">
-								<button type="button" class="btn btn-primary"><i class="fas fa-location-arrow"></i></button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			
 			<div class="tab-pane fade" id="alerts" role="tabpanel">
 				<div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header chat-list-header text-center">
@@ -240,35 +151,7 @@
 									</div>
 								</div>
 							</li>
-							<li class="name-first-letter">SOCIAL</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="img_cont success">RU<i class="icon fa-birthday-cake"></i></div>
-									<div class="user_info">
-										<span>Perfection Simplified</span>
-										<p>Jame Smith commented on your status</p>
-									</div>
-								</div>
-							</li>
-							<li class="name-first-letter">SEVER STATUS</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="img_cont primary">AU<i class="icon fas fa-user-plus"></i></div>
-									<div class="user_info">
-										<span>AharlieKane</span>
-										<p>Sami is online</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="img_cont info">MO<i class="icon fas fa-user-plus"></i></div>
-									<div class="user_info">
-										<span>Athan Jacoby</span>
-										<p>Nargis left 30 mins ago</p>
-									</div>
-								</div>
-							</li>
+							
 						</ul>
 					</div>
 					<div class="card-footer"></div>
@@ -298,42 +181,7 @@
 									</div>
 								</div>
 							</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="user_info">
-										<span>Youtube, a video-sharing website..</span>
-										<p>10 Aug 2020</p>
-									</div>
-									<div class="ms-auto">
-										<a href="javascript:void(0);" class="btn btn-primary btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-										<a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fas fa-trash"></i></a>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="user_info">
-										<span>john just buy your product..</span>
-										<p>10 Aug 2020</p>
-									</div>
-									<div class="ms-auto">
-										<a href="javascript:void(0);" class="btn btn-primary btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-										<a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fas fa-trash"></i></a>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="user_info">
-										<span>Athan Jacoby</span>
-										<p>10 Aug 2020</p>
-									</div>
-									<div class="ms-auto">
-										<a href="javascript:void(0);" class="btn btn-primary btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-										<a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fas fa-trash"></i></a>
-									</div>
-								</div>
-							</li>
+						
 						</ul>
 					</div>
 				</div>
@@ -561,10 +409,7 @@
 <div class="deznav">
     <div class="deznav-scroll mm-active">
         <ul class="metismenu mm-show" id="menu">
-            <li class="mm-active"><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-dashboard-1"></i>
-                    <span class="nav-text">Dashboard</span>
-                </a>
+            <li class="mm-active">
                 <ul aria-expanded="false" class="mm-collapse mm-show">
                     <li class="mm-active"><a href="index.html" class="mm-active">Dashboard</a></li>
                    
@@ -573,77 +418,25 @@
                     <li><a href="customerlist.html">Customer</a></li>
                 </ul>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
-                    <i class="flaticon-381-user-7"></i>
-                    <span class="nav-text">Agents</span>
-                    <span class="badge badge-sm badge-danger ms-3">New</span>
-                </a>
-                <ul aria-expanded="false" class="mm-collapse">
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/add_agent">Add Agent</a></li>
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/add_agent_wizard">Add Agent Wizard</a></li>
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/all_agents">All Agents</a></li>
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/agent_profile">Agent Profile</a></li>
-                    
-                </ul>
-            </li>
+            
             <li><a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
                     <i class="flaticon-381-layer-1"></i>
-                    <span class="nav-text">Property</span>
+                    <span class="nav-text">Vehicle</span>
                     <span class="badge badge-sm badge-danger ms-3">New</span>
                 </a>
                 <ul aria-expanded="false" class="mm-collapse">
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/add_property">Add Property</a></li>
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/property_list">Property List</a></li>
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/property_details">Property Details</a></li>
+                    <li><a href="add_property.html">Add Vehicle</a></li>
+                    <li><a href="all_property.html">Vehicle List</a></li>
+                    <li><a href="detail.html">Vehicle Details</a></li>
                 </ul>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-app"></i>
-                    <span class="nav-text">Apps</span>
-                </a>
-                <ul aria-expanded="false" class="mm-collapse">
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/app_profile">Profile</a></li>
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/post_details">Post Details</a></li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Email</a>
-                        <ul aria-expanded="false" class="mm-collapse">
-                            <li><a href="https://omah.dexignzone.com/codeigniter/demo/email_compose">Compose</a></li>
-                            <li><a href="https://omah.dexignzone.com/codeigniter/demo/email_inbox">Inbox</a></li>
-                            <li><a href="https://omah.dexignzone.com/codeigniter/demo/email_read">Read</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="https://omah.dexignzone.com/codeigniter/demo/app_calender">Calendar</a></li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Shop</a>
-                        <ul aria-expanded="false" class="mm-collapse">
-                            <li><a href="https://omah.dexignzone.com/codeigniter/demo/ecom_product_grid">Product Grid</a></li>
-							<li><a href="https://omah.dexignzone.com/codeigniter/demo/ecom_product_list">Product List</a></li>
-							<li><a href="https://omah.dexignzone.com/codeigniter/demo/ecom_product_details">Product Details</a></li>
-							<li><a href="https://omah.dexignzone.com/codeigniter/demo/ecom_product_order">Order</a></li>
-							<li><a href="https://omah.dexignzone.com/codeigniter/demo/ecom_checkout">Checkout</a></li>
-							<li><a href="https://omah.dexignzone.com/codeigniter/demo/ecom_invoice">Invoice</a></li>
-							<li><a href="https://omah.dexignzone.com/codeigniter/demo/ecom_customers">Customers</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+               
+                    
         </ul>
     
-        <div class="copyright">
-            <p><strong>Omah Dashboard</strong> © 2023 All Rights Reserved</p>
-            <p>by DexignZone</p>
-        </div>
     </div>
 </div>
-
+<script src="assets/js/models/customers.js"></script>
 <div class="content-body">
 	<!-- row -->
 	<div class="container-fluid">
@@ -660,151 +453,7 @@
 		<div class="row">
 			<div class="col-xl-12">
 				<div class="card">
-					<div class="card-body p-0">
-						<div class="row border-bottom mx-0 pt-4 px-2 align-items-center ">
-							<div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-12 mb-sm-4 mb-3 align-items-center  media">
-								<img class="me-sm-4 me-3 img-fluid rounded" width="90" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/customers/4.jpg" alt="DexignZone">
-								<div class="media-body">
-									<span class="text-primary d-block">#C01234</span>
-									<h4 class="mb-1">Robert Patilson</h4>
-									<span class="d-block mb-lg-0 mb-0">Join on 26/04/2020, 12:42 AM</span>
-								</div>
-							</div>
-							<div class="col-xl-2 col-xxl-2 col-lg-3 col-sm-4 mb-sm-4 col-6 mb-3">
-								<small class="mb-2 d-block">Location</small>
-								<span class="text-black font-w600">TY35 Avenue GGLondon Center</span>
-							</div>
-							<div class="col-xl-2 col-xxl-3 col-lg-3 col-sm-4 mb-sm-4 col-6 mb-3 text-lg-center">
-								<small class="mb-2 d-block">Phone Number</small>
-								<span class="text-black font-w600">+51 1234 5678</span>
-							</div>
-							<div class="col-xl-2 col-xxl-3 col-lg-6 col-sm-4 mb-sm-4 mb-3">
-								<small class="mb-2 d-block">Email Address</small>
-								<span class="text-black font-w600">info@example.com</span>
-							</div>
-							<div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 mb-sm-4 mb-4 d-flex ">
-								<div class="dropdown media-dropdown mt-auto mb-auto me-auto">
-									<div class="btn-link" data-bs-toggle="dropdown">
-										<a href="javascript:void(0);" class="btn btn-outline-primary rounded">Show Order History
-											<svg class="ms-2" width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path d="M0 -5.24537e-07L6 6L12 0" fill="#3B4CB8"></path>
-											</svg>
-										</a>
-									</div>
-									<div class="dropdown-menu dropdown-menu-end rounded">
-										<div class="media mb-4">
-											<img class="me-sm-4 me-3 img-fluid rounded" width="90" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/customers/4.jpg" alt="DexignZone">
-											<div class="media-body">
-												<h5 class="mb-0">Robert Patilson</h5>
-												<span class="fs-14 d-block mb-3">2 June 2018 - 4 June 2019</span>
-												<div class="star-icons">
-													<i class="las la-star fs-18"></i>
-													<i class="las la-star fs-18"></i>
-													<i class="las la-star fs-18"></i>
-													<i class="las la-star fs-18"></i>
-													<i class="las la-star fs-18"></i>
-												</div>
-											</div>
-										</div>
-										<div class="media">
-											<img class="me-sm-4 me-3 img-fluid rounded" width="90" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/customers/3.jpg" alt="DexignZone">
-											<div class="media-body">
-												<h5 class="mb-0">Robert Patilson</h5>
-												<span class="fs-14 d-block mb-3">2 June 2018 - 4 June 2019</span>
-												<div class="star-icons">
-													<i class="las la-star"></i>
-													<i class="las la-star"></i>
-													<i class="las la-star"></i>
-													<i class="las la-star"></i>
-													<i class="las la-star"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="dropdown ms-4  mt-auto mb-auto">
-									<div class="btn-link" data-bs-toggle="dropdown">
-										<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-									</div>
-									<div class="dropdown-menu dropdown-menu-end">
-										<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-										<a class="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row border-bottom mx-0 pt-4 px-2 align-items-center ">
-							<div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-12 mb-sm-4 mb-3 align-items-center  media">
-								<img class="me-sm-4 me-3 img-fluid rounded" width="90" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/customers/3.jpg" alt="DexignZone">
-								<div class="media-body">
-									<span class="text-primary d-block">#B85651</span>
-									<h4 class="mb-1">Marry Parkin</h4>
-									<span class="d-block mb-lg-0 mb-0">Join on 19/05/2022, 10:45 AM</span>
-								</div>
-							</div>
-							<div class="col-xl-2 col-xxl-2 col-lg-3 col-sm-4 mb-sm-4 col-6 mb-3">
-								<small class="mb-2 d-block">Location</small>
-								<span class="text-black font-w600">KL35 BodyClub Paris Center</span>
-							</div>
-							<div class="col-xl-2 col-xxl-3 col-lg-3 col-sm-4 mb-sm-4 col-6 mb-3 text-lg-center">
-								<small class="mb-2 d-block">Phone Number</small>
-								<span class="text-black font-w600">+91 1234 5678</span>
-							</div>
-							<div class="col-xl-2 col-xxl-3 col-lg-6 col-sm-4 mb-sm-4 mb-3">
-								<small class="mb-2 d-block">Email Address</small>
-								<span class="text-black font-w600">info@example.com</span>
-							</div>
-							<div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 mb-sm-4 mb-4 d-flex ">
-								<div class="dropdown media-dropdown mt-auto mb-auto me-auto">
-									<div class="btn-link" data-bs-toggle="dropdown">
-										<a href="javascript:void(0);" class="btn btn-outline-primary rounded">Show Order History
-											<svg class="ms-2" width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path d="M0 -5.24537e-07L6 6L12 0" fill="#3B4CB8"></path>
-											</svg>
-										</a>
-									</div>
-									<div class="dropdown-menu dropdown-menu-end rounded">
-										<div class="media mb-4">
-											<img class="me-sm-4 me-3 img-fluid rounded" width="90" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/customers/4.jpg" alt="DexignZone">
-											<div class="media-body">
-												<h5 class="mb-0">Marry Parkin</h5>
-												<span class="fs-14 d-block mb-3">15 June 2020 - 25 June 2023</span>
-												<div class="star-icons">
-													<i class="las la-star fs-18"></i>
-													<i class="las la-star fs-18"></i>
-													<i class="las la-star fs-18"></i>
-													<i class="las la-star fs-18"></i>
-													<i class="las la-star fs-18"></i>
-												</div>
-											</div>
-										</div>
-										<div class="media">
-											<img class="me-sm-4 me-3 img-fluid rounded" width="90" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/customers/3.jpg" alt="DexignZone">
-											<div class="media-body">
-												<h5 class="mb-0">Marry Parkin</h5>
-												<span class="fs-14 d-block mb-3">21 June 2018 - 28 June 2019</span>
-												<div class="star-icons">
-													<i class="las la-star"></i>
-													<i class="las la-star"></i>
-													<i class="las la-star"></i>
-													<i class="las la-star"></i>
-													<i class="las la-star"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="dropdown ms-4  mt-auto mb-auto">
-									<div class="btn-link" data-bs-toggle="dropdown">
-										<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-									</div>
-									<div class="dropdown-menu dropdown-menu-end">
-										<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-										<a class="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
-									</div>
-								</div>
-							</div>
-						</div>
+					<div class="card-body p-0" id="customerList">
 						
 						
 					</div>
@@ -839,54 +488,7 @@
             <script src="assets/js/owl.carousel.js"></script>
             <script src="assets/js/apexchart.js"></script>
 
-            <script src="assets/js/dashboard-1.js"></script>
-    	
 			<script src="assets/js/custom.min.js"></script>
-			<script src="assets/js/deznav-init.js"></script>
-		<script>
-	function carouselReview(){
-		/*  testimonial one function by = owl.carousel.js */
-		jQuery('.testimonial-one').owlCarousel({
-			loop:true,
-			autoplay:true,
-			margin:0,
-			nav:true,
-			dots: false,
-			navText: ['<i class="las la-long-arrow-alt-left"></i>', '<i class="las la-long-arrow-alt-right"></i>'],
-			responsive:{
-				0:{
-					items:1
-				},
-				
-				480:{
-					items:1
-				},			
-				
-				767:{
-					items:1
-				},
-				1000:{
-					items:1
-				}
-			}
-		})		
-		/*Custom Navigation work*/
-		jQuery('#next-slide').on('click', function(){
-			$('.testimonial-one').trigger('next.owl.carousel');
-		});
-
-		jQuery('#prev-slide').on('click', function(){
-			$('.testimonial-one').trigger('prev.owl.carousel');
-		});
-		/*Custom Navigation work*/
-	}
-	
-	jQuery(window).on('load',function(){
-		setTimeout(function(){
-			carouselReview();
-		}, 1000); 
-	});
-</script>
 
 
     <!--**********************************

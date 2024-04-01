@@ -6,7 +6,7 @@
 	<meta name="robots" content="index, follow">
    
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Reviews</title>
+	<title>All Property</title>
     <!-- Favicon icon -->
 	<link rel="icon" type="image/png" sizes="16x16" href="assets/brand/01.png">
 	
@@ -241,8 +241,7 @@
 										<span>10 minutes ago</span>
 										<h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
 									</a>
-								</li>
-							
+								
 							</ul>
 						</div>
 						</div>
@@ -311,114 +310,83 @@
     </div>
 </div>
 
-<script src="assets/js/models/reviews.js"></script>
+
 <div class="content-body">
-	<!-- row -->
 	<div class="container-fluid">
-		<div class="form-head page-titles d-flex  align-items-center">
-			<div class="me-auto  d-lg-block">
-				<h4 class=" mb-1">Reviews</h4>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item active"><a href="javascript:void(0)">Customer</a></li>
-					<li class="breadcrumb-item"><a href="javascript:void(0)">Reviews</a></li>
-				</ol>
-			</div>
-			<a href="javascript:void(0);" class="btn btn-primary rounded light">Refresh</a>
+		<div class="page-titles">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="javascript:void(0)">Vehicle</a></li>
+				<li class="breadcrumb-item active"><a href="javascript:void(0)">All Vehicle</a></li>
+			</ol>
 		</div>
+		<script src="/assets/js/models/allProperty.js" type="text/javascript"></script>
+		<!-- row -->
 		<div class="row">
-			<div class="col-xl-12">
-				<ul class="nav nav-pills review-tab" role="tablist">
-					<li class="nav-item" role="presentation">
-						<a href="#navpills-1" class="nav-link" data-bs-toggle="tab" aria-expanded="false" aria-selected="false" role="tab" tabindex="-1">All Review</a>
-					</li>
-					<li class="nav-item" role="presentation">
-						<a href="#navpills-2" class="nav-link active" data-bs-toggle="tab" aria-expanded="false" aria-selected="true" role="tab">Published</a>
-					</li>
-					<li class="nav-item" role="presentation">
-						<a href="#navpills-3" class="nav-link" data-bs-toggle="tab" aria-expanded="true" aria-selected="false" role="tab" tabindex="-1">Deleted</a>
-					</li>
-				</ul>
-				<div class="tab-content pt-4 bg-white" id="reviewList">
-					<div id="navpills-1" class="tab-pane" role="tabpanel">
-						<div class="card review-table">
-							<div class="media align-items-center">
-								<img class="me-3 img-fluid rounded" width="90" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/customers/4.jpg" alt="DexignZone">
-								<div class="media-body d-lg-flex d-block row align-items-center">
-									<div class="col-xl-4 col-xxl-5 col-lg-12 review-bx">
-										<span class="text-primary d-block">#C01234</span>
-										<h3 class="fs-18 text-black font-w600 mb-1">Robert Patilson</h3>
-										<span class="d-block mb-xl-0 mb-3">Join on 26/04/2020, 12:42 AM</span>
+			<div class="col-12">
+				<div class="filter cm-content-box box-primary">
+					<div class="content-title SlideToolHeader">
+						<div class="cpa">
+							<i class="fa-sharp fa-solid fa-filter me-2"></i>Filter
+						</div>
+						<div class="tools">
+							<a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
+						</div>
+					</div>
+					<div class="cm-content-body form excerpt">
+						<div class="card-body">
+							<form>
+								<div class="row">
+									<div class="mb-3 col-lg-3 col-md-6">
+										<input type="text" class="form-control" placeholder="Enter Your Keyword..." required="">
 									</div>
-									<div class="col-xl-7 col-xxl-7 col-lg-12 text-dark mb-xl-0 mb-2">
-										<p>Friendly service
-										Josh, Lunar and everyone at Just Property in Hastings deserved a big Thank You from us for moving us from Jakarta to Medan during the lockdown.</p>
+									<div class="mb-3 col-lg-3 col-md-6">
+										<select class="default-select form-control wide">
+											<option>Select Model</option>
+											<option>Rolls</option>
+											
+										</select>
+									</div>
+									<div class="mb-3 col-lg-3 col-md-6">
+										<select class="default-select form-control wide">
+											<option>Vehicle Type</option>
+											<option>Wide Area</option>
+											
+										</select>
+									</div>
+									<div class="mb-3 col-lg-3 col-md-6">
+										<select class="default-select form-control wide" tabindex="null">
+											<option>Select Category</option>
+											<option>For Rent</option>
+											<option>For Sale</option>
+										</select>
 									</div>
 								</div>
-								<div class="media-footer d-sm-flex d-block align-items-center">
-									<div class="me-5 text-xl-center text-start  ms-xl-3 mb-sm-0 mb-3 ms-0">
-										<span class="bgl-primary text-primary rounded p-1 ps-2 pe-2 font-w600 fs-12 d-inline-block mb-2 mb-sm-3">EXCELENT</span>
-										<span class="star-review d-block">
-											<i class="fas fa-star text-primary"></i>
-											<i class="fas fa-star text-primary"></i>
-											<i class="fas fa-star text-primary"></i>
-											<i class="fas fa-star text-primary"></i>
-											<i class="fas fa-star text-gray"></i>
-										</span>
-									</div>
-									<div class="edit ms-auto">
-										<a href="javascript:void(0);" class="btn btn-outline-success rounded  me-2">Approve</a>
-										<a href="javascript:void(0);" class="btn btn-outline-danger rounded">Reject</a>
-									</div>
+							</form>
+							<div class="row align-items-center">
+								<div class="mb-3 col-lg-4 col-md-6">
+									<h6 class="title">Price Range</h6>
+									
+								</div>
+								
+								<div class="col-lg-4 col-md-6 align-self-end mb-3">
+									<button class="btn btn-primary rounded-sm w-100" title="Click here to Search" type="button"><i class="fa fa-search me-1"></i>Search</button>
 								</div>
 							</div>
 						</div>
-						
-						
-						
-						
-						
 					</div>
-					<div id="navpills-2" class="tab-pane active show" role="tabpanel">
-						<div class="card review-table">
-							<div class="media align-items-center">
-								<img class="me-3 img-fluid rounded" width="90" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/customers/3.jpg" alt="DexignZone">
-								<div class="media-body d-lg-flex d-block row align-items-center">
-									<div class="col-xl-4 col-xxl-5 col-lg-12 review-bx">
-										<span class="text-primary d-block">#C01234</span>
-										<h3 class="fs-18 text-black font-w600 mb-1">Peter Parkur</h3>
-										<span class="d-block mb-xl-0 mb-3">Join on 26/04/2020, 12:42 AM</span>
-									</div>
-									<div class="col-xl-7 col-xxl-7 col-lg-12 text-dark mb-xl-0 mb-2">
-										<p>Dealing with Syamsudin and Bakri was a joy. I got in touch with Just Property after seeing a couple of properties that caught my eye. Both Syamsudin and Bakri strive to deliver a professional service and surpassed my expectations - they were not only help.</p> 
-									</div>
-								</div>
-								<div class="media-footer d-sm-flex d-block align-items-center">
-									<div class="me-5 text-xl-center text-start  ms-xl-3 mb-sm-0 mb-3 ms-0">
-										<span class="bgl-primary text-primary rounded p-1 ps-2 pe-2 font-w600 fs-12 d-inline-block mb-2 mb-sm-3">EXCELENT</span>
-										<span class="star-review d-block">
-											<i class="fas fa-star text-primary"></i>
-											<i class="fas fa-star text-primary"></i>
-											<i class="fas fa-star text-primary"></i>
-											<i class="fas fa-star text-primary"></i>
-											<i class="fas fa-star text-gray"></i>
-										</span>
-									</div>
-									<div class="edit ms-auto">
-										<a href="javascript:void(0);" class="btn btn-outline-success rounded  me-2">Approve</a>
-										<a href="javascript:void(0);" class="btn btn-outline-danger rounded">Reject</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						
-					</div>
-					
 				</div>
+				
 			</div>
+
+                     <div class="row" id="vehicleList">
+                        
+                    </div>
+                </div>
+                   
 		</div>
 	</div>
 </div>
+
 <!--**********************************
 	Content body end
 ***********************************-->
@@ -427,7 +395,7 @@
 ***********************************-->
 <footer class="footer">
     <div class="copyright">
-            
+            <p>Copyright © Designed &amp; Developed by <a href="http://dexignzone.com/" target="_blank">DexignZone</a> 2023</p>
     </div>
 </footer>
 <!--**********************************

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const vehicleSchema = mongoose.Schema({
-	user:{
+	company:{
 		type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'companyr'
 	},
     name: {
         type: String,
@@ -11,11 +11,11 @@ const vehicleSchema = mongoose.Schema({
     },
     plate: {
         type: String,
-        required: true,
         unique: true,
     },
     description: {
-        type: String,
+        type: mongoose.Schema.Types.Object,
+        default:{default:true}
     },
     date: {
         type: Date,

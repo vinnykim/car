@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const db = 'mongodb://0.0.0.0:27017/carshop';
+const db = "mongodb+srv://etolebradone:lovingson23@cluster0.pjipfgw.mongodb.net/carsells";
 
 
 

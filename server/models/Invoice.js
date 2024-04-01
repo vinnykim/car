@@ -6,11 +6,6 @@ const invoiceSchema = mongoose.Schema({
         ref: 'company'
     },
 	
-	parking: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'parking'
-    },
-	
 	booking: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'booking'
@@ -23,10 +18,7 @@ const invoiceSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    payment: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'payment'
-    },
+   
 	amount: {
         type: Number,
     },
@@ -34,10 +26,7 @@ const invoiceSchema = mongoose.Schema({
         type: String,
       
     },
-	due: {
-        type: Date,
-        required: true
-    },
+	
 	complete: {
         type: Boolean,
         default: false,

@@ -1,37 +1,35 @@
 const mongoose = require('mongoose');
 
 const BookingSchema = mongoose.Schema({
+	company:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'company',
+	},
 	user:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref:'user',
 	},
-	vehicle_year:{
-		type:String,
+	vehicle:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'vehicle',
 	},
-	service_date:{
-		type:Date,
-		required:true,
-	},
-	service_category:{
-		type:Array,
-		default:[]
-	},
-	service_time:{
-		type:Date,
-		
-	},
-	vehicle_make:{
-		type:String,
-	},
-	vehcile_mileage:{
-		type:String,
+	invoice:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'invoice',
 	},
 	
 	checkout:{
 		type:Date,
 		
 	},
-	
+	description:{
+		type: mongoose.Schema.Types.Object,
+		default:{default:true}
+	},
+	total:{
+		type:Number,
+		default: 0
+	},
 	saved:{
 		type:Boolean,
 		default:true,

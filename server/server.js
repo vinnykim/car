@@ -39,10 +39,10 @@ app.use('/api/models/admin', require('./routes/main'))
 app.use('/api/models/admin2', require('./routes/admin2'))
 app.use('/api/transaction', require('./routes/transactions'))
 
-app.use(express.static(path.join(__dirname, 'files/')));
+app.use(express.static(path.join(__dirname, 'admin/')));
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname,'files/admin.html'));
+  res.sendFile(path.join(__dirname,'admin/index.html'));
 })
 
 

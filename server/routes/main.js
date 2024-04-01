@@ -12,15 +12,7 @@ const Vehicle = require('../models/Vehicle')
 const Payment = require('../models/Payment')
 const Notification = require('../models/Notification')
 const Company = require('../models/Company')
-const Spot = require('../models/Spot')
-const Mail = require('../models/Mail')
-const Rate = require('../models/Rate')
-const Follow = require('../models/Follow')
-const Invoice = require('../models/Invoice')
-const Withdraw = require('../models/Withdraw')
-const Profile = require('../models/Profile')
-const Parked = require('../models/Parked')
-const Active = require('../models/Active')
+const Invoice = require("../models/Invoice")
 const Category = require("../models/Category")
 const Service = require("../models/Service")
 //const upload = multer({ dest: 'files/assets/global/images/uploads/' });
@@ -39,15 +31,84 @@ router.get('/',  async (req, res) => {
 	}
 })
 
-router.post('/newService',auth,  async (req, res) => {
+router.post('/getReviews',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  result.reviews = []
+	  result.message = "success"
+	  
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+
+router.post('/getCustomers',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const books = await Book.find({company:company_id})
+	  result.customers = []
+	  for(var book of books){
+		const r = {}
+		r.book = book
+		const user = await User.findById(book.user).select("-password")
+		r.user = user
+		result.customers.push = r
+	  }
+	  result.message = "success"
+	  
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+
+router.post('/getOrders',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const vehicles = await Vehicle.find({company:company_id})
+	  result.vehicles = vehicles
+	  result.orders = []
+	  for(var vehicle of vehicles){
+		const r = {}
+		r.vehicle = vehicle
+		const books = await Book.find({vehicle:vehicle})
+		r.books = []
+		for(var book of books){
+			const user = await User.findById(book.user).select("-password")
+			const invoice = await Invoice.findById(book.invoice)
+			r.books.push({book:book,user:user,invoice:invoice})
+		}
+		result.orders.push(r)
+	  }
+	  result.message = "success"
+	  
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+router.post('/neVehicle',auth,  async (req, res) => {
 	try {
 	  const result = {}
 	  const data = req.body
-	  
-	  const service = new Service(data)
-	  service.company = req.user.company
-	  await service.save()
-	  result.message = "New Service created"
+	  if(!data.vehicleVin || !data.vehuclePrice || !data.vrhicleModel){
+		return res.status(400).json({message:"Required data missing"})
+	  }
+	  const vehicle = new Vehicle()
+	  vehicle.description = data
+	  vehicle.company = req.user.company
+	  await vehicle.save()
+	  result.message = "New Vehicle created"
 	  return res.status(200).json(result)
 	} catch (error) {
 	  console.error(error.message)
@@ -132,13 +193,42 @@ router.post('/uploadImage',auth,  async (req, res) => {
 	}
 })
 
-router.post('/getServices', auth, async (req, res) => {
+router.post('/getVehicles', auth, async (req, res) => {
 	try {
 	  const company_id = req.user.company
 	  const result = {}
-	  const services = await Service.find({company:company_id})
-	  result.services = services
+	  const vehicles = await Vehicle.find({company:company_id})
+	  result.vehicles = vehicles
 		
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error='+error.message)
+	}
+  })
+
+router.post('/getAnalysis', auth, async (req, res) => {
+	try {
+	  const company_id = req.user.company
+	  const result = {}
+	  const vehicles = await Vehicle.find({company:company_id})
+	  result.vehicles = vehicles
+	  const books = await Book.find({company:company_id})
+	  result.books = books 
+	  result.invoice = []
+	  result.booked = []
+	  for(var book of books){
+			const invoice = await Invoice.findById(book.invoice)
+			
+			result.invoice.push(invoice)
+	  }
+	  for(var vehicle of vehicles){
+			const r = {}
+			r.vehicle = vehicle
+			const book = await Book.find({vehicle:vehicle._id})
+			r.book = book
+			result.booked.push(r)
+	  }
 	  return res.status(200).json(result)
 	} catch (error) {
 	  console.error(error.message)
