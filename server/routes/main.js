@@ -58,6 +58,13 @@ router.post('/getCustomers',auth,  async (req, res) => {
 		r.bookings = []
 		const book = await Book.find({user:user._id})
 		for(var bk of book){
+			const vehicle = await Vehicle.findById(bk.vehicle)
+			if(vehicle){
+				r.vehicle = vehicle
+			}else{
+				r.vehicle = {deleted:true}
+			}
+			
 			if(!r.bookings.includes(pk)){
 				r.bookings.push(bk)
 			}

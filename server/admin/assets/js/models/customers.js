@@ -1,4 +1,23 @@
 $(document).ready(function(){
+    function bookHistory(data){
+        let el = ''
+        for(var dat of data.bookings){
+            el += `
+            <div class="media mb-4">
+                <img class="me-sm-4 me-3 img-fluid rounded" width="90" src="assets/arrivals/01.jpg" alt="Vehicle">
+                <div class="media-body">
+                    <h5 class="mb-0">${data.vehicle.name}</h5>
+                    <div class="star-icons">
+                        <i class="fa fa-star fs-18"></i>
+                        <i class="fa fa-star fs-18"></i>
+                        
+                    </div>
+                </div>
+            </div>
+            `
+        }
+        return el
+    }
     //const customers = ['John Doe']
     fetchFunction("/api/models/admin/getCustomers",{},"post",function(datas){
         const customers = datas.customers
@@ -35,20 +54,7 @@ $(document).ready(function(){
                                 </a>
                             </div>
                             <div class="dropdown-menu dropdown-menu-end rounded">
-                                <div class="media mb-4">
-                                    <img class="me-sm-4 me-3 img-fluid rounded" width="90" src="assets/arrivals/01.jpg" alt="Vehicle">
-                                    <div class="media-body">
-                                        <h5 class="mb-0">Volvo</h5>
-                                        
-                                        <div class="star-icons">
-                                            <i class="fa fa-star fs-18"></i>
-                                            <i class="fa fa-star fs-18"></i>
-                                            <i class="fa fa-star fs-18"></i>
-                                            <i class="fa fa-star fs-18"></i>
-                                            <i class="fa fa-star fs-18"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                                ${bookHistory(datas.users)}
                                
                             </div>
                         </div>
