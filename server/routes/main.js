@@ -50,14 +50,19 @@ router.post('/getCustomers',auth,  async (req, res) => {
 	try {
 	  const result = {}
 	  const company_id = req.user.company
-	  const books = await Book.find({company:company_id})
-	  result.customers = []
-	  for(var book of books){
+	  const users = await User.find({}).select("-password")
+	  result.users = []
+	  for(var user of users){
 		const r = {}
-		r.book = book
-		const user = await User.findById(book.user).select("-password")
 		r.user = user
-		result.customers.push = r
+		r.bookings = []
+		const book = await Book.find({user:user._id})
+		for(var bk of book){
+			if(!r.bookings.includes(pk)){
+				r.bookings.push(bk)
+			}
+		}
+		result.users.push(r)
 	  }
 	  result.message = "success"
 	  
@@ -76,6 +81,7 @@ router.post('/getOrders',auth,  async (req, res) => {
 	  const vehicles = await Vehicle.find({company:company_id})
 	  result.vehicles = vehicles
 	  result.orders = []
+	  result.customers = 0
 	  for(var vehicle of vehicles){
 		const r = {}
 		r.vehicle = vehicle
@@ -83,11 +89,15 @@ router.post('/getOrders',auth,  async (req, res) => {
 		r.books = []
 		for(var book of books){
 			const user = await User.findById(book.user).select("-password")
+			result.customers += 1
 			const invoice = await Invoice.findById(book.invoice)
 			r.books.push({book:book,user:user,invoice:invoice})
 		}
 		result.orders.push(r)
 	  }
+	  const invc = await Invoice.find({company:company_id})
+	  result.transactions = invc.length
+
 	  result.message = "success"
 	  
 	  return res.status(200).json(result)

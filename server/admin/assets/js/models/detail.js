@@ -6,7 +6,16 @@ $(document).ready(function(){
     }
     $("#vehicle_id").text(vehicle)
     fetchFunction("/api/models/admin/getDetail/"+vehicle,{},"post",function(datas){
-        console.log(datas)
+        setTimeout(function(){
+            fetchFunction("/api/models/admin/vehicleBookings/"+vehicle,{},"post",function(data){
+                const list = document.getElementById("vehicleBookings")
+                for(var booking of data.bookings){
+                    list.innerHTML += `
+                        
+                    `
+                }
+            })
+        },499)
         const vehicle = datas.vehicle
         const books = datas.books
         document.getElementById("vehicleDetail").innerHTML = `
@@ -112,6 +121,16 @@ $(document).ready(function(){
                                     ${vehicle.description.vehicleFeatures ? vehicle.description.vehicleFeatures : ""}
                                     
                                 </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="card property-features">
+                            <div class="card-header border-0 pb-0">	
+                                <h3 class="fs-20 text-black mb-0">Vehicle Bookings</h3>
+                            </div>
+                            <div class="card-body" id="vehicleBookings">
+                               
                             </div>
                         </div>
                     </div>
