@@ -11,16 +11,14 @@ $(document).ready(function(){
             <div class="property-card style-1">
             <div class="dz-media post-swiper swiper swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
                 <ul>
-                    <li class="badge badge-sm badge-primary light">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Paris
-                    </li>
+                    
                     <li class="rent badge badge-sm badge-primary">For ${vehicle.description.vehicleStatus ? vehicle.description.vehicleStatus :  "Rent"}</li>
                 </ul>
                 
             
             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
             <div class="dz-content">
-                <img src="assets/images/arrivals/02.jpg" height="44"></img>
+                <img src="assets/arrivals/02.jpg" height="198px" width="100%" style="object-fit:cover;"></img>
                 <h3 class="title">${vehicle.description.vehiclePrice}</h3>
                 <div class="dz-meta">
                     <ul>
@@ -28,7 +26,7 @@ $(document).ready(function(){
                         ${vehicle.description.vehicleWeight} </a></li>
                     </ul>
                 </div>
-                <p>${vehicle.description.vehicleDescription}.</p>
+                <p>${vehicle.description.vehicleDescription ? vehicle.description.vehicleDescription : "Vehicle Description"}.</p>
                 <hr>
                 <div class="dz-footer">
                     <div class="property-card">

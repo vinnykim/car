@@ -212,7 +212,7 @@ router.post('/getAnalysis', auth, async (req, res) => {
 	try {
 	  const company_id = req.user.company
 	  const result = {}
-	  const vehicles = await Vehicle.find({company:company_id},{sort: {timestampField: -1}})
+	  const vehicles = await Vehicle.find({company:company_id})
 	  result.vehicles = {data:vehicles,sale:0,rent:0,total:0}
 	  const books = await Book.find({company:company_id})
 	  result.books = books 
@@ -233,7 +233,8 @@ router.post('/getAnalysis', auth, async (req, res) => {
 			const r = {}
 			r.vehicle = vehicle
 			result.vehicles.total += 1
-			if(vehicle.description.vehicleStatus.includes('rent')){
+			//console.log(vehicle.description,vehicle)
+			if(vehicle.description.vehicleStatus && vehicle.description.vehicleStatus.includes('rent')){
 				result.vehicles.rent += 1
 			}else{
 				result.vehicles.sale += 1
