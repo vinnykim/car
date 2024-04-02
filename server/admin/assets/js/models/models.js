@@ -77,6 +77,21 @@ async function fetchFunction(apiUrl, payload, method,nextFunction,header) {
     }
   }
   
-function createAlert(alert,data){
-    console.log(alert)
-  } 
+function createAlert(data){
+    alert(data.message)
+}
+const session = new Session()
+console.log(location.pathname)
+if(session.get("token") === false && session.get("user") === false){
+    
+    if(!location.pathname.includes("login") && !location.pathname.includes("register")){
+        session.delete()
+        window.location.href = "login.html"
+    }
+    
+}
+if(location.pathname.includes("logout")){
+    const sess = new Session()
+    sess.delete()
+    location.href = 'login.html'
+}

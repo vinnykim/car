@@ -101,7 +101,6 @@
 ***********************************-->
 
 
-<script src="assets/js/models/login.js"></script>
 <div class="fix-wrapper">
     <div class="container">
         <div class="row justify-content-center">
@@ -109,22 +108,26 @@
                 <div class="card mb-0 h-auto">
                     <div class="card-body">
                         <div class="text-center mb-3">
-                            <a href="https://omah.dexignzone.com/codeigniter/demo/index"><img class="logo-auth" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/logo-full.png" alt=""></a>
+                            <a href="index.html"><img class="logo-auth" src="assets/brand/02.png" alt=""></a>
                         </div>
                         <h4 class="text-center mb-4">Sign in your account</h4>
-                        <form action="index.html">
+                        <form id="registerForm">
                             <div class="form-group mb-4">
                                 <label class="form-label" for="username">Username</label>
-                                <input type="text" class="form-control" placeholder="Enter username" id="username">
+                                <input type="text"name="name" class="form-control" placeholder="Enter username" id="username">
                             </div>
                             <div class="form-group mb-4">
                                 <label class="form-label" for="email">Email</label>
-                                <input type="text" class="form-control" placeholder="Enter Email" id="email">
+                                <input type="text" name="email" class="form-control" placeholder="Enter Email" id="email">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="form-label" for="email">Phone</label>
+                                <input type="text" name="phone" class="form-control" placeholder="Enter Phone" id="email">
                             </div>
                            <div class="form-group mb-3 mb-sm-4">
                                 <label class="form-label">Password</label>
                                 <div class="position-relative">
-                                    <input type="password" id="dz-password" class="form-control" value="Password">
+                                    <input type="password" id="dz-password" name="password" class="form-control" value="Password">
                                     <span class="show-pass eye">
                                         <i class="fa fa-eye-slash"></i>
                                         <i class="fa fa-eye"></i>
@@ -182,7 +185,7 @@
             <script src="assets/js/owl.carousel.js"></script>
             <script src="assets/js/apexchart.js"></script>
 			<script src="assets/js/custom.min.js"></script>
-			
+			<script src="assets/js/models/login.js"></script>
 
             <!---
 				

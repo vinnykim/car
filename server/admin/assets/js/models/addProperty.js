@@ -17,7 +17,7 @@ function addVehicle(e){
     }
     console.log(vehicleData)
     //email,password
-    
+    var payload = vehicleData
     $(e).prop('disabled', false);
     fetchFunction("/api/models/admin/newVehicle",payload,"post",function(data){
         console.log(data)

@@ -97,15 +97,16 @@ router.post('/getOrders',auth,  async (req, res) => {
 	}
 })
 
-router.post('/neVehicle',auth,  async (req, res) => {
+router.post('/newVehicle',auth,  async (req, res) => {
 	try {
 	  const result = {}
 	  const data = req.body
-	  if(!data.vehicleVin || !data.vehuclePrice || !data.vrhicleModel){
+	  if(!data.vehicleVin || !data.vehiclePrice || !data.vehicleModel || !data.vehicleModel){
 		return res.status(400).json({message:"Required data missing"})
 	  }
 	  const vehicle = new Vehicle()
 	  vehicle.description = data
+	  vehicle.name = data.vehicleModel
 	  vehicle.company = req.user.company
 	  await vehicle.save()
 	  result.message = "New Vehicle created"
@@ -211,20 +212,32 @@ router.post('/getAnalysis', auth, async (req, res) => {
 	try {
 	  const company_id = req.user.company
 	  const result = {}
-	  const vehicles = await Vehicle.find({company:company_id})
-	  result.vehicles = vehicles
+	  const vehicles = await Vehicle.find({company:company_id},{sort: {timestampField: -1}})
+	  result.vehicles = {data:vehicles,sale:0,rent:0,total:0}
 	  const books = await Book.find({company:company_id})
 	  result.books = books 
-	  result.invoice = []
+	  result.invoice ={data:[],total:0,complete:0,pending:0}
 	  result.booked = []
+	  result.latest = []
 	  for(var book of books){
 			const invoice = await Invoice.findById(book.invoice)
-			
-			result.invoice.push(invoice)
+			if(invoice.complete === true){
+				result.invoice.complete += invoice.amount
+			}else{
+				result.invoice.pending += invoice.amount
+			}
+			result.invoice.total += invoice.amount
+			result.invoice.data.push(invoice)
 	  }
 	  for(var vehicle of vehicles){
 			const r = {}
 			r.vehicle = vehicle
+			result.vehicles.total += 1
+			if(vehicle.description.vehicleStatus.includes('rent')){
+				result.vehicles.rent += 1
+			}else{
+				result.vehicles.sale += 1
+			}
 			const book = await Book.find({vehicle:vehicle._id})
 			r.book = book
 			result.booked.push(r)
@@ -235,6 +248,39 @@ router.post('/getAnalysis', auth, async (req, res) => {
 	  res.status(500).send('Server Error='+error.message)
 	}
   })
+
+
+  router.post('/getDetail/:id', auth, async (req, res) => {
+	try {
+	  const company_id = req.user.company
+	  const result = {}
+	  const vehicle_id = req.params.id
+	  const vehicle = await Vehicle.findById(vehicle_id)
+	  if(!vehicle){
+		return res.status(404).json({message:" Vehicle not found"})
+	  }
+	  result.vehicle = vehicle
+	  const books = await Book.find({vehicle:vehicle})
+	  result.books = {data:[],total:0,complete:0}
+	  for(var book of books){
+		if(book.complete){
+			result.books.complete += 1
+		}
+		const r = {}
+		const user = await User.findById(book.user)
+		const invoice = await Invoice.findById(book.invoice)
+		r.book = book
+		r.user = user
+		r.invoice = invoice
+		result.books.total += 1
+		result.books.data.push(r)
+	  }
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error='+error.message)
+	}
+})
 
 
 module.exports = router

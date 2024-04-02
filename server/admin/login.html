@@ -6,7 +6,7 @@
 	<meta name="robots" content="index, follow">
    
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Orders</title>
+	<title>Login</title>
     <!-- Favicon icon -->
 	<link rel="icon" type="image/png" sizes="16x16" href="assets/brand/01.png">
 	
@@ -101,7 +101,7 @@
 ***********************************-->
 
 
-<script src="assets/js/models/login.js"></script>
+
 <div class="fix-wrapper">
     <div class="container">
         <div class="row justify-content-center">
@@ -109,18 +109,18 @@
                 <div class="card mb-0 h-auto">
                     <div class="card-body">
                         <div class="text-center mb-3">
-                            <a href="https://omah.dexignzone.com/codeigniter/demo/index"><img class="logo-auth" src="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/logo-full.png" alt=""></a>
+                            <a href="assets/brand/01.png" alt=""></a>
                         </div>
                         <h4 class="text-center mb-4">Sign in your account</h4>
-                        <form action="index.html">
+                        <form action="index.html" id="loginForm">
                             <div class="form-group mb-4">
                                 <label class="form-label" for="username">Username</label>
-                                <input type="text" class="form-control" placeholder="Enter username" id="username">
+                                <input name="email" type="text" class="form-control" placeholder="Enter username" id="username">
                             </div>
                            <div class="form-group mb-3 mb-sm-4">
                                 <label class="form-label">Password</label>
                                 <div class="position-relative">
-                                    <input type="password" id="dz-password" class="form-control" value="Password">
+                                    <input type="password" name="password" id="dz-password" class="form-control" value="Password">
                                     <span class="show-pass eye">
                                         <i class="fa fa-eye-slash"></i>
                                         <i class="fa fa-eye"></i>
@@ -179,7 +179,7 @@
             <script src="assets/js/apexchart.js"></script>
 			<script src="assets/js/custom.min.js"></script>
 			
-
+            <script src="assets/js/models/login.js"></script>
             <!---
 				
 				<script src="assets/js/dashboard-1.js"></script>

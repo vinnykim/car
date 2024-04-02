@@ -253,18 +253,18 @@
 								<span class="text-black">Super Admin</span>
 								<p class="fs-12 mb-0">Admin</p>
 							</div>
-							<img src="" width="20" alt="/">
+							<img src="" width="20" alt="" src="assets/images/customers/avatar.jpg">
 						</a>
 						<div class="dropdown-menu dropdown-menu-end">
-							<a href="app_profile.html" class="dropdown-item ai-icon">
+							<a href="#app_profile.html" class="dropdown-item ai-icon">
 								<svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
 								<span class="ms-2">Profile </span>
 							</a>
-							<a href="email_inbox.html" class="dropdown-item ai-icon">
+							<a href="#email_inbox.html" class="dropdown-item ai-icon">
 								<svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
 								<span class="ms-2">Inbox </span>
 							</a>
-							<a href="page_login.html" class="dropdown-item ai-icon">
+							<a href="logout" class="dropdown-item ai-icon">
 								<svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
 								<span class="ms-2">Logout </span>
 							</a>
@@ -333,7 +333,7 @@
 							<div class="row">
 								<div class="mb-3 col-lg-4 col-md-6">
 									<label class="form-label">Vehicle Type</label>
-									<input type="text" name="vehicletype" class="form-control" placeholder="office,villa,apartment" required="">
+									<input type="text" name="vehicleType" class="form-control" placeholder="" required="">
 								</div>
 								<div class="mb-3 col-lg-4 col-md-6">
 									<label class="form-label">Vehicle Status</label>
@@ -354,24 +354,15 @@
 								</div>
 								<div class="mb-3 col-lg-4 col-md-6">
 									<label class="form-label">Max Orders</label>
-									<div class="dropdown bootstrap-select default-select form-control wide">
-										<select class="default-select form-control wide" name="vehicleMaxorders">
-										
-									</select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" title="1"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">1</div></div> </div></button><div class="dropdown-menu "><div class="inner show" role="listbox" id="bs-select-2" tabindex="-1"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+									<input type="number" min="1" class="form-control" value="1" placeholder="1" name="vehicleMax" required="">
 								</div>
 								<div class="mb-3 col-lg-4 col-md-6">
 									<label class="form-label">Details</label>
-									<div class="dropdown bootstrap-select default-select form-control wide">
-										<select class="default-select form-control wide" name="vehicleDetail">
-										
-									</select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-3" aria-haspopup="listbox" aria-expanded="false" title="1"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">1</div></div> </div></button><div class="dropdown-menu "><div class="inner show" role="listbox" id="bs-select-3" tabindex="-1"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+									<input type="text" class="form-control" placeholder="color" name="vehicleDetail" required="">
 								</div>
 								<div class="mb-3 col-lg-4 col-md-6">
 									<label class="form-label">Wheels</label>
-									<div class="dropdown bootstrap-select default-select form-control wide">
-										<select class="default-select form-control wide" name="vehicleWheels">
-										
-									</select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-4" aria-haspopup="listbox" aria-expanded="false" title="1"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">1</div></div> </div></button><div class="dropdown-menu "><div class="inner show" role="listbox" id="bs-select-4" tabindex="-1"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+									<input type="number" min="4" value="4" class="form-control" placeholder="4" name="vehicleWheels" required="">
 								</div>
 								<div class="mb-3 col-lg-4 col-md-6">
 									<label class="form-label">Weight</label>
@@ -388,7 +379,7 @@
 
 								<div class="mb-3 col-12">
 									<label class="form-label">Description</label>
-									<textarea class="form-control" rows="4" name="vehcileDescription"></textarea>
+									<textarea class="form-control" rows="4" name="vehicleDescription"></textarea>
 								</div>
 								<div class="mb-3 col-sm-6">
 									<label class="form-label">HorsePower</label>
@@ -396,30 +387,31 @@
 								</div>
 								<div class="mb-3 col-sm-6">
 									<label class="form-label">Torque</label>
-									<input type="number" id="vehicle_torque" name="vehicleTorque" class="form-control" placeholder="Enter pin code" required="">
+									<input type="number" id="vehicle_torque" name="vehicleTorque" class="form-control" placeholder="Vehicle Torque" required="">
 								</div>
 								<div class="mb-3 col-sm-6">
 									<label class="form-label">Fuel Type</label>
-									<input type="text" class="form-control" name="vehicleFuel" placeholder="Address of your Vehicle">
+									<input type="text" class="form-control" name="vehicleFuel" placeholder="Diesel,Petrol">
 								</div>
 								<div class="mb-3 col-sm-6">
 									<label class="form-label">Fuel Capacity</label>
-									<input type="number" id="vehicle_capacity" name="vehicleCapacity" class="form-control" placeholder="Enter pin code" required="">
+									<input type="number" id="vehicle_capacity" name="vehicleCapacity" class="form-control" placeholder="Enter vehicle fuel capacity" required="">
 								</div>
 								<div class="mb-3 col-sm-6">
 									<label class="form-label">VIN</label>
-									<input type="text" class="form-control" name="vehicleVin" placeholder="Address of your Vehicle">
+									<input type="text" class="form-control" name="vehicleVin" placeholder="Vin of the Vehicle">
 								</div>
 								<div class="mb-3 col-sm-6">
-									<label class="form-label">Code</label>
-									<input type="number" id="vehicle_code" name="vehicleCode" class="form-control" placeholder="Enter pin code" required="">
+									<label class="form-label">Passengers</label>
+									<input type="number" id="vehicle_code" name="vehiclePassengers" class="form-control" placeholder="Enter number of Passengers" required="">
 								</div>
 								
 							</div>
 						</form>
 						<div class="dropzone-admin mb-3">
 							<label class="form-label">Media</label>
-							<form class="dropzone dz-clickable" id="multiFileUpload" action="">
+							<form class="dropzone dz-clickable" id="multiFileUpload" action="" onclick="this.children[0].click()">
+								<input type="file" name="vehicleFiles" style="display: none;" multiple>
 								<div class="dz-message needsclick"><i class="fas fa-cloud-upload-alt"></i>
 								<h6>Drop files here or click to upload.</h6>
 								</div>

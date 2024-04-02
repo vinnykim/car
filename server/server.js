@@ -40,6 +40,19 @@ app.use('/api/models/admin2', require('./routes/admin2'))
 app.use('/api/transaction', require('./routes/transactions'))
 
 app.use(express.static(path.join(__dirname, 'admin/')));
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname,'admin/login.html'));
+})
+
+app.get('/logout', (req, res) => {
+  res.sendFile(path.join(__dirname,'admin/login.html'));
+})
+
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname,'admin/register.html'));
+})
+
+
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname,'admin/index.html'));
