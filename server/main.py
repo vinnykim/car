@@ -13,6 +13,13 @@ SERVER_NAME = 'http://127.0.0.1'
 @app.route("/")
 def landing():
     return redirect("/shop")
+
+@app.route("/compare")
+def compare():
+    vehicles = getVehicles(server=SERVER_NAME)
+    print(vehicles)
+    return render_template("compare.html",**locals()) 
+
 @app.route("/shop")
 def shop():
     vehicles = getVehicles(server=SERVER_NAME)

@@ -105,7 +105,7 @@ def Register(username,password,email,phone,server=None):
     
 def getVehicles(server=None):
     categories =[]
-    response = requests.post(server+":8081/api/models/users/getVehicles")
+    response = requests.post(server+":8081/api/models/user/getVehicles")
     print(response.status_code)
     if response.status_code == 200:
         res = response.json()
@@ -119,7 +119,7 @@ def getCategories(id=None,server=None,key=None):
         return []
     
     categories =[]
-    response = requests.post(server+":8081/api/models/users/getCategories/"+id)
+    response = requests.post(server+":8081/api/models/user/getCategories/"+id)
     if response.status_code == 200:
         res = response.json()
         for x in res["categories"]:
@@ -129,7 +129,7 @@ def getCategories(id=None,server=None,key=None):
         return False
 def getServices(server=None):
     db = myDB()
-    response = requests.post(server+":8081/api/models/users/getServices",json={})
+    response = requests.post(server+":8081/api/models/user/getServices",json={})
     services = []
     if response.status_code == 200:
         res = response.json()

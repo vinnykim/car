@@ -1,9 +1,10 @@
 {%extends 'main.html'%}
 {%block content%}
 <section class=" arrivals show " style="width:100%;position:relative;text-align: left;">
+    <div class="container">
     {%for vehicle in vehicles %}
     <div class="card" style="width: 18rem;">
-        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/062.webp" class="card-img-top" alt="Chicago Skyscrapers"/>
+        <img src="/static/arrivals/02.jpg" class="card-img-top" alt="Chicago Skyscrapers"/>
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -19,6 +20,7 @@
         </div>
       </div>
     {%endfor%}
+    </div>
 </section>
 
 {%endblock%}
