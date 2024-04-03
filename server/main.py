@@ -23,7 +23,7 @@ def compare():
 @app.route("/shop")
 def shop():
     vehicles = getVehicles(server=SERVER_NAME)
-    print(vehicles)
+    print(vehicles)+
     return render_template("shop.html",**locals())
 
 @app.route("/shop-single.html")
@@ -98,7 +98,7 @@ def signup():
             session['user'] = result['token']
             return redirect("shop") 
     return render_template("signup.html",**locals())
-    pass
+    
 node_command = ["node", "server.js"]
 
 if __name__ == '__main__':
