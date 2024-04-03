@@ -23,7 +23,7 @@ def compare():
 @app.route("/shop")
 def shop():
     vehicles = getVehicles(server=SERVER_NAME)
-    print(vehicles)+
+    #print(vehicles)
     return render_template("shop.html",**locals())
 
 @app.route("/shop-single.html")
