@@ -11,7 +11,7 @@ const vehicleSchema = mongoose.Schema({
     },
     plate: {
         type: String,
-        unique: true,
+
     },
     description: {
         type: mongoose.Schema.Types.Object,
