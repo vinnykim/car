@@ -1,5 +1,5 @@
 from flask import Flask,render_template, request, session, jsonify,redirect
-from db import Login,Register,getService,bookService,getVehicles,getCategories,getServices
+from db import Login,Register,getVehicles,getCategories,getServices
 import json
 from keys import Key
 import subprocess
@@ -15,7 +15,9 @@ def landing():
     return redirect("/shop")
 @app.route("/shop")
 def shop():
-    return render_template("shop.html")
+    vehicles = getVehicles(server=SERVER_NAME)
+    print(vehicles)
+    return render_template("shop.html",**locals())
 
 @app.route("/shop-single.html")
 def detailPage():
@@ -90,6 +92,8 @@ def signup():
             return redirect("shop") 
     return render_template("signup.html",**locals())
     pass
+node_command = ["node", "server.js"]
+
 if __name__ == '__main__':
     try:
         node_process = subprocess.Popen(node_command)

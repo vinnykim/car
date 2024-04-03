@@ -103,18 +103,23 @@ def Register(username,password,email,phone,server=None):
         return result
     return response.json()
     
-def getVehicles():
-    file = open("vehicles.list","r")
-    lines = file.readlines()
-    file.close()
-    
-    return lines
+def getVehicles(server=None):
+    categories =[]
+    response = requests.post(server+":8081/api/models/users/getVehicles")
+    print(response.status_code)
+    if response.status_code == 200:
+        res = response.json()
+        
+        for x in res["vehicles"]:
+            categories.append(x)
+        return categories
+    return categories
 def getCategories(id=None,server=None,key=None):
     if id == None:
         return []
     
     categories =[]
-    response = requests.post(server+":8081/api/models/user/getCategories/"+id)
+    response = requests.post(server+":8081/api/models/users/getCategories/"+id)
     if response.status_code == 200:
         res = response.json()
         for x in res["categories"]:
@@ -124,7 +129,7 @@ def getCategories(id=None,server=None,key=None):
         return False
 def getServices(server=None):
     db = myDB()
-    response = requests.post(server+":8081/api/models/user/getServices",json={})
+    response = requests.post(server+":8081/api/models/users/getServices",json={})
     services = []
     if response.status_code == 200:
         res = response.json()
