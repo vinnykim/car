@@ -15,6 +15,11 @@
     
     <!-- Login Form Section -->
     <div class="login">
+        {%if msg%}
+            <div class="alert alert-{{alert}}">
+             <strong>{{alert}}!</strong> <a href="#" class="alert-link">{{msg}}</a>.
+            </div>
+        {%endif%}
         <div class="title">
             <h3>Register Account Form</h3>
         </div>
@@ -22,7 +27,7 @@
             <div class="inputs">
                 <div class="inputBx" style="width: 100%;">
                     <label for="">Full Name</label>
-                    <input type="text" name="name" placeholder="Enter Your Email">
+                    <input type="text" name="name" placeholder="Enter Your Name">
                 </div>
                
                 <div class="inputBx" style="width: 100%;">
@@ -30,13 +35,14 @@
                     <input type="text" name="email" placeholder="Enter Your Email">
                 </div>
                 <div class="inputBx" style="width: 100%;">
+                    <label for="">Phne</label>
+                    <input type="text" name="phone" placeholder="Enter Your Phone">
+                </div>
+                <div class="inputBx" style="width: 100%;">
                     <label for="">Password</label>
                     <input type="text" name="password" placeholder="Enter Your Password">
                 </div>
-                <div class="inputBx" style="width: 100%;">
-                    <label for="">Confirm Password</label>
-                    <input type="text" name="confirm-password" placeholder="Enter Your Password">
-                </div>
+               
                
             </div>
             <div class="forgot">
@@ -44,16 +50,12 @@
             </div>
 
             <div class="submit">
-                <button class>Login</button>
+                <button class>Register</button>
             </div>
 
             <div class="social_log">
-                <p>Continue with Social Media</p>
-                <div class="social">
-                    <i class="bx bxl-facebook"></i>
-                    <i class="bx bxl-google"></i>
-                    <i class="bx bxl-twitter"></i>
-                </div>
+                <p>Continue with <a href="login">login</a></p>
+                
             </div>
         </form>
     </div>

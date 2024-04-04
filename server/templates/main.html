@@ -9,6 +9,7 @@
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='app.css')}}">
+    <script src="{{url_for('static',filename='models.js')}}"></script>
     <!-- BoxIcon CDN -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -28,8 +29,12 @@
                 </div>
 
                 <div class="col-2">
+                    {%if session.get("user") == None%}
                     <a href="login.html"><i class='bx bx-arrow-to-right'></i>Login</a>
                     <a href="signup.html"><i class='bx bxs-user'></i>Register</a>
+                    {%else%}
+                    <a href="logout"><i class='bx bx-arrow-to-left'></i>Logout</a>
+                    {%endif%}
                     <span>Follow Us:</span>
                     <div class="social">
                         <i class='bx bxl-facebook-circle' ></i>
@@ -54,16 +59,12 @@
                         
                         <li><a href="#">Pages<i class='bx bxs-chevron-down'></i></a>
                             <ul class="drop-down">
-                                <li><a href="inventory.html">Inventory</a></li>
-                                <li><a href="price.html">Subscription</a></li>
-                                <li><a href="calculator.html">Calculator</a></li>
-                                <li><a href="price.html">Our Team</a></li>
-                                <li><a href="reset.html">Reset Password</a></li>
-                                <li><a href="blog-single.html">Blog Single</a></li>
-                                <li><a href="inventory-single.html">Inventory Single</a></li>
-                                <li><a href="shop-single.html">Shop Single</a></li>
-                                <li><a href="shop_checkout.html">Shop Checkout</a></li>
-                                <li><a href="services_single.html">Services Single</a></li>
+                                <li><a href="cart">Cart</a></li>
+                                <li><a href="compare">Compare</a></li>
+                                <li><a href="hsitory">History</a></li>
+                                <li><a href="review">Review</a></li>
+                                <li><a href="shop_checkout.html">Checkout</a></li>
+                               
                             </ul>
                         </li>
                        
@@ -111,6 +112,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- Custom JS File -->
     <script src="{{url_for('static',filename='script.js')}}"></script>
+    
 
 </body>
 </html>

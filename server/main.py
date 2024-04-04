@@ -1,5 +1,5 @@
-from flask import Flask,render_template, request, session, jsonify,redirect
-from db import Login,Register,getVehicles,getCategories,getServices
+from flask import Flask,render_template, request, session, jsonify,redirect,send_file
+from db import Login,Register,getVehicles,getVehicle,getCategories,getServices,getUser,addCart,getCart,addWish,getWish
 import json
 from keys import Key
 import subprocess
@@ -14,10 +14,16 @@ SERVER_NAME = 'http://127.0.0.1'
 def landing():
     return redirect("/shop")
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
 @app.route("/compare")
 def compare():
     vehicles = getVehicles(server=SERVER_NAME)
-    print(vehicles)
+    wishlist = getWish(user=session.get("user"),server=SERVER_NAME)
+    print(wishlist)
     return render_template("compare.html",**locals()) 
 
 @app.route("/shop")
@@ -26,17 +32,43 @@ def shop():
     #print(vehicles)
     return render_template("shop.html",**locals())
 
-@app.route("/shop-single.html")
+@app.route("/book")
+def book():
+    pass
+
+@app.route("/shop-single.html",methods=["GET","POST"])
 def detailPage():
-    return render_template("shop-single.html")
+    vehicle = {}
+    msg = False
+    if request.args.get("id"):
+        vehicle_id = request.args["id"]
+        vehicle = getVehicle(id=vehicle_id,server=SERVER_NAME)
+    vehicle_detail = vehicle.get("vehicle")
+    user = getUser(user=session.get("user"),server=SERVER_NAME)
+    if request.form == "POST" and "vehicle_id" in request.form:
+        vehicle_id = request.form["vehicle_id"] 
+        user_id = request.form["user_id"] if "user_id" in request.form else None
+        if "compare" not in request.form:
+            x = addCart(vehicle=vehicle_id,user=session.get("user"),server=SERVER_NAME)
+        else:
+            x = addWish(vehicle=vehicle_id,user=session.get("user"),server=SERVER_NAME)
+        msg = x.get("message") if x.get("message") else False 
+    return render_template("shop-single.html",**locals())
 
 @app.route("/shop_checkout.html")
 def checkout():
     return render_template("shop_checkout.html")
 
+@app.route("/cart")
 @app.route("/shop_cart.html")
 def cart():
-    return render_template("shop_cart.html")
+    if session.get("user") == None:
+        return redirect("login")
+    cart = getCart(user=session.get("user"),server=SERVER_NAME)
+    print(cart,session.get("user"))
+    cart = cart.get("cart") if cart.get("cart") else {}
+    empty = cart.get("total") if cart.get("total") else 0
+    return render_template("shop_cart.html",**locals())
 
 @app.route("/services.html")
 def services():
@@ -62,8 +94,8 @@ def inventory():
 def price():
     return render_template("price.html")
 
-@app.route("/login.html")
-@app.route("/login")
+@app.route("/login.html",methods=["GET","POST"] )
+@app.route("/login",methods=["GET","POST"] )
 def login():
     msg = False
     if request.method == "POST" and "email" in request.form:
@@ -81,23 +113,36 @@ def login():
         alert = "error"
     return render_template("login.html",**locals())
 
-@app.route("/signup.html")
-@app.route("/signup")
+@app.route("/signup.html",methods=["GET","POST"] )
+@app.route("/signup",methods=["GET","POST"] )
 def signup():
     msg = False
     if request.method == "POST":
         email= request.form["email"]
-        
+        phone = request.form["phone"] if "phone" in request.form else random.randint(123456789,987654321)
         username = request.form['name']
-        password= "123456"
-        result = Register(username,password,email,None,server=SERVER_NAME)
+        password= request.form['password']
+        result = Register(username,password,email,phone,server=SERVER_NAME)
+        print(result)
         if result == False:
             msg = 'Error: An error occured, try again'
            
         else:
-            session['user'] = result['token']
-            return redirect("shop") 
+            if result.get("token"):
+                session['user'] = result['token']
+                return redirect("shop") 
+            else:
+                msg = result.get("message")
+        alert = "error"
     return render_template("signup.html",**locals())
+
+@app.route("/app/live/<string:id>")
+def liveView(id):
+    return render_template("tour.html")
+
+@app.route("/tour.xml")
+def tourXml():
+    return send_file("tour.xml")
     
 node_command = ["node", "server.js"]
 

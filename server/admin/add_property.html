@@ -332,8 +332,16 @@
 						<form id="vehicleForm">
 							<div class="row">
 								<div class="mb-3 col-lg-4 col-md-6">
-									<label class="form-label">Vehicle Type</label>
-									<input type="text" name="vehicleType" class="form-control" placeholder="" required="">
+									<label class="form-label">Vehicle Name</label>
+									<input type="text" class="form-control" placeholder="Vehicle Name Identifier" name="vehicleType" required="">
+								</div>
+								<div class="mb-3 col-lg-4 col-md-6">
+									<label class="form-label">Transmission Type</label>
+									<select class="form-control wide" name="vehicleTransmission">
+										<option>Choose</option>
+										<option value="Manual">Manual</option>
+										<option value="Automatic">Automatic</option>
+								</select>
 								</div>
 								<div class="mb-3 col-lg-4 col-md-6">
 									<label class="form-label">Vehicle Status</label>

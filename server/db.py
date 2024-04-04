@@ -62,7 +62,7 @@ def bookService(server=None,user=None,book_data=None,id=None):
     if server and user:
         headers = {
             'Content-Type': 'application/json',
-            'x-auth-token':session.get('user')
+            'x-auth-token':user
         }
 
         response = requests.post(server+":8081/api/models/user/Book",
@@ -114,6 +114,31 @@ def getVehicles(server=None):
             categories.append(x)
         return categories
     return categories
+
+def getVehicle(server=None,id=None):
+    categories =None
+    if id:
+        response = requests.post(server+":8081/api/models/user/getVehicle/"+id)
+        
+        if response.status_code == 200:
+            res = response.json()
+            return res
+    return categories 
+
+def getUser(server=None,user=None):
+    categories =None
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/auth",headers=headers)
+        
+        if response.status_code == 200:
+            res = response.json()
+            return res
+    return {}
+
 def getCategories(id=None,server=None,key=None):
     if id == None:
         return []
@@ -137,3 +162,48 @@ def getServices(server=None):
             services.append(x)
     print(services)
     return services
+
+def addWish(user=None,vehicle=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/models/user/addWish",json={'vehicle_id':vehicle},headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+
+def getWish(user=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/models/user/getWish",headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+
+def addCart(user=None,vehicle=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/models/user/addCart",json={'vehicle_id':vehicle},headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+
+def getCart(user=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/models/user/getCart",json={},headers=headers)
+        if response.status_code == 200:
+            print(response.json())
+            return response.json()
+        return response.json()

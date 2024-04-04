@@ -2,19 +2,76 @@
 {%extends 'main.html'%}
 
 {%block content%}
+<style>
+     .button-3 {
+            appearance: none;
+            background-color: #2ea44f;
+            border: 1px solid rgba(27, 31, 35, .15);
+            border-radius: 6px;
+            box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 20px;
+            margin-top: 11px;
+            padding: 9px 89px;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: middle;
+            white-space: nowrap;
+            
+            }
+
+            .button-3:focus:not(:focus-visible):not(.focus-visible) {
+            box-shadow: none;
+            outline: none;
+            }
+
+            .button-3:hover {
+            background-color: #2c974b;
+            }
+
+            .button-3:focus {
+            box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+            outline: none;
+            }
+
+            .button-3:disabled {
+            background-color: #94d3a2;
+            border-color: rgba(27, 31, 35, .1);
+            color: rgba(255, 255, 255, .8);
+            cursor: default;
+            }
+
+            .button-3:active {
+            background-color: #298e46;
+            box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+            }
+        .checkout-btn{
+            position: absolute;
+            right: 5%;
+            bottom: 1%;
+            padding: 9px 13px;
+        }
+</style>
 <div class="shop_single">
-    <div class="left">
-        <img class="main" src="img/Shop/car-parts-p7.png" alt="">
-        <div class="row">
-            <img src="img/Shop/car-parts-p1.png" alt="">
-            <img src="img/Shop/car-part-p2.png" alt="">
-            <img src="img/Shop/car-parts-p5.png" alt="">
-            <img src="img/Shop/car-parts-p4.png" alt="">
+    <div class="left" onclick="location.href='/app/live/{{vehicle_detail.get("_id")}}'">
+        <img class="main" src="/static/arrivals/02.jpg" alt="">
+        <div class="col" style="width: 100%;text-align:center;">
+            <button class="button-3">Live View</button>
         </div>
     </div>
 
     <div class="right">
-        <h2>Car Engine Parts</h2>
+        <h2>{{vehicle_detail["name"] if vehicle_detail else "Vehicle Name" }}</h2>
         <div class="rate">
             <i class="bx bxs-star"></i>
             <i class="bx bxs-star"></i>
@@ -23,16 +80,16 @@
             <i class="bx bxs-star-half"></i>
             <p>(4 Customer Review)</p>
         </div>
-        <p class="price" style="padding: 0;">₹690 <span>₹620</span></p>
-        <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo incidunt aliquid veniam, cupiditate rem laudantium eius quaerat illo dolor eaque corporis voluptate similique?</p>
+        <p class="price" style="padding: 0;">{{vehicle_detail["description"]["vehiclePrice"] if vehicle_detail else "Vehicle Price"}} <span>{{vehicle_detail["description"]["vehicleMarketvalue"] if vehicle_detail else "Market Value"}}</span></p>
+        <p class="text">{{vehicle_detail["description"]["vehicleDescription"] if vehicle_detail else "Vehicle Description"}}</p>
         <div class="details">
             <div class="col">
-                <p>Stock:</p>
+                <p>Stock: {{vehicle_detail["description"]["vehicleMax"] if vehicle_detail else "Vehicle Max Orders"}}</p>
                 <span>Available</span>
             </div>
             <div class="col">
-                <p>SKU:</p>
-                <span>676TYWV</span>
+                <p>VIN:</p>
+                <span>{{vehicle_detail["description"]["vehicleVin"] if vehicle_detail else "Vehicle Vin"}}</span>
             </div>
             <div class="col">
                 <p>Quantity:</p>
@@ -46,6 +103,7 @@
             </div>
             <div class="col">
                 <p>Tags:</p>
+                
                 <span>Car, Shop, Tire</span>
             </div>
             <div class="col social">
@@ -57,18 +115,42 @@
                 <i class="bx bxl-youtube"></i>
             </div>
         </div>
-
+        <form style="display:none;" method="POST" id="cartForm">
+            <input type="hidden" name="vehicle_id" value={{vehicle_detail["_id"] if vehicle_detail else null}}>
+            <input type="hidden" name="user_id" value={{user["_id"] if user else null}}>
+            
+        </form>
         <div class="add-cart">
-            <a href="#">
+            <a role="button" onclick="document.getElementById('cartForm').submit()">
                 <i class="bx bx-shopping-bag"></i>
                 Add To Cart
             </a>
             <div class="other">
-                <i class="bx bx-heart"></i>
-                <i class="bx bx-sort"></i>
+                <i class="bx bx-heart" onclick="likeItem(this)"></i>
+                <i class="bx bx-sort" title="Trade In"></i>
             </div>
         </div>
     </div>
 </div>
 
+<script>
+    function likeItem(el){
+        console.log(el)
+        const input = document.createElement("ipout")
+        input.setAttribute("type","hidden")
+        input.setAttribute("name","compare")
+        if(!el.hasAttribute("style")){
+            document.getElementById('cartForm').appendChild(input)
+            el.setAttribute("style","background: #d30d0d;color:white;")
+            document.getElementById('cartForm').submit()
+        }else{
+            document.getElementById('cartForm').submit()
+            const lastChild = document.querySelector('#cartForm :last-child');
+            lastChild.remove()
+            el.removeAttribute("style")
+        }
+        
+        
+    }
+</script>
 {%endblock%}

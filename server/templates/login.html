@@ -18,7 +18,7 @@
     <div class="login">
         {%if msg%}
             <div class="alert alert-{{alert}}">
-             <strong>{{alert}}!</strong> You should <a href="#" class="alert-link">{{msg}}</a>.
+             <strong>{{alert}}!</strong> <a href="#" class="alert-link">{{msg}}</a>.
             </div>
         {%endif%}
         <div class="title">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="inputBx" style="width: 100%;">
                     <label for="">Password</label>
-                    <input type="text" name="password" placeholder="Enter Your Password">
+                    <input type="password" name="password" placeholder="Enter Your Password">
                 </div>
                
             </div>

@@ -18,7 +18,7 @@
 
             <div class="text-center">
               <div class="p-3 mx-n3 mb-4" style="background-color: #eff1f2;">
-                <h5 class="mb-0">Quick Look</h5>
+                <h5 class="mb-0">{{vehicle.description.vehicleStatus}}</h5>
               </div>
 
               <div class="d-flex flex-column mb-4">
@@ -29,16 +29,16 @@
         
 
               <div class="d-flex flex-column mb-4">
-                <span class="h1 mb-0">{{vehicle.description.vehicleFuel}}</span>
+                <span class="h1 mb-0">{{vehicle.description.vehicleCapacity}}</span>
                 <span>Litres</span>
               </div>
 
               <div class="p-3 mx-n3 mb-4" style="background-color: #eff1f2;">
-                <h5 class="mb-0">Capacity</h5>
+                <h5 class="mb-0">{{vehicle.description.vehicleFuel}}</h5>
               </div>
 
               <div class="d-flex flex-column mb-4 lead">
-                <span class="mb-2">{}</span>
+                <span class="mb-2">Passengers {{vehicle.description.vehiclePassengers}}</span>
                 <span style="color: transparent;">0</span>
               </div>
             </div>
