@@ -45,16 +45,19 @@ def detailPage():
         vehicle = getVehicle(id=vehicle_id,server=SERVER_NAME)
     vehicle_detail = vehicle.get("vehicle")
     user = getUser(user=session.get("user"),server=SERVER_NAME)
-    if request.form == "POST" and "vehicle_id" in request.form:
+    if request.method == "POST" and "vehicle_id" in request.form:
         vehicle_id = request.form["vehicle_id"] 
         user_id = request.form["user_id"] if "user_id" in request.form else None
+        
         if "compare" not in request.form:
             x = addCart(vehicle=vehicle_id,user=session.get("user"),server=SERVER_NAME)
         else:
             x = addWish(vehicle=vehicle_id,user=session.get("user"),server=SERVER_NAME)
         msg = x.get("message") if x.get("message") else False 
+        print(msg)
     return render_template("shop-single.html",**locals())
 
+@app.route("/chekout")
 @app.route("/shop_checkout.html")
 def checkout():
     return render_template("shop_checkout.html")

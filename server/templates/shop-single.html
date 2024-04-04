@@ -115,7 +115,7 @@
                 <i class="bx bxl-youtube"></i>
             </div>
         </div>
-        <form style="display:none;" method="POST" id="cartForm">
+        <form style="display:none;" method="POST" id="cartForm" action="shop-single.html">
             <input type="hidden" name="vehicle_id" value={{vehicle_detail["_id"] if vehicle_detail else null}}>
             <input type="hidden" name="user_id" value={{user["_id"] if user else null}}>
             
