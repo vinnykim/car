@@ -33,10 +33,22 @@ $(document).ready(function(){
         console.log(ft)
        ek += `
        <div class="form-check form-check-inline">
-            <input type="checkbox" name="vehicleFeatures" class="form-check-input" value="" id="flexRadioDefault${ft}">
+            <input type="checkbox" name="vehicleFeatures" class="form-check-input" value="${ft}" id="flexRadioDefault${ft}">
             <label class="form-check-label" for="flexRadioDefault${ft}">${ft}</label>
         </div>
        `
     })
     $("#vehicleFeatures").html(ek)
+    if(location.search.includes("id=") && location.includes("edit=true")){
+        var loc_id = location.search.replace("edit=true","")
+        loc_id = location.search.replace("?id=","")
+        var id = loc_id
+        if(id.length > 5){
+            fetchFunction("/api/models/admin/getDetails/"+id,{},"post",function(data){
+                for (const [key, value] of vehicle) {
+                    $(`input[name="${key}"]`).val(value);
+                }
+            })
+        }
+    }
 })

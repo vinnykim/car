@@ -13,7 +13,7 @@ $(document).ready(function(){
                 const list = document.getElementById("vehicleBookings")
                 for(var booking of data.bookings){
                     list.innerHTML += `
-                        
+                        <li class='recents'></li>
                     `
                 }
             })

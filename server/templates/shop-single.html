@@ -80,7 +80,7 @@
             <i class="bx bxs-star-half"></i>
             <p>(4 Customer Review)</p>
         </div>
-        <p class="price" style="padding: 0;">{{vehicle_detail["description"]["vehiclePrice"] if vehicle_detail else "Vehicle Price"}} <span>{{vehicle_detail["description"]["vehicleMarketvalue"] if vehicle_detail else "Market Value"}}</span></p>
+        <p class="price" style="padding: 0;">{{vehicle_detail["description"]["vehicleMarketvalue"] if vehicle_detail else "Vehicle Price"}} <span>{{vehicle_detail["description"]["vehiclePrice"] if vehicle_detail else "Market Value"}}</span></p>
         <p class="text">{{vehicle_detail["description"]["vehicleDescription"] if vehicle_detail else "Vehicle Description"}}</p>
         <div class="details">
             <div class="col">

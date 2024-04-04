@@ -2,9 +2,9 @@
 {%block content%}
 <section class=" arrivals show " style="width:100%;position:relative;text-align: left;">
     <div class="row">
-        <div class="row">
+        <div class="flexdisplay">
     {%for vehicle in vehicles %}
-        <div class="arr-col" style="max-width: 88%;width: 28%;">
+        <div class="arr-col" style="max-width: 88%;width: 28%;margin-left: 12px;border-radius: 8px;cursor: pointer;">
             <div class="image product-image" style="width: 100%;" onclick='location.href="shop-single.html?id={{vehicle['_id']}}"'>
                 <img src="/static/arrivals/01.jpg" alt="" style="object-fit:cover;width: 100%;">
             </div>

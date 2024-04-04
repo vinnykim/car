@@ -139,6 +139,14 @@ router.post('/newVehicle',auth,  async (req, res) => {
 	  if(!data.vehicleVin || !data.vehiclePrice || !data.vehicleModel || !data.vehicleModel){
 		return res.status(400).json({message:"Required data missing"})
 	  }
+	  if(data._id && data.update){
+		await Vehicle.findById(
+			data._id,
+			{$set:{name:data.vehicleModel,description:data}},
+			{new:true}
+		)
+		return res.status(200).json({message:"Vehicle Updated"})
+	  }
 	  const vehicle = new Vehicle()
 	  vehicle.description = data
 	  vehicle.plate = Math.random() * (max - min)+min
@@ -230,6 +238,26 @@ router.post('/uploadImage',auth,  async (req, res) => {
 	}
 })
 
+router.post('/vehicleBookings/:id', auth, async (req, res) => {
+	try {
+	  const company_id = req.user.company
+	  const result = {}
+	  const vehicle_id = req.params.id
+	  const vehicles = await Vehicle.findById(vehicle_id)
+	  if(!vehicles){
+		return res.status(404).json({message:"Vehicle not found"})
+	  }
+	  const book = await Book.find({vehicle:vehicle_id})
+	  result.bookings = book
+	  result.vehicle = vehicles
+		
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error='+error.message)
+	}
+  })
+
 router.post('/getVehicles', auth, async (req, res) => {
 	try {
 	  const company_id = req.user.company
@@ -257,6 +285,9 @@ router.post('/getAnalysis', auth, async (req, res) => {
 	  result.latest = []
 	  for(var book of books){
 			const invoice = await Invoice.findById(book.invoice)
+			if(!invoice){
+				continue
+			}
 			if(invoice.complete === true){
 				result.invoice.complete += invoice.amount
 			}else{

@@ -55,6 +55,8 @@ def detailPage():
     if request.args.get("id"):
         vehicle_id = request.args["id"]
         vehicle = getVehicle(id=vehicle_id,server=SERVER_NAME)
+    else:
+        return redirect("shop")
     vehicle_detail = vehicle.get("vehicle")
     user = getUser(user=session.get("user"),server=SERVER_NAME)
     if request.method == "POST" and "vehicle_id" in request.form:
@@ -65,7 +67,8 @@ def detailPage():
             x = addCart(vehicle=vehicle_id,user=session.get("user"),server=SERVER_NAME)
         else:
             x = addWish(vehicle=vehicle_id,user=session.get("user"),server=SERVER_NAME)
-        msg = x.get("message") if x.get("message") else False 
+
+        msg = x.get("message") if x else x 
         print(msg)
     return render_template("shop-single.html",**locals())
 
@@ -111,6 +114,7 @@ def cart():
     empty = cart.get("total") if cart.get("total") else 0
     return render_template("shop_cart.html",**locals())
 
+@app.route("/history")
 @app.route("/orders")
 def orders():
     if session.get("user") == None:
