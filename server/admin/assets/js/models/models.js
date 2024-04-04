@@ -78,7 +78,13 @@ async function fetchFunction(apiUrl, payload, method,nextFunction,header) {
   }
   
 function createAlert(data){
-    alert(data.message)
+    //alert(data.message)
+	Swal.fire({
+		title: 'Message!',
+		text: data.message,
+		icon: 'info',
+		confirmButtonText: 'OK'
+	  });
 }
 const session = new Session()
 console.log(location.pathname)

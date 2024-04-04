@@ -208,3 +208,38 @@ def getCart(user=None,server=None):
             print(response.json())
             return response.json()
         return response.json()
+
+def addReview(data,user=None,id=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/models/user/addReview/"+id,json=data,headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+
+def getReviews(user=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/models/user/getReviews",json={},headers=headers)
+        if response.status_code == 200:
+            
+            return response.json()
+        return response.json()
+
+def getOrder(invoice=None,server=None,user=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/models/user/getOrder/"+invoice,json={},headers=headers)
+        if response.status_code == 200:
+            
+            return response.json()
+        return response.json()

@@ -1,9 +1,10 @@
 from flask import Flask,render_template, request, session, jsonify,redirect,send_file
-from db import Login,Register,getVehicles,getVehicle,getCategories,getServices,getUser,addCart,getCart,addWish,getWish
+from db import Login,Register,getOrder,getVehicles,getVehicle,getCategories,getServices,getUser,addCart,getCart,addWish,getWish
 import json
 from keys import Key
 import subprocess
 import random
+from stripe_pay import createCheckout
 
 app = Flask(__name__)
 
@@ -36,6 +37,17 @@ def shop():
 def book():
     pass
 
+@app.route("/reviews")
+def reviews():
+    if session.get("user") == None:
+        return redirect("logout")
+    reviews = getReviews(server=SERVER_NAME,user=session.get("user"))
+    reviews = reviews.get("reviews") if reviews.get("reviews") else []
+    user = getUser(server=SERVER_NAME,user=session.get("user"))
+    if user.get("_id") == None:
+        return redirect("logout")
+    return render_template("reviews.html",**locals())
+
 @app.route("/shop-single.html",methods=["GET","POST"])
 def detailPage():
     vehicle = {}
@@ -57,10 +69,36 @@ def detailPage():
         print(msg)
     return render_template("shop-single.html",**locals())
 
-@app.route("/chekout")
-@app.route("/shop_checkout.html")
+@app.route("/checkout",methods=["GET","POST"])
+@app.route("/shop_checkout.html",methods=["GET","POST"])
 def checkout():
-    return render_template("shop_checkout.html")
+    if session.get("user") == None:
+        return redirect("login")
+    cart = getCart(user=session.get("user"),server=SERVER_NAME)
+    user = getUser(user=session.get("user"),server=SERVER_NAME)
+    user = user if user else {}
+    cart = cart.get("cart") if cart.get("cart") else {}
+    if request.method == "POST" and "cardNumber" in request.form and "cardCvv" in request.form:
+        try:
+            cardNumber = request.form["cardNumber"]
+            cardCvv = request.form["cardCvv"]
+            cardAmount = request.form["cardAmount"]
+            cardExpiry = request.form["cardExpiry"]
+            country = request.form["country"]
+            city = request.form["city"]
+            data = {
+                'cardNumber':cardNumber,
+                'cardCvv':cardCvv,
+                'cardNumber':cardNumber,
+                'cardExpiry':cardExpiry,
+                'country':country,
+                'city':city,
+            }
+            pay = createCheckout(data,user=user,cart=cart)
+        except Exception as e:
+            msg = str(e)
+            pass
+    return render_template("shop_checkout.html",**locals())
 
 @app.route("/cart")
 @app.route("/shop_cart.html")
@@ -68,18 +106,22 @@ def cart():
     if session.get("user") == None:
         return redirect("login")
     cart = getCart(user=session.get("user"),server=SERVER_NAME)
-    print(cart,session.get("user"))
+    
     cart = cart.get("cart") if cart.get("cart") else {}
     empty = cart.get("total") if cart.get("total") else 0
     return render_template("shop_cart.html",**locals())
 
-@app.route("/services.html")
-def services():
-    return render_template("services.html")
+@app.route("/orders")
+def orders():
+    if session.get("user") == None:
+        return redirect("logout")
+    order = None
+    if request.args.get("invoice"):
+        order = getOrder(user=session.get("user"),invoice=request.args.get("invoice"),server=SERVER_NAME)
+    cart = getCart(user=session.get("user"),server=SERVER_NAME)
+    user = getUser(user=session.get("user"),server=SERVER_NAME)
+    return render_template("orders.html",**locals())
 
-@app.route("/services_single.html")
-def serviceSingle():
-    return render_template("services_single.html")
 
 @app.route("/reset.html")
 def reset():

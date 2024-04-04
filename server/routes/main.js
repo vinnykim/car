@@ -6,15 +6,15 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('../config/default.json')
 const auth = require('../middlewares/admin')
-const Product = require('../models/Product')
+
 const Book = require('../models/Booking')
 const Vehicle = require('../models/Vehicle')
-const Payment = require('../models/Payment')
-const Notification = require('../models/Notification')
+
 const Company = require('../models/Company')
 const Invoice = require("../models/Invoice")
 const Category = require("../models/Category")
-const Service = require("../models/Service")
+
+const Review = require("../models/Review")
 //const upload = multer({ dest: 'files/assets/global/images/uploads/' });
 const {formidable} = require('formidable');
 
@@ -36,6 +36,22 @@ router.post('/getReviews',auth,  async (req, res) => {
 	  const result = {}
 	  const company_id = req.user.company
 	  result.reviews = []
+	  const reviews = await Review.find({company:company_id})
+	  for(var review of reviews){
+	  	const r = {} 
+		r.review = review
+	  	const invoice = await Invoice.findById(review.invoice)
+		const user = await User.findById(review.user)
+		const vehicle = await Review.findById(review.vehicle)
+		r.invoice = invoice
+		r.user = user
+		r.vehicle = vehicle
+		if(invoice){
+			const book = await Book.findById(invoice.booking)
+			r.book = book ? book : []
+			result.reviews.push(r)
+		}
+	  }
 	  result.message = "success"
 	  
 	  return res.status(200).json(result)
@@ -118,11 +134,14 @@ router.post('/newVehicle',auth,  async (req, res) => {
 	try {
 	  const result = {}
 	  const data = req.body
+	  max = 999999
+	  min = 111111
 	  if(!data.vehicleVin || !data.vehiclePrice || !data.vehicleModel || !data.vehicleModel){
 		return res.status(400).json({message:"Required data missing"})
 	  }
 	  const vehicle = new Vehicle()
 	  vehicle.description = data
+	  vehicle.plate = Math.random() * (max - min)+min
 	  vehicle.name = data.vehicleModel
 	  vehicle.company = req.user.company
 	  await vehicle.save()

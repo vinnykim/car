@@ -9,7 +9,7 @@ const auth = require('../middlewares/auth')
 const admin= require('../middlewares/admin')
 const Request = require('../models/Request')
 const Notification = require('../models/Notification')
-const Product = require('../models/Product')
+
 const Profile = require('../models/Profile')
 const Active = require('../models/Active')
 const Book = require('../models/Booking')

@@ -3,6 +3,8 @@ $(document).ready(function(){
     if(location.search.includes("?vehicle")){
         vehicle = location.search.split("&")[0]
         vehicle = vehicle.replace("?vehicle=","")
+    }else{
+        location.href="all_property.html"
     }
     $("#vehicle_id").text(vehicle)
     fetchFunction("/api/models/admin/getDetail/"+vehicle,{},"post",function(datas){

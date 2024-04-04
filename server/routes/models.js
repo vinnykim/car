@@ -13,6 +13,69 @@ const Profile = require('../models/Profile')
 const Category = require("../models/Category")
 const Invoice = require('../models/Invoice')
 const Wish = require("../models/Wish")
+const Review = require('../models/Review')
+const Handler = require("../models/Handler")
+
+router.post('/addReview/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const user_id = req.user.id
+	  const order_id = req.params.id
+	  const {description,rating} = req.body
+	  const book = await Book.findById(order_id)
+	  if(!book){
+		return res.status(404).json({message:"No booking found"})
+	  }
+	  if(book.complete === false){
+		return res.status(400).json({message:"You will be able to submit a review after your have completed your purchase"})
+	  }
+	  const review = new Review()
+	  review.description = description
+	  review.rating = rating
+	  review.user = user_id
+	  review.company = book.company
+	  review.vehicle = book.vehicle
+	  await review.save()
+	  
+	  result.message = "Added review"
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+router.post('/getReviews',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  result.reviews = {data: [],total:0}
+	  const user_id = req.user.id
+	  const invoices = await Review.find({user:user_id})
+	  for(var invoice of invoices){
+		const r = {}
+		r.invoice = invoice
+		const book = await Book.findOne({vehicle:invoice.vehicle,user:user_id,invoice:invoice.invoice})
+		
+		const vehicle = await Vehicle.findById(invoice.vehicle)
+		r.vehicle = vehicle
+		r.book = book
+		if(book && book.complete === true){
+			result.wishlist.complete.push(r)
+		}else{
+			result.wishlist.pending.push(r)
+		}
+		result.wishlist.total += 1
+		
+	  }
+	
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+
 
 router.post('/getCart',auth,  async (req, res) => {
 	try {
@@ -32,6 +95,15 @@ router.post('/getCart',auth,  async (req, res) => {
 				result.cart.complete.push(r)
 			}else{
 				result.cart.pending.push(r)
+			}
+			if(!invoice.amount || invoice.amount === ""){
+				var pr = vehicle.description.vehiclePrice ? vehicle.description.vehiclePrice : 1
+				r.invoice = await Invoice.findByIdAndUpdate(
+					invoice._id,
+					{$set:{amount: pr}},
+					{new:true}
+				)
+			
 			}
 			result.cart.total += 1
 			result.cart.amount += invoice.amount
@@ -186,6 +258,29 @@ router.delete('/deleteVehicle/:id', auth, async (req, res) => {
     res.status(500).send('Server Error')
   }
 })
+
+router.post('/getOrder/:id', auth, async (req, res) => {
+	try {
+	  const userid = req.user.id
+	  const result = {}
+	  const invoice = await Invoice.findById(req.params.id)
+	  if(!invoice){
+		return res.status(404).json({message:"Invoice not found"})
+	  }
+	  const book = await Book.findById(invoice.booking)
+	  if(book){
+		const vehicle = await Vehicle.findById(book.vehicle)
+		result.vehicle = vehicle
+		result.book = book
+	  }
+	  result.invoice = invoice
+	  
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error='+error.message)
+	}
+  })
 
 //@route GET api/models/users
 //@description Get user Payment

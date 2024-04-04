@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('../config/default.json')
 const auth = require('../middlewares/auth')
-const Product = require('../models/Product')
+
 const Book = require('../models/Booking')
 const Vehicle = require('../models/Vehicle')
 const Payment = require('../models/Payment')

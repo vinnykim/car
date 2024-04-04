@@ -2,14 +2,14 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
 const User = require('../models/User')
-const Parking = require('../models/Parking')
+
 const Book = require('../models/Booking')
 const Vehicle = require('../models/Vehicle')
-const Payment = require('../models/Payment')
-const Spot = require('../models/Spot')
+
+
 const Invoice = require('../models/Invoice')
 const Notification = require('../models/Notification')
-const Active = require('../models/Active')
+
 const History = require('../models/History')
 
 
