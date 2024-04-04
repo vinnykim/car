@@ -15,9 +15,16 @@ function addVehicle(e){
     for (const [key, value] of vehicle_details) {
         vehicleData[key] = value;
     }
-    console.log(vehicleData)
-    //email,password
     var payload = vehicleData
+    if(location.search.includes("id=") && location.includes("edit=true")){
+        var loc_id = location.search.replace("edit=true","")
+        loc_id = location.search.replace("?id=","")
+        var id = loc_id
+        payload._id = id
+        payload.update = true
+    }
+    //email,password
+    
     $(e).prop('disabled', false);
     fetchFunction("/api/models/admin/newVehicle",payload,"post",function(data){
         console.log(data)
