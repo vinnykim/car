@@ -120,6 +120,10 @@ router.post('/addCart',auth,  async (req, res) => {
 		result.message = "Vehicle not available"
 		return res.status(404).json(result)
 	  }
+	  const booked = await Book.findOne({user:user_id:vehicle:vehiccle_id})
+	  if(booked){
+		return res.status(200).json({message: "Already booked",book:booked})
+	  }
 	  const company = await Company.findById(vehicle.company)
 	  const invoice = new Invoice()
 	  const book = new Book(data)

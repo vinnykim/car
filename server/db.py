@@ -193,6 +193,7 @@ def addCart(user=None,vehicle=None,server=None):
         }
         response = requests.post(server+":8081/api/models/user/addCart",json={'vehicle_id':vehicle},headers=headers)
         if response.status_code == 200:
+            
             return response.json()
         return response.json()
 

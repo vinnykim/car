@@ -149,8 +149,10 @@
             lastChild.remove()
             el.removeAttribute("style")
         }
-        
-        
+    }
+    if(location.search.includes("submit=true")){
+        document.getElementById('cartForm').submit()
+        location.search  = location.search.replace("submit=true","success")
     }
 </script>
 {%endblock%}
