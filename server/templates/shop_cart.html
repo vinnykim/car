@@ -57,6 +57,8 @@
             right: 5%;
             top: 1%;
             padding: 9px 13px;
+            background:white;
+            z-index: 3;
         }
     </style>
     <!-- Shop-cart Section -->
@@ -75,13 +77,14 @@
                 </div>
             </div>
         {%else%}
-        <table>
+        <table clas=="col-span-1" style="max-width: 70%;margin-left: -15%;">
             <tr class="topic">
                 <th>image</th>
                 <th>Product image</th>
                 <th>price</th>
                 <th>quantity</th>
                 <th>sub total</th>
+                <th>Action</th>
             </tr>
             {%for order in cart.get("pending")%}
             <tr class="text">
@@ -97,10 +100,29 @@
                     <td>&#x20b9;{{order["invoice"]["amount"]}}</td>
                     
                 </td>
+                <td></td>
             </tr>
             {%endfor%}
         </table>
         {%endif%}
-        <button class="button-3 checkout-btn" onclick="location.href='checkout'">Checkout</button>
+        <div class="col-span-1 md:col-span-1 checkout-btn">
+            <div class="summary">
+                <div class="grid grid-cols-1 gap-2">
+                    <h4>Order summary</h4>
+                    <div class="flex justify-between gap-3">
+                        <div>Sub total</div>
+                    <div class="text-right">{{cart.get("amount")}}</div>
+                </div>
+                <div class="summary-row grand-total flex justify-between">
+                    <div><div>
+                        <div class="font-bold"><span>Total</span></div>
+                        <div><span class="italic">(<!-- -->Inclusive of tax $0.00<!-- -->)</span></div>
+                    </div></div>
+                    <div><div></div><div class="grand-total-value">{{cart.get("amount")}}</div></div>
+                </div>
+            </div>
+            <div class="shopping-cart-checkout-btn flex justify-between mt-2"><a href="/checkout" class="button primary"><span>CHECKOUT</span></a></div></div>
+        </div>
+        
     </div>
 {%endblock%}

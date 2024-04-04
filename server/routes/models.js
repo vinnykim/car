@@ -17,7 +17,7 @@ const Wish = require("../models/Wish")
 router.post('/getCart',auth,  async (req, res) => {
 	try {
 	  const result = {}
-	  result.cart = {complete:[],pending: [],total:0}
+	  result.cart = {complete:[],pending: [],total:0,amount:0}
 	  const user_id = req.user.id
 	  const invoices = await Invoice.find({user:user_id})
 	  for(var invoice of invoices){
@@ -34,6 +34,7 @@ router.post('/getCart',auth,  async (req, res) => {
 				result.cart.pending.push(r)
 			}
 			result.cart.total += 1
+			result.cart.amount += invoice.amount
 		}
 	  }
 	
@@ -127,6 +128,7 @@ router.post('/addCart',auth,  async (req, res) => {
 	  const company = await Company.findById(vehicle.company)
 	  const invoice = new Invoice()
 	  const book = new Book()
+	  book.description = vehicle.description
 	  book.vehicle = vehicle_id
 	  book.user = req.user.id
 	  book.company = company._id
