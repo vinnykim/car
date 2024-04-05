@@ -132,11 +132,12 @@ def getUser(server=None,user=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/auth",headers=headers)
-        
+        response = requests.get(server+":8081/api/auth",headers=headers)
+        #print(response)
         if response.status_code == 200:
             res = response.json()
             return res
+        return response.json() if response else {}
     return {}
 
 def getCategories(id=None,server=None,key=None):
@@ -170,6 +171,7 @@ def addWish(user=None,vehicle=None,server=None):
             'x-auth-token':user
         }
         response = requests.post(server+":8081/api/models/user/addWish",json={'vehicle_id':vehicle},headers=headers)
+        print(response,response.json())
         if response.status_code == 200:
             return response.json()
         return response.json()
@@ -192,9 +194,11 @@ def addCart(user=None,vehicle=None,server=None):
             'x-auth-token':user
         }
         response = requests.post(server+":8081/api/models/user/addCart",json={'vehicle_id':vehicle},headers=headers)
+        print(response,response.json())
         if response.status_code == 200:
             
             return response.json()
+        
         return response.json()
 
 def getCart(user=None,server=None):
@@ -205,7 +209,7 @@ def getCart(user=None,server=None):
         }
         response = requests.post(server+":8081/api/models/user/getCart",json={},headers=headers)
         if response.status_code == 200:
-            print(response.json())
+            #print(response.json())
             return response.json()
         return response.json()
 
@@ -241,5 +245,16 @@ def getOrder(invoice=None,server=None,user=None):
         response = requests.post(server+":8081/api/models/user/getOrder/"+invoice,json={},headers=headers)
         if response.status_code == 200:
             
+            return response.json()
+        return response.json()
+
+def getReviews(user=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/models/user/getReviews",headers=headers)
+        if response.status_code == 200:
             return response.json()
         return response.json()

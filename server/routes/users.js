@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('../config/default.json')
 const auth = require('../middlewares/auth')
-const Hostel = require('../models/Hostel')
+
 const Book = require('../models/Booking')
 const Notification = require("../models/Notification")
 

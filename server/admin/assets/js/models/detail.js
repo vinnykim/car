@@ -11,15 +11,30 @@ $(document).ready(function(){
         setTimeout(function(){
             fetchFunction("/api/models/admin/vehicleBookings/"+vehicle,{},"post",function(data){
                 const list = document.getElementById("vehicleBookings")
+                console.log(data)
                 for(var booking of data.bookings){
                     list.innerHTML += `
-                        <li class='recents'></li>
+                    <div class="media mb-3 mb-sm-4">
+                        <img src="assets/images/customer/avatar.jpg" alt="/" class="rounded me-3" width="52">
+                        <div class="media-body">
+                            <h4 class="fs-16 font-w600 mb-0"><a href="reviews.html" class="text-black">James Humbly</a></h4>
+                            <span class="fs-14 d-block mb-2">${booking.book.date}</span>
+                            <div class="star-icons">
+                                <i class="las la-star fs-16"></i>
+                                <i class="las la-star fs-16"></i>
+                                <i class="las la-star fs-16"></i>
+                                <i class="las la-star fs-16"></i>
+                                <i class="las la-star fs-16"></i>
+                            </div>
+                        </div>
+                    </div>
                     `
                 }
             })
         },499)
         const vehicle = datas.vehicle
         const books = datas.books
+        let img_file = vehicle.description.vehicleFiles ? vehicle.description.vehicleFiles : "n/a.jpg"
         document.getElementById("vehicleDetail").innerHTML = `
         <div class="row">
             <div class="col-xl-3 col-xxl-4">
@@ -44,7 +59,7 @@ $(document).ready(function(){
                             <div class="card-body">
                                 <div id="lightgallery" class="front-view-slider mb-sm-5 mb-3 owl-carousel owl-loaded owl-drag">	
                                     <div class="front-view">
-                                        <img src="/assets/arrivals/01.jpg" alt="/">
+                                        <img src="/assets/arrivals/${img_file.split(",")[0]}" alt="/">
                                         <div class="info">
                                             <h3 class="mb-2 text-white">>${vehicle.description.vehicleModel}</h3>
                                             <p class="mb-0"></p>
@@ -95,22 +110,20 @@ $(document).ready(function(){
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="image-gallery owl-carousel owl-loaded owl-drag">
+                            <div class="image-gallery owl-carousel owl-loaded owl-drag">
                                     
-                                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1834px, 0px, 0px); transition: all 3s ease 0s; width: 3669px;"><div class="owl-item" style="width: 581.5px; margin-right: 30px;"><div class="items">
-                                        <img src="/assets/arrivals/01.jpg" alt="/">
-                                    </div></div><div class="owl-item" style="width: 581.5px; margin-right: 30px;"><div class="items">
-                                        <img src="/assets/arrivals/02.jpg" alt="/">
-                                    </div></div><div class="owl-item" style="width: 581.5px; margin-right: 30px;"><div class="items">
-                                        <img src="/assets/arrivals/03.jpg" alt="/">
-                                    </div></div><div class="owl-item active" style="width: 581.5px; margin-right: 30px;"><div class="items">
-                                        <img src="/assets/arrivals/04.jpg" alt="/">
-                                    </div></div><div class="owl-item" style="width: 581.5px; margin-right: 30px;"><div class="items">
-                                        <img src="/assets/arrivals/05.jpg" alt="/">
-                                    </div></div><div class="owl-item" style="width: 581.5px; margin-right: 30px;"><div class="items">
-                                        <img src="/assets/arrivals/06.jpg" alt="/">
-                                    </div></div></div></div><div class="owl-nav"><div class="owl-prev"><i class="fas fa-caret-left"></i></div><div class="owl-next"><i class="fas fa-caret-right"></i></div></div><div class="owl-dots"><div class="owl-dot"><span></span></div><div class="owl-dot"><span></span></div><div class="owl-dot"><span></span></div><div class="owl-dot active"><span></span></div><div class="owl-dot"><span></span></div><div class="owl-dot"><span></span></div></div></div>
+                            <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1834px, 0px, 0px); transition: all 3s ease 0s; width: 3669px;">
+                                <div class="owl-item" style="width: 581.5px; margin-right: 30px;"><div class="items">
+                                    <img src="/assets/arrivals/${img_file.split(",")[0]}" alt="/">
+                                </div></div>
                             </div>
+                            </div>
+                            <div class="owl-nav">
+                                <div class="owl-prev"><i class="fas fa-caret-left"></i></div>
+                                <div class="owl-next"><i class="fas fa-caret-right"></i></div>
+                            </div>
+                          </div>
+                        </div>
                         </div>
                     </div>
                     <div class="col-xl-12">

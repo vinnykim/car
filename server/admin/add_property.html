@@ -327,7 +327,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="card-title">Add Vehicle</h4>
+						<h4 class="card-title" id="cardTitle">Add Vehicle</h4>
 					</div>
 					<div class="card-body">
 						<form id="vehicleForm">
@@ -407,8 +407,8 @@
 									<input type="number" id="vehicle_capacity" name="vehicleCapacity" class="form-control" placeholder="Enter vehicle fuel capacity" required="">
 								</div>
 								<div class="mb-3 col-sm-6">
-									<label class="form-label">VIN</label>
-									<input type="text" class="form-control" name="vehicleVin" placeholder="Vin of the Vehicle">
+									<label class="form-label">Engine Volume (cc)</label>
+									<input type="text" class="form-control" name="vehicleVin" placeholder="2500">
 								</div>
 								<div class="mb-3 col-sm-6">
 									<label class="form-label">Passengers</label>
@@ -416,11 +416,12 @@
 								</div>
 								
 							</div>
-						</form>
+						
 						<div class="dropzone-admin mb-3">
 							<label class="form-label">Media</label>
 							<input type="text" class="form-control" name="vehicleFiles" placeholder="image file directory">
 						</div>  
+					</form>
 						<form id="vehicledetailsForm">
 							<div class="row">
 								<div class="mb-3 col-12">

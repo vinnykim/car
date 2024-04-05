@@ -2,50 +2,126 @@
 
 {%block content%}
 
-<section class="vh-100" style="background-color: #eee;">
+<style>
+@media (min-width: 1025px) {
+.h-custom {
+height: 100vh !important;
+}
+}
+
+.horizontal-timeline .items {
+border-top: 2px solid #ddd;
+}
+
+.horizontal-timeline .items .items-list {
+position: relative;
+margin-right: 0;
+}
+
+.horizontal-timeline .items .items-list:before {
+content: "";
+position: absolute;
+height: 8px;
+width: 8px;
+border-radius: 50%;
+background-color: #ddd;
+top: 0;
+margin-top: -5px;
+}
+
+.horizontal-timeline .items .items-list {
+padding-top: 15px;
+}
+</style>
+
+<section class="vh-100" style="">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         {%if order != None and order.get("invoice")%}
-        <div class="col">
-          <div class="card card-stepper" style="border-radius: 10px;">
-            <div class="card-body p-4">
-  
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex flex-column">
-                  <span class="lead fw-normal">{{"Your order has been delivered" if order["book"]["complete"] else "Your order has been recieved"}}</span>
-                  <span class="text-muted small">{{order["invoice"]["due"]}}</span>
-                </div>
-                <div>
-                  <button class="btn btn-outline-primary" type="button" onclick="location.search='invoice={{order["invoice"]["_id"]}}'">Track order details</button>
+        <section class="h-100 h-custom" style="background-color: #eee;">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-lg-8 col-xl-6">
+                <div class="card border-top border-bottom border-3" style="border-color: #f37a27 !important;">
+                  <div class="card-body p-5">
+        
+                    <p class="lead fw-bold mb-5" style="color: #f37a27;">Purchase Reciept</p>
+        
+                    <div class="row">
+                      <div class="col mb-3">
+                        <p class="small text-muted mb-1">Date</p>
+                        <p>{{order["invoice"]["date"]}}</p>
+                      </div>
+                      <div class="col mb-3">
+                        <p class="small text-muted mb-1">Order No.</p>
+                        <p>{{order["book"]["_id"]}}</p>
+                      </div>
+                    </div>
+        
+                    <div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
+                      <div class="row">
+                        <div class="col-md-8 col-lg-9">
+                          <p>{{order["vehicle"]["name"]}}</p>
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                          <p>{{order["invoice"]["amount"]}}</p>
+                        </div>
+                      </div>
+                      
+                    </div>
+        
+                    <div class="row my-4">
+                      <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+                        <p class="lead fw-bold mb-0" style="color: #f37a27;">{{order["invoice"]["amount"]}}</p>
+                      </div>
+                    </div>
+        
+                    <p class="lead fw-bold mb-4 pb-2" style="color: #f37a27;">Tracking Order</p>
+        
+                    <div class="row">
+                      <div class="col-lg-12">
+        
+                        <div class="horizontal-timeline">
+        
+                          <ul class="list-inline items d-flex justify-content-between">
+                            <li class="list-inline-item items-list">
+                              <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Ordered</p
+                                class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
+                            </li>
+                            {%if order["invoice"]["complete"]%}
+                              <li class="list-inline-item items-list">
+                                <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Paid</p
+                                  class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
+                              </li>
+                            {%endif%}
+                            {%if order["book"]["confirmed"]%}
+                              <li class="list-inline-item items-list">
+                                <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Shipped</p
+                                  class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
+                              </li>
+                            {%endif%}
+                            {%if order["book"]["complete"]%}
+                            <li class="list-inline-item items-list text-end" style="margin-right: 8px;">
+                              <p style="margin-right: -8px;">Delivered</p>
+                            </li>
+                            {%endif%}
+                          </ul>
+        
+                        </div>
+        
+                      </div>
+                    </div>
+    
+                    <p class="mt-4 pt-2 mb-0">Back to ? <a href="orders" style="color: #f37a27;">Orders</a></p>
+        
+                  </div>
                 </div>
               </div>
-              <hr class="my-4">
-  
-              <div class="d-flex flex-row justify-content-between align-items-center align-content-center">
-                <span class="dot"></span>
-                <hr class="flex-fill track-line"><span class="dot"></span>
-                <hr class="flex-fill track-line"><span class="dot"></span>
-                <hr class="flex-fill track-line"><span class="dot"></span>
-                <hr class="flex-fill track-line"><span
-                  class="d-flex justify-content-center align-items-center big-dot dot">
-                  <i class="fa fa-check text-white"></i></span>
-              </div>
-  
-              <div class="d-flex flex-row justify-content-between align-items-center">
-                <div class="d-flex flex-column align-items-start"><span>{{order["book"]["date"]}}</span><span>Order placed</span>
-                </div>
-                <div class="d-flex flex-column justify-content-center"><span>{{order["invoice"]["date"]}}</span><span>Order
-                    placed</span></div>
-                <div class="d-flex flex-column justify-content-center align-items-center"><span> </span><span>Order Dispatched</span></div>
-                <div class="d-flex flex-column align-items-center"><span> </span><span>Out for
-                    delivery</span></div>
-                <div class="d-flex flex-column align-items-end"><span> {{order["invoice"]["due"]}} </span><span>Delivered</span></div>
-              </div>
-  
             </div>
           </div>
-        </div>
+        </section>
         {%else%}
+          <h5>Completed</h5>
             {%for order in cart["complete"]%}
           <div class="col">
             <div class="card card-stepper" style="border-radius: 10px;">
@@ -83,6 +159,36 @@
                   <div class="d-flex flex-column align-items-end"><span> {{order["invoice"]["due"]}} </span><span>Delivered</span></div>
                 </div>
     
+              </div>
+            </div>
+          </div>
+          {%endfor%}
+          <hr/>
+          <h5>Pending</h5>
+          {%for order in cart["pending"]%}
+          {%set img_file = order["vehicle"]["description"]["vehicleFiles"] if order["vehicle"]["description"]["vehicleFiles"] else "n/a.jpg"%}
+          <div class="col">
+            <div class="card card-stepper" style="border-radius: 10px;">
+              <div class="card-body p-4">
+    
+                <div class="d-flex justify-content-between align-items-center" style="position: relative;">
+                  <div class="d-flex flex-column">
+                    <span class="lead fw-normal">{{"Your order is being processed" if order["book"]["complete"] else "Your order has been recieved, Waiting to be process"}}</span>
+                    <span class="text-muted small">{{order["invoice"]["due"]}}</span>
+                  </div>
+                  <div class="d-flex flex-column align-items-start"><span>{{order["book"]["date"]}}</span><span> Order placed</span>
+                  </div>
+                  <div class="d-flex flex-column align-items-start"><span>{{order["book"]["_id"]}}</span><span> Order ID</span>
+                  </div>
+                  <div>
+                    <button class="btn btn-outline-primary" type="button" onclick="location.search='invoice={{order["invoice"]["_id"]}}'">Track order details</button>
+                  </div>
+                  <img src="/static/arrivals/{{img_file}}" style="position: absolute;right:5%;top: -4%;width: 196px;height: 192px;object-fit: contain;border-radius: 8px;"><img>
+                </div>
+                <hr class="my-4">
+    
+               
+              
               </div>
             </div>
           </div>

@@ -52,13 +52,9 @@ app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname,'admin/register.html'));
 })
 
-
-
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname,'admin/index.html'));
 })
-
-
 
 const Port = 8081
 // Start the Express server and listen on port 8081

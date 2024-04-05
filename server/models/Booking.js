@@ -38,6 +38,10 @@ const BookingSchema = mongoose.Schema({
 		type:Boolean,
 		default: false,
 	},
+	confirmed:{
+		type:Boolean,
+		default: false,
+	},
 
 	comments:{
 		type:String,

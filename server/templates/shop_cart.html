@@ -53,9 +53,9 @@
             box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
             }
         .checkout-btn{
-            position: absolute;
-            right: 5%;
-            top: 1%;
+            position: fixed;
+            right: 2%;
+            top: 26%;
             padding: 9px 13px;
             background:white;
             z-index: 3;
@@ -87,9 +87,10 @@
                 <th>Action</th>
             </tr>
             {%for order in cart.get("pending")%}
+            {%set img_file = order["vehicle"]["description"]["vehicleFiles"]%}
             <tr class="text">
                 <td>
-                    <a href="shop-single.html?id={{order['vehicle']['_id']}}"><img src="/static/arrivals/02.jpg" alt=""></a>
+                    <a href="shop-single.html?id={{order['vehicle']['_id']}}"><img src="/static/arrivals/{{img_file}}" alt=""></a>
                 </td>
                 <td><a href="shop_checkout.html" style="text-decoration: none; color: #646161;">{{order["vehicle"]["name"]}}</a></td>
                 <td>&#x20b9;{{order["invoice"]["amount"]}}</td>

@@ -15,6 +15,42 @@ const Invoice = require('../models/Invoice')
 const Wish = require("../models/Wish")
 const Review = require('../models/Review')
 const Handler = require("../models/Handler")
+const Checkout = require("../models/Checkout")
+
+router.post('/saveCheckout',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const user_id = req.user.id
+	  const data = req.body
+	  const found = await Checkout.findOne({id:data.id,user:user_id})
+	  if(data.update === true && found){
+		await Checkout.findByIdAndUpdate(
+			found._id,
+			{$set:{description:data}},
+			{new:true}
+		)
+		const invoice = await Invoice.find({user:user_id,complete:false,cancelled:false})
+		for(var inv of invoice){
+			await Invoice.findByIdAndUpdate(
+				inv._id,
+				{$set:{complete:true}},
+				{new:true}
+			)
+		}
+		return res.status(200).json({message:"Checkout updated"})
+	  }
+	  const checkout = new Checkout()
+	  checkout.id = data.id
+	  
+	  checkout.user = user_id
+	  await checkout.save()
+	  result.message = "Added review"
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
 
 router.post('/addReview/:id',auth,  async (req, res) => {
 	try {
@@ -170,6 +206,7 @@ router.post('/addWish',auth,  async (req, res) => {
 	  wish.user = user_id
 	  wish.vehicle = vehicle_id
 	  wish.company = company._id
+	  await wish.save()
 	  result.message = "Added to wishlist"
 	  return res.status(200).json(result)
 	} catch (error) {

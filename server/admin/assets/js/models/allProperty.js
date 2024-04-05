@@ -6,6 +6,7 @@ $(document).ready(function(){
         if(datas.vehicles.length === 0){}
         for(var vehicle of datas.vehicles){
             console.log(vehicle)
+            let img_file = vehicle.description.vehicleFiles ? vehicle.description.vehicleFiles : "n/a.jpg"
             html += `
             <div class="col-xl-3 col-xxl-4 col-md-6 col-sm-6 col-lg-4 m-b30" style="max-height: ;" onclick="location.href='detail.html?vehicle=${vehicle._id}'">
             <div class="property-card style-1">
@@ -18,12 +19,12 @@ $(document).ready(function(){
             
             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
             <div class="dz-content">
-                <img src="assets/arrivals/02.jpg" height="198px" width="100%" style="object-fit:cover;"></img>
+                <img src="assets/arrivals/${img_file.split(",")[0]}" height="198px" width="100%" style="object-fit:cover;"></img>
                 <h3 class="title">${vehicle.description.vehiclePrice}</h3>
                 <div class="dz-meta">
                     <ul>
                         <li><a href="javascript:void(0);">
-                        ${vehicle.description.vehicleWeight} </a></li>
+                        ${vehicle.description.vehicleMake }, ${vehicle.description.vehicleDetail}, ${vehicle.description.vehicleFuel}</a></li>
                     </ul>
                 </div>
                 <p>${vehicle.description.vehicleDescription ? vehicle.description.vehicleDescription : "Vehicle Description"}.</p>

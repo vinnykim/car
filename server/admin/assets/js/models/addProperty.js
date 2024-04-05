@@ -10,15 +10,17 @@ function addVehicle(e){
     const vehicleData = {}
     vehicle_details = new URLSearchParams(vehicle_details)
     for (const [key, value] of vehicle) {
+        if(value === ''){continue}
         vehicleData[key] = value;
     }
     for (const [key, value] of vehicle_details) {
+        if(value === ''){continue}
         vehicleData[key] = value;
     }
     var payload = vehicleData
-    if(location.search.includes("id=") && location.includes("edit=true")){
-        var loc_id = location.search.replace("edit=true","")
-        loc_id = location.search.replace("?id=","")
+    if(location.search.includes("id=") && location.search.includes("&edit=true")){
+        var loc_id = location.search.replace("&edit=true","")
+        loc_id = loc_id.replace("?id=","")
         var id = loc_id
         payload._id = id
         payload.update = true
@@ -46,15 +48,23 @@ $(document).ready(function(){
        `
     })
     $("#vehicleFeatures").html(ek)
-    if(location.search.includes("id=") && location.includes("edit=true")){
-        var loc_id = location.search.replace("edit=true","")
-        loc_id = location.search.replace("?id=","")
+    if(location.search.includes("id=") && location.search.includes("edit=true")){
+        var loc_id = location.search.replace("&edit=true","")
+        loc_id = loc_id.replace("?id=","")
         var id = loc_id
         if(id.length > 5){
-            fetchFunction("/api/models/admin/getDetails/"+id,{},"post",function(data){
-                for (const [key, value] of vehicle) {
-                    $(`input[name="${key}"]`).val(value);
+            fetchFunction("/api/models/admin/getDetail/"+id,{},"post",function(datas){
+                if(datas.message){
+                    createAlert(datas)
                 }
+                var obj = datas.vehicle.description
+                $(`#cardTitle`).text(`Editing Vehicle : ${datas.vehicle.name}`);
+                Object.keys(obj).forEach(key => {
+                    const value = obj[key];
+                    $(`input[name="${key}"]`).val(value);
+                    //console.log(`Key: ${key}, Value: ${value}`);
+                });
+               
             })
         }
     }

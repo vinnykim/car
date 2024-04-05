@@ -52,7 +52,7 @@
 
             <div class="mb-3">
               <label for="email">Email <span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com" value='{{user.get("name") if user else ""}}'>
+              <input type="email" class="form-control" id="email" placeholder="you@example.com" value='{{user.get("email") if user else ""}}'>
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>

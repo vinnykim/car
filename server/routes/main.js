@@ -72,6 +72,7 @@ router.post('/getCustomers',auth,  async (req, res) => {
 		const r = {}
 		r.user = user
 		r.bookings = []
+		if(user._id.toString() === req.user.id){continue}
 		const book = await Book.find({user:user._id})
 		for(var bk of book){
 			const vehicle = await Vehicle.findById(bk.vehicle)
@@ -113,7 +114,40 @@ router.post('/getOrders',auth,  async (req, res) => {
 		for(var book of books){
 			const user = await User.findById(book.user).select("-password")
 			result.customers += 1
-			const invoice = await Invoice.findById(book.invoice)
+			if(!book.invoice){
+				var invoice = await Invoice.findOne({booking:book._id,user:user._id})
+				if(invoice){
+					await Book.findByIdAndUpdate(
+						book._id,
+						{$set:{invoice:invoice._id}},
+						{new:true}
+					)
+				}
+			}else{
+				var invoice = await Invoice.findById(book.invoice)
+			}
+			if(!invoice){
+				invoice = new Invoice(book)
+				invoice.booking = book._id
+				invoice.amount = 0
+				await invoice.save()
+				await Book.findByIdAndUpdate(
+					book._id,
+					{$set:{invoice:invoice._id}},
+					{new:true}
+				)
+			}
+			if(!invoice.amount || invoice.amount && invoice.amount === ""){
+				let pr = vehicle.description.vehiclePrice ?  vehicle.description.vehiclePrice : vehicle.description.vehicleMarketvalue
+				
+				invoice = await Invoice.findByIdAndUpdate(
+					invoice._id,
+					{$set:{amount:pr}},
+					{new:true}
+				)
+				invoice.amount = pr
+			}
+			
 			r.books.push({book:book,user:user,invoice:invoice})
 		}
 		result.orders.push(r)
@@ -136,11 +170,11 @@ router.post('/newVehicle',auth,  async (req, res) => {
 	  const data = req.body
 	  max = 999999
 	  min = 111111
-	  if(!data.vehicleVin || !data.vehiclePrice || !data.vehicleModel || !data.vehicleModel){
+	  if(!data.vehicleVin || !data.vehiclePrice || !data.vehicleModel || !data.vehicleStatus || !data.vehicleTransmission){
 		return res.status(400).json({message:"Required data missing"})
 	  }
 	  if(data._id && data.update){
-		await Vehicle.findById(
+		await Vehicle.findByIdAndUpdate(
 			data._id,
 			{$set:{name:data.vehicleModel,description:data}},
 			{new:true}

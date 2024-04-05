@@ -3,7 +3,21 @@
 {%block content%}
 <section class="p-4 p-md-5 text-center text-lg-start shadow-1-strong rounded" style=" ">
   <div class="row d-flex justify-content-center">
-    {%for review in reviews%}
+    {%if reviews['total'] == 0%}
+    <div class="empty-shopping-cart w-100" style="margin-top:150px">
+      <div>
+          <div class="text-center"><h2>Reviews</h2></div>
+          <div class="mt-2 text-center"><span>Your Will be able to make reviews after purchase</span></div>
+          <div class="flex justify-center mt-2">
+              <a href="/" class="button primary"><span><span class="flex space-x-1"><span class="self-center">CONTINUE SHOPPING</span>
+                   <svg class="self-center" style="width:2.5rem;height:2.5rem" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                  </span></span>
+              </a>
+          </div>
+      </div>
+  </div>
+    {%endif%}
+    {%for review in reviews['data']%}
     <div class="col-md-10">
       <div class="card">
         <div class="card-body m-3">
