@@ -37,9 +37,12 @@ def compare():
 def shop():
     filter = request.args.get("search") if request.args.get("search") else None
     vehicles = getVehicles(server=SERVER_NAME)
-    for vehicle in vehicles:
-        print(vehicle)
-    #print(vehicles)
+    for [key,data] in vehicles["vehicles"]:
+        print(vehicles[key])
+        if filter and filter in data:
+            continue
+        del vehicles["vehicles"][key]
+    print(vehicles)
     return render_template("shop.html",**locals())
 
 @app.route("/book")
