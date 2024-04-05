@@ -132,6 +132,7 @@ def checkout():
                 result = saveCheckout(id=pay,user=session.get("user"),server=SERVER_NAME+":8081")
                 msg = result.get("message") if result.get("message") else msg
                 return redirect("checkout?msg="+msg)
+            msg = "Checkout Incomplete"
         except Exception as e:
             msg = str(e)
             pass
