@@ -35,7 +35,10 @@ def compare():
 
 @app.route("/shop")
 def shop():
+    filter = request.args.get("search") if request.args.get("search") else None
     vehicles = getVehicles(server=SERVER_NAME)
+    for vehicle in vehicles:
+        print(vehicle)
     #print(vehicles)
     return render_template("shop.html",**locals())
 

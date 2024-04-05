@@ -18,12 +18,13 @@
   </div>
     {%endif%}
     {%for review in reviews['data']%}
-    <div class="col-md-10">
+    {%set img_file = review["vehicle"]["description"]["vehicleFiles"] ? review["vehicle"]["description"]["vehicleFiles"] : "n/a.jpg"%}
+      <div class="col-md-10">
       <div class="card">
         <div class="card-body m-3">
           <div class="row">
             <div class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
-              <img src="/static/arrivals/02.jpg"
+              <img src="/static/arrivals/{{img_file.split(',')[0]}}"
                 class="rounded-circle img-fluid shadow-1" alt="woman avatar" width="200" height="200" />
             </div>
             <div class="col-lg-8">

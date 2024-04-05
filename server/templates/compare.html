@@ -9,7 +9,7 @@
       {%set img_file = vehicle["vehicle"]["description"]["vehicleFiles"] if vehicle["vehicle"]["description"]["vehicleFiles"] else "n/a.jpg"%}
       <div class="col-md-12 col-lg-4 mb-4 mb-lg-0" style="width: 26%;max-width: 85%;margin-bottom: 15px;">
         <div class="card text-black" style="width: 100%;">
-          <img src="/static/arrivals/{{img_file}}" style="object-fit: contain;width: 100%;"
+          <img src="/static/arrivals/{{img_file.split(',')[0]}}" style="object-fit: contain;width: 100%;"
             class="card-img-top" alt="Img" />
           <div class="card-body">
             <div class="text-center mt-1">

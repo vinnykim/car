@@ -77,7 +77,11 @@
                 <!---<button class="addBtn"><i class='bx bx-plus-circle'></i>Add Listing</button>--->
             </div>
             <div class="others" style="position: absolute;top:30%;left: 7%;">
-                <a href="javascript:void(0)"><i class='bx bx-search-alt-2' ></i></a>
+                <a href="javascript:void(0)" onclick="this.nextElementSibling.style.display='block'"><i class='bx bx-search-alt-2' ></i></a>
+                <form style="display:none;">
+                    <input type="text" class="form-control" name="search" placeholder="Search here">
+                    <button class="btn" type="submit"><i class="fa fa-search"></i></button>
+                </form>
             </div>
         </nav>
     </header>

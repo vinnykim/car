@@ -63,8 +63,9 @@
         }
 </style>
 <div class="shop_single">
+    {%set img_file = vehicle['description']['vehicleFiles'] ? vehicle['description']['vehicleFiles'] : "n/a.jpg%}
     <div class="left" onclick="location.href='/app/live/{{vehicle_detail.get("_id")}}'">
-        <img class="main" src="/static/arrivals/{{vehicle_detail['description']['vehicleFiles']}}" alt="">
+        <img class="main" src="/static/arrivals/{{img_file.split(',')[0]}}" alt="">
         <div class="col" style="width: 100%;text-align:center;">
             <button class="button-3">Live View</button>
         </div>

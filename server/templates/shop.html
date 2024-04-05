@@ -4,9 +4,10 @@
     <div class="row">
         <div class="flexdisplay">
     {%for vehicle in vehicles %}
+            {%set img_file = vehicle['description']['vehicleFiles'] ? vehicle['description']['vehicleFiles'] : "n/a.jpg%}
         <div class="arr-col" style="max-width: 88%;width: 28%;margin-left: 12px;border-radius: 8px;cursor: pointer;">
             <div class="image product-image" style="width: 100%;" onclick='location.href="shop-single.html?id={{vehicle['_id']}}"'>
-                <img src="/static/arrivals/{{vehicle['description']['vehicleFiles']}}" alt="" style="object-fit:cover;width: 100%;">
+                <img src="/static/arrivals/{{img_file.split(',')[0]}}" alt="" style="object-fit:cover;width: 100%;">
             </div>
 
             <h5>{{vehicle["name"]}}</h5>
