@@ -91,7 +91,7 @@ function pano2vrSkin(player,base) {
 		return r;
 	}
 	
-	this.preloadstatic/images=function() {
+	this.preloadstatic=function() {
 		var preLoadImg=new Image();
 		preLoadImg.src=basePath + 'static/images/vr__o.png';
 		preLoadImg.src=basePath + 'static/images/play__o.png';
@@ -1290,7 +1290,7 @@ function pano2vrSkin(player,base) {
 			return me.player.getCurrentNode();
 		}
 		this._vk.onclick=function (e) {
-			me.player.openUrl("https:\/\/vk.com\/share.php?url=http:\/\/pindora.com\/car_panoramas\/maybach\/tour.html","");
+			me.player.openUrl("http:\/\/localhost\/share.php?url=http:\/\/pindora.com\/car_panoramas\/maybach\/tour.html","");
 			me._tooltip.style[domTransition]='none';
 			me._tooltip.style.visibility='hidden';
 			me._tooltip.ggVisible=false;
@@ -2764,7 +2764,7 @@ function pano2vrSkin(player,base) {
 		}
 		this._intro_logo.appendChild(this._external_1);
 		this.divSkin.appendChild(this._intro_logo);
-		this.preloadstatic/images();
+		this.preloadstatic();
 		this.divSkin.ggUpdateSize=function(w,h) {
 			me.updateSize(me.divSkin);
 		}

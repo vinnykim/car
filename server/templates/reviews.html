@@ -18,7 +18,7 @@
   </div>
     {%endif%}
     {%for review in reviews['data']%}
-    {%set img_file = review["vehicle"]["description"]["vehicleFiles"] ? review["vehicle"]["description"]["vehicleFiles"] : "n/a.jpg"%}
+    {%set img_file = review["vehicle"]["description"]["vehicleFiles"] if review["vehicle"]["description"]["vehicleFiles"] else "n/a.jpg"%}
       <div class="col-md-10">
       <div class="card">
         <div class="card-body m-3">

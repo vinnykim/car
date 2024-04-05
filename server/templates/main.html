@@ -6,6 +6,7 @@
     <title>Car Selling Website</title>
     <!-- Swiper css CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://kit.fontawesome.com/c63faa1f51.js" crossorigin="anonymous"></script>
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='app.css')}}">
@@ -78,7 +79,7 @@
             </div>
             <div class="others" style="position: absolute;top:30%;left: 7%;">
                 <a href="javascript:void(0)" onclick="this.nextElementSibling.style.display='block'"><i class='bx bx-search-alt-2' ></i></a>
-                <form style="display:none;">
+                <form style="display:none;" action="shop">
                     <input type="text" class="form-control" name="search" placeholder="Search here">
                     <button class="btn" type="submit"><i class="fa fa-search"></i></button>
                 </form>

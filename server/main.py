@@ -37,12 +37,11 @@ def compare():
 def shop():
     filter = request.args.get("search") if request.args.get("search") else None
     vehicles = getVehicles(server=SERVER_NAME)
-    for [key,data] in vehicles["vehicles"]:
-        print(vehicles[key])
-        if filter and filter in data:
-            continue
-        del vehicles["vehicles"][key]
-    print(vehicles)
+    #print(vehicles)
+    for v in vehicles:
+        print(v)
+       
+    
     return render_template("shop.html",**locals())
 
 @app.route("/book")
@@ -255,11 +254,17 @@ def webhook():
 
 @app.route("/app/live/<string:id>")
 def liveView(id):
-    return render_template("tour.html")
+    vehicle = getVehicle(id=id,server=SERVER_NAME)
+    vehicle_detail = vehicle.get("vehicle") if vehicle.get("vehicle") else {}
+    return render_template("tour.html",**locals())
 
 @app.route("/tour.xml")
 def tourXml():
     return send_file("tour.xml")
+    
+@app.route("/tiles/f_on_closed/<string:filename>")
+def routeFile(filename):
+    return send_file("static\\tiles\\f_on_closed\\"+filename)
     
 node_command = ["node", "server.js"]
 

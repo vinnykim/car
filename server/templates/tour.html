@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
+	
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-8960823-4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -13,7 +13,7 @@
 
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
-		<title>Mercedes Maybach S 600 Virtual tour 360</title>
+		<title>{{vehicle_detail["name"].upper() - LIVE VIEW}}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -83,7 +83,7 @@
 		skin=new pano2vrSkin(pano);
 		// load the configuration
 		window.addEventListener("load", function() {
-			pano.readConfigUrlAsync("tour.xml",function() {  gyro=new pano2vrGyro(pano,"container"); gyro.disable(); gyro.setUseMoveTo(false); gyro.setUseRoll(true);});
+			pano.readConfigUrlAsync("/tour.xml",function() {  gyro=new pano2vrGyro(pano,"container"); gyro.disable(); gyro.setUseMoveTo(false); gyro.setUseRoll(true);});
 		});
 		</script>
 		<noscript>

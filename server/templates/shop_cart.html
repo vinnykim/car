@@ -87,7 +87,7 @@
                 <th>Action</th>
             </tr>
             {%for order in cart.get("pending")%}
-            {%set img_file = order["vehicle"]["description"]["vehicleFiles"]%}
+            {%set img_file = order["vehicle"]["description"]["vehicleFiles"] if order["vehicle"]["description"]["vehicleFiles"] else "n/a.jpg"%}
             <tr class="text">
                 <td>
                     <a href="shop-single.html?id={{order['vehicle']['_id']}}"><img src="/static/arrivals/{{img_file.split(',')[0]}}" alt=""></a>
