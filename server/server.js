@@ -44,6 +44,10 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname,'admin/login.html'));
 })
 
+app.get('/live_view', (req, res) => {
+  res.sendFile(path.join(__dirname,'admin/live.html'));
+})
+
 app.get('/logout', (req, res) => {
   res.sendFile(path.join(__dirname,'admin/login.html'));
 })

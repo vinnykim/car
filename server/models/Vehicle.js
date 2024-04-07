@@ -13,6 +13,10 @@ const vehicleSchema = mongoose.Schema({
         type: String,
 
     },
+    live_view:{
+        type:Boolean,
+        default:false,
+    },
     description: {
         type: mongoose.Schema.Types.Object,
         default:{default:true}

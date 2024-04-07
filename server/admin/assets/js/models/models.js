@@ -101,3 +101,27 @@ if(location.pathname.includes("logout")){
     sess.delete()
     location.href = 'login.html'
 }
+$(document).ready(function(){
+	const actions = [
+		"Inventory",
+		"Coupons",
+		"Active Orders",
+		"Price Alerts"
+	]
+	var menu_items = ""
+	actions.map(function(action){
+		menu_items += `
+		<li><a href="index.html#${action.toLowerCase().replace(" ","_")}">${action}</a></li>
+		`
+	})
+	
+	const menu = document.getElementById("menu")
+	menu.innerHTML += `
+	<li class="mm-active">
+	<ul aria-expanded="false" class="mm-collapse mm-show">
+		<li class="mm-active"><a href="#actions" class="mm-active">Actions</a></li>
+	   ${menu_items}
+	</ul>
+	</li>
+	`
+})

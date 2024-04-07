@@ -1,5 +1,5 @@
 from flask import Flask,render_template, request, session, jsonify,redirect,send_file
-from db import Login,Register,getOrder,getVehicles,getVehicle,getCategories,getServices,getUser,addCart,getCart,addWish,getWish,getReviews
+from db import Login,Register,getOrder,deleteOrder,getVehicles,getVehicle,getCategories,getServices,getUser,addCart,getCart,addWish,getWish,getReviews
 import json
 from keys import Key
 import subprocess
@@ -7,7 +7,7 @@ import random
 from stripe_pay import createCheckout,saveCheckout
 import stripe
 
-STRIPE_WEBHOOK = 'your_webhook_secret_key'
+STRIPE_WEBHOOK = 'whsec_5f9146f9f271b5f3bd03d1c5bbd0e97880fcfda41ec69bdfd5b578bb0820399e'
 
 app = Flask(__name__)
 
@@ -119,7 +119,7 @@ def checkout():
         try:
             cardNumber = request.form["cardNumber"]
             cardCvv = request.form["cardCvv"]
-            cardAmount = request.form["cardAmount"]
+            
             cardExpiry = request.form["cardExpiry"]
             country = request.form["country"]
             city = request.form["city"]
@@ -131,16 +131,18 @@ def checkout():
                 'country':country,
                 'city':city,
             }
-            pay = createCheckout(data,user=user,cart=cart,server=SERVER_NAME+":8081")
+            pay = createCheckout(data,user=user,cart=cart,server=SERVER_NAME)
             if pay:
                 msg = "Checkout success"
-                result = saveCheckout(id=pay,user=session.get("user"),server=SERVER_NAME+":8081")
+                result = saveCheckout(id=pay,user=session.get("user"),server=SERVER_NAME)
                 msg = result.get("message") if result.get("message") else msg
                 return redirect("checkout?msg="+msg)
             msg = "Checkout Incomplete"
         except Exception as e:
             msg = str(e)
+            
             pass
+        print(msg)
     return render_template("shop_checkout.html",**locals())
 
 @app.route("/cart")
@@ -148,6 +150,16 @@ def checkout():
 def cart():
     if session.get("user") == None:
         return redirect("login")
+    if request.args.get("id") != None:
+        id = request.args.get("id")
+        invoice = getOrder(invoice=id,server=SERVER_NAME,user=session.get("user"))
+        
+        if invoice.get("invoice") and request.args.get("delete") == "true":
+            booking = invoice.get("invoice")
+            dell = deleteOrder(id=booking.get("booking"),server=SERVER_NAME,user=session.get("user"))
+            print(invoice.get("invoice"),dell)
+            msg = dell.get("message")
+            return redirect("cart?msg="+msg)
     cart = getCart(user=session.get("user"),server=SERVER_NAME)
     
     cart = cart.get("cart") if cart.get("cart") else {}
@@ -248,6 +260,50 @@ def webhook():
         session = event['data']['object']
         result = saveCheckout(id=session["id"],user=session.get("user"),server=SERVER_NAME+":8081",update=True)
         print("Checkout session completed:", session)
+    elif event['type'] == 'customer.created':
+      customer = event['data']['object']
+    elif event['type'] == 'customer.deleted':
+      customer = event['data']['object']
+    elif event['type'] == 'customer.updated':
+      customer = event['data']['object']
+    elif event['type'] == 'customer.discount.created':
+      discount = event['data']['object']
+    elif event['type'] == 'customer.discount.deleted':
+      discount = event['data']['object']
+    elif event['type'] == 'customer.discount.updated':
+      discount = event['data']['object']
+    elif event['type'] == 'customer.source.created':
+      source = event['data']['object']
+    elif event['type'] == 'customer.source.deleted':
+      source = event['data']['object']
+    elif event['type'] == 'customer.source.expiring':
+      source = event['data']['object']
+    elif event['type'] == 'customer.source.updated':
+      source = event['data']['object']
+    elif event['type'] == 'customer.subscription.created':
+      subscription = event['data']['object']
+    elif event['type'] == 'customer.subscription.deleted':
+      subscription = event['data']['object']
+    elif event['type'] == 'customer.subscription.paused':
+      subscription = event['data']['object']
+    elif event['type'] == 'customer.subscription.pending_update_applied':
+      subscription = event['data']['object']
+    elif event['type'] == 'customer.subscription.pending_update_expired':
+      subscription = event['data']['object']
+    elif event['type'] == 'customer.subscription.resumed':
+      subscription = event['data']['object']
+    elif event['type'] == 'customer.subscription.trial_will_end':
+      subscription = event['data']['object']
+    elif event['type'] == 'customer.subscription.updated':
+      subscription = event['data']['object']
+    elif event['type'] == 'customer.tax_id.created':
+      tax_id = event['data']['object']
+    elif event['type'] == 'customer.tax_id.deleted':
+      tax_id = event['data']['object']
+    elif event['type'] == 'customer.tax_id.updated':
+      tax_id = event['data']['object']
+    else:
+      print('Unhandled event type {}'.format(event['type']))
 
     return jsonify({'status': 'success'})
 
@@ -266,7 +322,7 @@ def tourXml():
 def routeFile(filename):
     return send_file("static\\tiles\\f_on_closed\\"+filename)
     
-node_command = ["node", "server.js"]
+node_command = ['','']
 
 if __name__ == '__main__':
     try:
@@ -276,4 +332,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(str(e))
         pass
-    app.run("0.0.0.0",debug=True)
+    app.run("0.0.0.0",port =80, debug=True)

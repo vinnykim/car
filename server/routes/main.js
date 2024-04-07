@@ -106,16 +106,18 @@ router.post('/getOrders',auth,  async (req, res) => {
 	  result.vehicles = vehicles
 	  result.orders = []
 	  result.customers = 0
+	  
 	  for(var vehicle of vehicles){
 		const r = {}
 		r.vehicle = vehicle
-		const books = await Book.find({vehicle:vehicle})
+		const books = await Book.find({vehicle:vehicle._id})
 		r.books = []
 		for(var book of books){
 			const user = await User.findById(book.user).select("-password")
 			result.customers += 1
+			var invoice  = null
 			if(!book.invoice){
-				var invoice = await Invoice.findOne({booking:book._id,user:user._id})
+				invoice = await Invoice.findOne({booking:book._id,user:user._id})
 				if(invoice){
 					await Book.findByIdAndUpdate(
 						book._id,
@@ -124,12 +126,15 @@ router.post('/getOrders',auth,  async (req, res) => {
 					)
 				}
 			}else{
-				var invoice = await Invoice.findById(book.invoice)
+				invoice = await Invoice.findById(book.invoice)
 			}
 			if(!invoice){
 				invoice = new Invoice(book)
 				invoice.booking = book._id
-				invoice.amount = 0
+				invoice.user = user._id
+				invoice.amount = vehicle.description.vehiclePrice
+				invoice.vehicle = vehicle._id
+				invoice.company = company_id
 				await invoice.save()
 				await Book.findByIdAndUpdate(
 					book._id,
@@ -153,7 +158,11 @@ router.post('/getOrders',auth,  async (req, res) => {
 		result.orders.push(r)
 	  }
 	  const invc = await Invoice.find({company:company_id})
-	  result.transactions = invc.length
+	  result.transactions = 0
+	  for(var i of invc){
+		if(i.cancelled === true){continue}
+		result.transactions += 1
+	  }
 
 	  result.message = "success"
 	  
@@ -170,7 +179,7 @@ router.post('/newVehicle',auth,  async (req, res) => {
 	  const data = req.body
 	  max = 999999
 	  min = 111111
-	  if(!data.vehicleVin || !data.vehiclePrice || !data.vehicleModel || !data.vehicleStatus || !data.vehicleTransmission){
+	  if(!data.vehicleFiles || !data.vehiclePrice || !data.vehicleModel || !data.vehicleStatus || !data.vehicleTransmission){
 		return res.status(400).json({message:"Required data missing"})
 	  }
 	  if(data._id && data.update){
@@ -298,8 +307,27 @@ router.post('/getVehicles', auth, async (req, res) => {
 	  const result = {}
 	  const vehicles = await Vehicle.find({company:company_id})
 	  result.vehicles = vehicles
+	  const r =  {vehicles:[]}
+	  for(var vehicle of vehicles){
+		var rs = {}
+		rs.vehicle = vehicle
+		const bookings = await Book.find({vehicle:vehicle._id})
+		rs.bookings = {data:[],complete:0,total:0}
+		for(var book of bookings){
+			if(!book.invoice){continue}
+			//var invoice = await Invoice.findById(book.invoice)
+			if(book.complete === true){
+				rs.bookings.complete += 1
+			}
+			rs.bookings.data.push(book)
+			//r.bookings.invoice.push(invoice)
+			rs.bookings.total +=1 
+		}
+		r.vehicles.push(rs)
 		
-	  return res.status(200).json(result)
+	  }
+	  
+	  return res.status(200).json(r)
 	} catch (error) {
 	  console.error(error.message)
 	  res.status(500).send('Server Error='+error.message)
@@ -314,7 +342,7 @@ router.post('/getAnalysis', auth, async (req, res) => {
 	  result.vehicles = {data:vehicles,sale:0,rent:0,total:0}
 	  const books = await Book.find({company:company_id})
 	  result.books = books 
-	  result.invoice ={data:[],total:0,complete:0,pending:0}
+	  result.invoice ={data:[],total:0,complete:0,pending:0,cancelled:0,deleted:0}
 	  result.booked = []
 	  result.latest = []
 	  for(var book of books){
@@ -323,11 +351,19 @@ router.post('/getAnalysis', auth, async (req, res) => {
 				continue
 			}
 			if(invoice.complete === true){
-				result.invoice.complete += invoice.amount
+				result.invoice.complete += invoice.amount		
 			}else{
-				result.invoice.pending += invoice.amount
+				if(invoice.cancelled === false){
+					result.invoice.pending += invoice.amount	
+				}
+				
 			}
-			result.invoice.total += invoice.amount
+			if(invoice.cancelled === true){result.invoice.cancelled += 1}
+			if(invoice.deleted === true){result.invoice.deleted += 1}
+			
+			if(invoice.cancelled === false){
+				result.invoice.total += invoice.amount
+			}	
 			result.invoice.data.push(invoice)
 	  }
 	  for(var vehicle of vehicles){
@@ -370,7 +406,23 @@ router.post('/getAnalysis', auth, async (req, res) => {
 		}
 		const r = {}
 		const user = await User.findById(book.user)
-		const invoice = await Invoice.findById(book.invoice)
+		var invoice = await Invoice.findById(book.invoice)
+		if(!book.invoice || invoice === null){
+			var invoice = new Invoice()
+			invoice.user = user._id
+			invoice.company = company_id
+			invoice.booking = book._id
+			invoice.vehicle = vehicle._id
+			invoice.amount = vehicle.description.vehiclePrice
+			await invoice.save()
+			await Book.findByIdAndUpdate(
+				book._id,
+				{$set:{invoice:invoice._id}},
+				{new:true}
+			)
+		}
+		
+		
 		r.book = book
 		r.user = user
 		r.invoice = invoice

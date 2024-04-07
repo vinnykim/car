@@ -233,21 +233,24 @@ router.post('/addCart',auth,  async (req, res) => {
 	  const booked = await Book.findOne({user:user_id,vehicle:vehicle_id})
 	  if(booked){
 		return res.status(200).json({message: "Already booked",book:booked})
+	  }else{
+		  const company = await Company.findById(vehicle.company)
+		  const invoice = new Invoice()
+		  const book = new Book()
+		  book.description = vehicle.description
+		  book.vehicle = vehicle_id
+		  book.user = req.user.id
+		  book.company = company._id
+		  invoice.company = company._id
+		  invoice.booking = book._id
+		  invoice.user = user_id
+		  book.invoice = invoice._id
+		  invoice.amomunt = vehicle.description.vehiclePrice 
+		  await invoice.save()
+		  await book.save()
+		  result.message = "Booking complete"
 	  }
-	  const company = await Company.findById(vehicle.company)
-	  const invoice = new Invoice()
-	  const book = new Book()
-	  book.description = vehicle.description
-	  book.vehicle = vehicle_id
-	  book.user = req.user.id
-	  book.company = company._id
-	  invoice.company = company._id
-	  invoice.booking = book._id
-	  invoice.user = user_id
-	  invoice.amomunt = vehicle.description.vehiclePrice 
-	  await invoice.save()
-	  await book.save()
-	  result.message = "Booking complete"
+	  
 	  return res.status(200).json(result)
 	} catch (error) {
 	  console.error(error.message)
@@ -267,6 +270,19 @@ router.post('/deleteBook/:id',auth,  async (req, res) => {
 		return res.status(404).json(result)
 	  }
 	  if(book.user.toString() === req.user.id){
+		if(book.complete === false){
+			await Invoice.findByIdAndUpdate(
+				book.invoice,
+				{$set:{cancelled:true}},
+				{new:true}
+			)
+		}else{
+			await Invoice.findByIdAndUpdate(
+				book.invoice,
+				{$set:{deleted:true}},
+				{new:true}
+			)
+		}
 		await Book.findByIdAndDelete(book._id)
 		result.message = "Booking removed succsffully"
 	  }else{

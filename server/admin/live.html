@@ -6,9 +6,9 @@
 	<meta name="robots" content="index, follow">
    
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Customer List</title>
+	
     <!-- Favicon icon -->
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/brand/01.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://omah.dexignzone.com/codeigniter/demo/public/assets/images/favicon.png">
 	
 		
 		 <link href="assets/css/jqvmap.min.css" rel="stylesheet" type="text/css">	
@@ -17,17 +17,14 @@
 			
 		 <link href="assets/css/bootstrap-select.min.css" rel="stylesheet" type="text/css">		
 		
-		 <link href="assets/css/style.css" rel="stylesheet" type="text/css">		
+		 <link href="assets/css/style.css" rel="stylesheet" type="text/css">	
 		 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		 <script src="assets/js/models/models.js"></script>
 		 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.min.css">
 		 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.min.js"></script>
 
-	
 <style type="text/css">
-.ai-icon{
-    display: none;
-  }
+
 @keyframes opaque {
   0% {
     opacity: 0;
@@ -72,7 +69,9 @@
   background: #eee;
   overflow: auto;
 }
-
+.brand-title{
+	display:none;
+}
 .contract-trigger:before {
   width: 200%;
   height: 200%;
@@ -308,32 +307,24 @@
     
     </div>
 </div>
+<!--**********************************
+    Sidebar end
+***********************************-->        <!--**********************************
+	Content body start
+***********************************-->
 
-
-<script src="assets/js/models/customers.js"></script>
+<script src="assets/js/models/live.js"></script>
 <div class="content-body">
 	<!-- row -->
 	<div class="container-fluid">
-		<div class="form-head page-titles d-flex  align-items-center">
-			<div class="me-auto  d-lg-block d-block">
-				<h4 class="mb-1">Customer</h4>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item active"><a href="javascript:void(0)">Customer</a></li>
-					<li class="breadcrumb-item"><a href="javascript:void(0)">Customer List</a></li>
-				</ol>
+		<div class="form-head d-md-flex mb-sm-4 mb-3 align-items-start">
+			<div class="me-auto d-lg-block d-block">
+				<h2 class="text-black font-w600">Live View Settings</h2>
+				<p class="mb-0">Edit Live view for <b id="live_vehicle"></b></p>
 			</div>
-			<a href="javascript:void(0);" class="btn btn-primary rounded light">Refresh</a>
+			<a href="all_property.html" class="btn btn-primary rounded light">Refresh</a>
 		</div>
-		<div class="row">
-			<div class="col-xl-12">
-				<div class="card">
-					<div class="card-body p-0" id="customerList">
-						
-						
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="dashboard-cont"></div>
 	</div>
 </div>
 <!--**********************************
@@ -355,8 +346,7 @@
 			<script src="assets/js/global.min.js"></script>
 			<script src="assets/js/bootstrap-select.min.js"></script>
 		
-
-	        <script src="assets/js/chart.bundle.min.js"></script>
+			<script src="assets/js/chart.bundle.min.js"></script>
             <script src="assets/js/owl.carousel.js"></script>
             <script src="assets/js/apexchart.js"></script>
 			<script src="assets/js/custom.min.js"></script>
@@ -364,7 +354,7 @@
 
             <!---
 				
-				<script src="assets/js/dashboard-1.js"></script>
+    	
 			<script src="assets/js/custom.min.js"></script>
 			<script src="assets/js/deznav-init.js"></script>
 				--->
@@ -377,6 +367,4 @@
         Main wrapper end
     ***********************************-->
 
-<svg id="SvgjsSvg1001" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;"><defs id="SvgjsDefs1002"></defs><polyline id="SvgjsPolyline1003" points="0,0"></polyline><path id="SvgjsPath1004" d="M-1 282.348L-1 282.348C-1 282.348 51.81396484374999 282.348 51.81396484374999 282.348C51.81396484374999 282.348 103.62792968749999 282.348 103.62792968749999 282.348C103.62792968749999 282.348 155.44189453125 282.348 155.44189453125 282.348C155.44189453125 282.348 207.25585937499997 282.348 207.25585937499997 282.348C207.25585937499997 282.348 259.06982421875 282.348 259.06982421875 282.348C259.06982421875 282.348 310.8837890625 282.348 310.8837890625 282.348C310.8837890625 282.348 362.69775390624994 282.348 362.69775390624994 282.348C362.69775390624994 282.348 414.51171874999994 282.348 414.51171874999994 282.348C414.51171874999994 282.348 414.51171874999994 282.348 414.51171874999994 282.348 "></path></svg>
-<div class="jqvmap-label" style="display: none;"></div><div class="jqvmap-label" style="display: none;"></div><div class="jqvmap-label" style="display: none; left: 71.2656px; top: 2028.7px;">Canada</div>
 </body></html>

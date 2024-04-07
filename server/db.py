@@ -247,6 +247,18 @@ def getOrder(invoice=None,server=None,user=None):
             
             return response.json()
         return response.json()
+        
+def deleteOrder(id=None,server=None,user=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+":8081/api/models/user/deleteBook/"+id,json={'delete':True},headers=headers)
+        if response.status_code == 200:
+            
+            return response.json()
+        return response.json()
 
 def getReviews(user=None,server=None):
     if user:

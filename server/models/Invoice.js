@@ -14,6 +14,10 @@ const invoiceSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    cancelled: {
+        type: Boolean,
+        default: false
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'

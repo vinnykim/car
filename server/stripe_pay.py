@@ -3,7 +3,7 @@ import requests
 import json
 
 # Set your secret API key
-stripe.api_key = 'your_secret_api_key'
+stripe.api_key = 'pk_test_51MBfXmHwqgFfBwcHa7j9ds0K6aMemrGJrKrIIRT0Hu3WzyupZR1Im6RtbpoOKfAPmVXctTe4AITig3qzmWPwPknK00lzlRU98W'
 
 
 

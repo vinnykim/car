@@ -6,6 +6,8 @@ $(document).ready(function(){
         if(datas.vehicles.length === 0){}
         for(var vehicle of datas.vehicles){
             console.log(vehicle)
+            var bookings = vehicle.bookings
+            vehicle = vehicle.vehicle
             let img_file = vehicle.description.vehicleFiles ? vehicle.description.vehicleFiles : "n/a.jpg"
             html += `
             <div class="col-xl-3 col-xxl-4 col-md-6 col-sm-6 col-lg-4 m-b30" style="max-height: ;" onclick="location.href='detail.html?vehicle=${vehicle._id}'">
@@ -21,13 +23,15 @@ $(document).ready(function(){
             <div class="dz-content">
                 <img src="assets/arrivals/${img_file.split(",")[0]}" height="198px" width="100%" style="object-fit:cover;"></img>
                 <h3 class="title">${vehicle.description.vehiclePrice}</h3>
+                <a style="position:absolute;right: 2%;text-align:right;" href="javascript:void(0)">Max ${vehicle.description.vehicleMax} | Orders ${bookings.total}<br> | Completed ${bookings.complete}</a>
+                
                 <div class="dz-meta">
                     <ul>
                         <li><a href="javascript:void(0);">
                         ${vehicle.description.vehicleMake }, ${vehicle.description.vehicleDetail}, ${vehicle.description.vehicleFuel}</a></li>
                     </ul>
                 </div>
-                <p>${vehicle.description.vehicleDescription ? vehicle.description.vehicleDescription : "Vehicle Description"}.</p>
+                <p>Live View : <a href="live_view?vehicle=${vehicle._id}" target="_blank">${vehicle.live_view ? "Enabled" : "Disabled"}</a></p>
                 <hr>
                 <div class="dz-footer">
                     <div class="property-card">

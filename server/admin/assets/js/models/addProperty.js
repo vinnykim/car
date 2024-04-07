@@ -62,9 +62,11 @@ $(document).ready(function(){
                 Object.keys(obj).forEach(key => {
                     const value = obj[key];
                     $(`input[name="${key}"]`).val(value);
+                    $(`textarea[name="${key}"]`).val(value);
+                    $(`select[name="${key}"]`).val(value);
                     //console.log(`Key: ${key}, Value: ${value}`);
                 });
-               
+                document.title = 'Editing Vehicle '+datas.vehicle.name;
             })
         }
     }

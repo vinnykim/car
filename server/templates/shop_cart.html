@@ -101,7 +101,7 @@
                     <td>KES {{order["invoice"]["amount"]}}</td>
                     
                 </td>
-                <td></td>
+                <td><a href="?id={{order['invoice']['_id']}}&delete=true">Delete</a></td>
             </tr>
             {%endfor%}
         </table>
