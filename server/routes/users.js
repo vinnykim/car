@@ -108,6 +108,7 @@ router.post(
   '/register',
   [
     check('name', 'Name is required').not().isEmpty(),
+    check('stripe_id', 'ID is required').not().isEmpty(),
     check('email', 'Please include a valid email address').isEmail(),
     check(
       'password',
@@ -120,7 +121,7 @@ router.post(
       return res.status(400).json({message: errors.array()[0].msg })
     }
 
-    const { name, phone, email, password } = req.body
+    const { name, phone, email, password,stripe_id } = req.body
 	
     try {
       let user = await User.findOne({ email })
@@ -133,11 +134,16 @@ router.post(
       if (user) {
         return res.status(400).json({ message: 'User Already Exits' })
       }
+    user = await User.findOne({ stripe_id })
+
+    if (user) {
+        return res.status(400).json({ message: 'User Already Exits' })
+    }
 	   const userFields = {}
 	  if (name) userFields.name = name
 	  if (email) userFields.email = email
 	  if (phone) userFields.phone = phone
-	  
+	  if(stripe_id)userFields.stripe_id = stripe_id
       
       const salt = await bcrypt.genSalt(10)
 	  if (password) userFields.password =await bcrypt.hash(password, salt)

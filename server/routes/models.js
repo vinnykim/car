@@ -17,34 +17,80 @@ const Review = require('../models/Review')
 const Handler = require("../models/Handler")
 const Checkout = require("../models/Checkout")
 
+router.post('/updateStripe',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const user_id = req.user.id
+	  const {stripe_id} = req.body
+	  const user = await User.findById(user_id)
+	  if(stripe_id && !user.stripe_id){
+		  
+		  await User.findByIdAndUpdate(
+			user_id,
+			{$set:{stripe_id:stripe_id}},
+				{new:true},
+		  )
+	  }
+	  result.message = "Stripe Id Updated"
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
 router.post('/saveCheckout',auth,  async (req, res) => {
 	try {
 	  const result = {}
 	  const user_id = req.user.id
 	  const data = req.body
-	  const found = await Checkout.findOne({id:data.id,user:user_id})
-	  if(data.update === true && found){
-		await Checkout.findByIdAndUpdate(
-			found._id,
-			{$set:{description:data}},
-			{new:true}
-		)
-		const invoice = await Invoice.find({user:user_id,complete:false,cancelled:false})
-		for(var inv of invoice){
-			await Invoice.findByIdAndUpdate(
-				inv._id,
-				{$set:{complete:true}},
+	  console.log(data)
+	  if(data.id !== null){
+		const found = await Checkout.findOne({user:user_id})
+		//console.log(found)
+		if(found){
+			await Checkout.findByIdAndUpdate(
+				found._id,
+				{$set:{description:data,id:data.id}},
 				{new:true}
 			)
-		}
-		return res.status(200).json({message:"Checkout updated"})
+			const books = await Book.find({user:user_id})
+			/*const invoice = await Invoice.find({user:user_id,complete:false,cancelled:false})
+			for(var inv of invoice){
+				await Invoice.findByIdAndUpdate(
+					inv._id,
+					{$set:{complete:true}},
+					{new:true}
+				)
+			}*/
+			return res.status(200).json({message:"Checkout completed & updated",checkout:found})
+		}else{
+			const checkout = new Checkout()
+			checkout.id = data.id
+			checkout.description = data
+			
+			checkout.user = user_id
+			await checkout.save()
+			result.checkout = checkout
+			result.message = "Added new checkout"
+			return res.status(200).json(result)
+		}	
+		
+	}	
+	
+	  const found = await Checkout.findOne({id: { $ne: null },user:user_id})
+	  if(found){
+		result.message = "Checkout found, proceed to complete"
+		result.checkout = found
+	  	return res.status(200).json(result)
 	  }
 	  const checkout = new Checkout()
-	  checkout.id = data.id
+	  checkout.id = null
 	  
 	  checkout.user = user_id
 	  await checkout.save()
-	  result.message = "Added review"
+	  result.checkout = checkout
+	  result.message = "Added new  checkout"
 	  return res.status(200).json(result)
 	} catch (error) {
 	  console.error(error.message)
@@ -142,7 +188,10 @@ router.post('/getCart',auth,  async (req, res) => {
 			
 			}
 			result.cart.total += 1
-			result.cart.amount += invoice.amount
+			if(book.complete === false){
+				result.cart.amount += invoice.amount
+			}
+			
 		}
 	  }
 	
@@ -230,7 +279,7 @@ router.post('/addCart',auth,  async (req, res) => {
 		result.message = "Vehicle not available"
 		return res.status(404).json(result)
 	  }
-	  const booked = await Book.findOne({user:user_id,vehicle:vehicle_id})
+	  const booked = await Book.findOne({user:user_id,vehicle:vehicle_id,complete:false})
 	  if(booked){
 		return res.status(200).json({message: "Already booked",book:booked})
 	  }else{

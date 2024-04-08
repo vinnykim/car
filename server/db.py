@@ -87,7 +87,7 @@ def Login(username,password,server=None):
             return result
         return response.json()
     return False
-def Register(username,password,email,phone,server=None):
+def Register(username,password,email,phone,stripe_id=None,server=None):
     db = myDB()
     if server:
         data = {
@@ -95,6 +95,7 @@ def Register(username,password,email,phone,server=None):
             'phone':phone,
             'email':email,
             'password':password,
+            'stripe_id':stripe_id,
         }
     
     response = requests.post(server+":8081/api/users/register",json=data)

@@ -4,7 +4,7 @@ import json
 from keys import Key
 import subprocess
 import random
-from stripe_pay import createCheckout,saveCheckout
+from stripe_pay import *
 import stripe
 
 STRIPE_WEBHOOK = 'whsec_5f9146f9f271b5f3bd03d1c5bbd0e97880fcfda41ec69bdfd5b578bb0820399e'
@@ -115,14 +115,18 @@ def checkout():
     user = getUser(user=session.get("user"),server=SERVER_NAME)
     user = user.get("user") if user.get("user") else {}
     cart = cart.get("cart") if cart.get("cart") else {}
-    if request.method == "POST" and "cardNumber" in request.form and "cardCvv" in request.form:
+    customer = getCustomer(user=user)
+    #print(user)
+    update_user = updateUserStripe(user=session.get("user"),server=SERVER_NAME,stripe_id = customer.get("id"))
+    if request.method == "POST":# and "cardNumber" in request.form and "cardCvv" in request.form:
         try:
+            
             cardNumber = request.form["cardNumber"]
             cardCvv = request.form["cardCvv"]
             
             cardExpiry = request.form["cardExpiry"]
             country = request.form["country"]
-            city = request.form["city"]
+            city = request.form["state"]
             data = {
                 'cardNumber':cardNumber,
                 'cardCvv':cardCvv,
@@ -131,12 +135,23 @@ def checkout():
                 'country':country,
                 'city':city,
             }
-            pay = createCheckout(data,user=user,cart=cart,server=SERVER_NAME)
+            #print(cart)
+            result = saveCheckout(id=None,user=session.get("user"),server=SERVER_NAME)
+            #print(result)
+            session_id = result.get("checkout")["id"]
+            print("sessionid",session_id)
+            if session_id != None:
+                pay = getCheckout(user=user,session_id=session_id)
+                if pay == False:
+                    pay = createCheckout(data,checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_NAME)
+            else:
+                pay = createCheckout(data,checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_NAME)
+            #print(pay)
             if pay:
                 msg = "Checkout success"
-                result = saveCheckout(id=pay,user=session.get("user"),server=SERVER_NAME)
+                result = saveCheckout(id=pay["id"],user=session.get("user"),server=SERVER_NAME)
                 msg = result.get("message") if result.get("message") else msg
-                return redirect("checkout?msg="+msg)
+                return redirect(pay["url"])
             msg = "Checkout Incomplete"
         except Exception as e:
             msg = str(e)
@@ -161,7 +176,7 @@ def cart():
             msg = dell.get("message")
             return redirect("cart?msg="+msg)
     cart = getCart(user=session.get("user"),server=SERVER_NAME)
-    
+    #print(cart)
     cart = cart.get("cart") if cart.get("cart") else {}
     empty = cart.get("total") if cart.get("total") else 0
     return render_template("shop_cart.html",**locals())
@@ -228,7 +243,8 @@ def signup():
         phone = request.form["phone"] if "phone" in request.form else random.randint(123456789,987654321)
         username = request.form['name']
         password= request.form['password']
-        result = Register(username,password,email,phone,server=SERVER_NAME)
+        stripe_id = getCustomer(user={"name":username,"email":email,"phone":phone})
+        result = Register(username,password,email,phone,stripe_id=stripe_id["id"],server=SERVER_NAME)
         print(result)
         if result == False:
             msg = 'Error: An error occured, try again'
@@ -322,7 +338,7 @@ def tourXml():
 def routeFile(filename):
     return send_file("static\\tiles\\f_on_closed\\"+filename)
     
-node_command = ['','']
+node_command = ['node','server.js']
 
 if __name__ == '__main__':
     try:
@@ -332,4 +348,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(str(e))
         pass
-    app.run("0.0.0.0",port =80, debug=True)
+    app.run("0.0.0.0",port =80, debug=False)

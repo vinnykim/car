@@ -15,6 +15,10 @@ const UserSchema = mongoose.Schema({
         type: Number,
         default:254,
     },
+	stripe_id:{
+		type:String,
+		unique: true,
+	},
     password: {
         type: String,
         required: true,
