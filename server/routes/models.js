@@ -16,6 +16,51 @@ const Wish = require("../models/Wish")
 const Review = require('../models/Review')
 const Handler = require("../models/Handler")
 const Checkout = require("../models/Checkout")
+const Payment = require("../models/Payment")
+
+router.post('/updateCard',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const user_id = req.user.id
+	  const data = req.body
+	  const user = await User.findById(user_id)
+	  const card = await Payment.findOne({user:user_id})
+	  result.message = "No card data"
+	  console.log(data)
+	  if(card){
+		if(data.id){
+			await Payment.findByIdUpdate(
+				card._id,
+				{$set:{id:data.id,description:data}},
+				{new:true}
+			)
+			card.id = data.id
+			card.description = data
+			result.card = card
+			result.message = "User card data Updated"
+		}else{
+			result.card = card
+			return res.status(200).json(result)
+		}
+	  }else{
+		
+			var newcard = new Payment()
+			newcard.user = user_id
+			newcard.id = data.id ? data.id : null
+			newcard.description = data
+			await newcard.save()
+			result.card = newcard
+			result.message = "Created new card"
+		
+	  }
+	  
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
 
 router.post('/updateStripe',auth,  async (req, res) => {
 	try {
@@ -39,6 +84,54 @@ router.post('/updateStripe',auth,  async (req, res) => {
 	}
 })
 
+router.post('/updateCheckout',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const user_id = req.user.id
+	  const data = req.body
+	  const user = await Checkout.findOne({id: { $ne: null },user:user_id})
+	  if(user){
+		if(data.id !== user.id){
+			return res.status(400).json({message:"Checkout data do not correspond"})
+		}
+		const checkoutInvoices = []
+		if(data.payment_status === "paid" || data.status && data.status === "succeeded"){
+			const dt = new Date()
+			const books = await Book.find({user:user_id})
+			const invoice = await Invoice.find({user:user_id,complete:false,cancelled:false})
+			for(var inv of invoice){
+				await Invoice.findByIdAndUpdate(
+					inv._id,
+					{$set:{complete:true,due:dt}},
+					{new:true}
+				)
+				checkoutInvoices.push(inv._id)
+			}
+			for(var book of books){
+				await Book.findByIdAndUpdate(
+					book._id,
+					{$set:{complete:true}},
+					{new:true}
+				)
+			}
+			await Checkout.findByIdAndUpdate(
+				user._id,
+				{$set:{complete:true,invoices:checkoutInvoices}},
+				{new:true}
+			)
+			result.message = "Checkout Updated"
+		}else{
+			result.message = "Checkout status is unpaid"
+		}
+	  }
+	  
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
 router.post('/saveCheckout',auth,  async (req, res) => {
 	try {
 	  const result = {}
@@ -46,7 +139,7 @@ router.post('/saveCheckout',auth,  async (req, res) => {
 	  const data = req.body
 	  console.log(data)
 	  if(data.id !== null){
-		const found = await Checkout.findOne({user:user_id})
+		const found = await Checkout.findOne({user:user_id,complete:false})
 		//console.log(found)
 		if(found){
 			await Checkout.findByIdAndUpdate(
@@ -54,7 +147,7 @@ router.post('/saveCheckout',auth,  async (req, res) => {
 				{$set:{description:data,id:data.id}},
 				{new:true}
 			)
-			const books = await Book.find({user:user_id})
+			
 			/*const invoice = await Invoice.find({user:user_id,complete:false,cancelled:false})
 			for(var inv of invoice){
 				await Invoice.findByIdAndUpdate(
@@ -78,7 +171,7 @@ router.post('/saveCheckout',auth,  async (req, res) => {
 		
 	}	
 	
-	  const found = await Checkout.findOne({id: { $ne: null },user:user_id})
+	  const found = await Checkout.findOne({id: { $ne: null },user:user_id,complete:false})
 	  if(found){
 		result.message = "Checkout found, proceed to complete"
 		result.checkout = found
@@ -188,7 +281,7 @@ router.post('/getCart',auth,  async (req, res) => {
 			
 			}
 			result.cart.total += 1
-			if(book.complete === false){
+			if(invoice.complete === false){
 				result.cart.amount += invoice.amount
 			}
 			

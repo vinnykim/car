@@ -20,7 +20,7 @@ section {
 <script src="/static/js/smooth-scroll.js"></script>
 
 
-<div class="container">
+<div class="container" style="margin-bottom:54px;">
 	<div class="mbr-section-head">
 		<h3 class="mbr-section-title mbr-fonts-style mb-2 title-relative display-2">
 			Vehicle Compare
@@ -30,7 +30,7 @@ section {
 		</h3>
 		
 	</div>
-	<div class="row mbr-gallery mt-4">
+	<div class="row mbr-gallery mt-4" style="margin-bottom:54px;">
 		{%for vehicle in wishlist.get("pending")%}
         {%set img_file = vehicle["vehicle"]["description"]["vehicleFiles"] if vehicle["vehicle"]["description"]["vehicleFiles"] else "n/a.jpg"%}
 		<div class="col-12 col-md-6 col-lg-4 item gallery-image">

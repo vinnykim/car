@@ -112,7 +112,7 @@ padding-top: 15px;
                       </div>
                     </div>
     
-                    <p class="mt-4 pt-2 mb-0">Back to ? <a href="orders" style="color: #f37a27;">Orders</a></p>
+                    <p class="mt-4 pt-2 mb-0">Back to ? <a href="orders" style="color: #f37a27;">Orders</a>&nbsp;Add review<a href="review?id={{order['book']['_id']}}">review</a></a></p>
         
                   </div>
                 </div>
@@ -129,8 +129,18 @@ padding-top: 15px;
     
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="d-flex flex-column">
-                    <span class="lead fw-normal">{{"Your order has been delivered" if order["book"]["complete"] else "Your order has been recieved"}}</span>
+                    <span class="lead fw-normal">{{order["vehicle"]["name"]}} | {{"Your order has been delivered" if order["book"]["complete"] else "Your order has been recieved"}}</span>
                     <span class="text-muted small">{{order["invoice"]["due"]}}</span>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="d-flex flex-column align-items-start"><span>{{order["book"]["date"]}}</span> | <span>Order placed</span>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center"><span>{{order["invoice"]["due"]}}</span> | <span>Order
+                        paid</span></div>
+                    <div class="d-flex flex-column justify-content-center align-items-center"><span> </span><span>Order Dispatched</span></div>
+                    <div class="d-flex flex-column align-items-center"><span> </span><span>Out for
+                        delivery</span></div>
+                    
                   </div>
                   <div>
                     <button class="btn btn-outline-primary" type="button" onclick="location.search='invoice={{order["invoice"]["_id"]}}'">Track order details</button>
@@ -138,27 +148,7 @@ padding-top: 15px;
                 </div>
                 <hr class="my-4">
     
-                <div class="d-flex flex-row justify-content-between align-items-center align-content-center">
-                  <span class="dot"></span>
-                  <hr class="flex-fill track-line"><span class="dot"></span>
-                  <hr class="flex-fill track-line"><span class="dot"></span>
-                  <hr class="flex-fill track-line"><span class="dot"></span>
-                  <hr class="flex-fill track-line"><span
-                    class="d-flex justify-content-center align-items-center big-dot dot">
-                    <i class="fa fa-check text-white"></i></span>
-                </div>
-    
-                <div class="d-flex flex-row justify-content-between align-items-center">
-                  <div class="d-flex flex-column align-items-start"><span>{{order["book"]["date"]}}</span><span>Order placed</span>
-                  </div>
-                  <div class="d-flex flex-column justify-content-center"><span>{{order["invoice"]["date"]}}</span><span>Order
-                      placed</span></div>
-                  <div class="d-flex flex-column justify-content-center align-items-center"><span> </span><span>Order Dispatched</span></div>
-                  <div class="d-flex flex-column align-items-center"><span> </span><span>Out for
-                      delivery</span></div>
-                  <div class="d-flex flex-column align-items-end"><span> {{order["invoice"]["due"]}} </span><span>Delivered</span></div>
-                </div>
-    
+                
               </div>
             </div>
           </div>
