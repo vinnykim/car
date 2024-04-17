@@ -2,18 +2,13 @@
 {%block content%}
 <section class=" arrivals show " style="width:100%;position:relative;text-align: left;">
     <div class="row">
-<<<<<<< HEAD
-        <div class="flexdisplay">
-    {%for vehicle in vehicles %}
-            {%set img_file = vehicle['description']['vehicleFiles'] if vehicle['description']['vehicleFiles'] else "n/a.jpg"%}
-        <div class="arr-col" style="max-width: 88%;width: 28%;margin-left: 12px;border-radius: 8px;cursor: pointer;">
-=======
+
         <div class="flexdisplay" style="flex-wrap:wrap;">
             
     {%for vehicle in vehicles %}
             {%set img_file = vehicle['description']['vehicleFiles'] if vehicle['description']['vehicleFiles'] else "n/a.jpg"%}
         <div class="arr-col" onclick="" style="max-width: 88%;box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;position: relative;width: 269px;margin-left: 12px;border-radius: 8px;cursor: pointer;">
->>>>>>> ba97854 (edit heroku git)
+
             <div class="image product-image" style="width: 100%;" onclick='location.href="shop-single.html?id={{vehicle['_id']}}"'>
                 <img src="/static/arrivals/{{img_file.split(',')[0]}}" alt="" style="object-fit:cover;width: 100%;">
             </div>
@@ -41,9 +36,16 @@
                 <span><i class='bx bx-target-lock'></i>{{vehicle["description"]["vehicleHp"]}} HosrsePower</span>
             </div>
             <div class="price">
+				<form style="display:none;" method="POST" id="cartForm" action="/update">
+					<input type="hidden" name="vehicle_id" value={{vehicle["_id"] if vehicle else null}}>
+					<input type="hidden" name="user_id" value={{user["_id"] if user else null}}>
+					
+				</form>
                 <p>KES &nbsp {{vehicle["description"]["vehiclePrice"]}}</p>
-                <a href="shop-single.html?id={{vehicle['_id']}}"><button>Details</button></a>
+                <a onclick="document.getElementById('cartForm').submit()"><button>Add to Cart</button></a>
+				{%if vehicle["live_view"] != false%}
 				<a href="/app/live/{{vehicle['_id']}}">Live View</a>
+				{%endif%}
             </div>
         </div>  
     {%endfor%}

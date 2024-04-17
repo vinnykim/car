@@ -90,7 +90,7 @@ def detailPage():
         return redirect("shop")
     vehicle_detail = vehicle.get("vehicle")
     user = getUser(user=session.get("user"),server=SERVER_NAME)
-    #print(user)
+    #print(vehicle_detail)
     if request.method == "POST" and "vehicle_id" in request.form:
         if user.get("_id") == None:
             return redirect("logout")
@@ -116,7 +116,7 @@ def checkout():
     user = user.get("user") if user.get("user") else {}
     cart = cart.get("cart") if cart.get("cart") else {}
     customer = getCustomer(user=user)
-    #print(user)
+    print(customer)
     update_user = updateUserStripe(user=session.get("user"),server=SERVER_NAME,stripe_id = customer.get("id"))
     if request.method == "POST":# and "cardNumber" in request.form and "cardCvv" in request.form:
         try:
