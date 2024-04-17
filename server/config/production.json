@@ -1,4 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://otutukingsley:richie999@contactkeeper.rivle.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  "jwtSecret": "Artlist"
-}

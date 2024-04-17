@@ -2,17 +2,21 @@ from flask import Flask,render_template, request, session, jsonify,redirect,send
 from db import Login,Register,getOrder,deleteOrder,getVehicles,getVehicle,getCategories,getServices,getUser,addCart,getCart,addWish,getWish,getReviews
 import json
 from keys import Key
-import subprocess
+
 import random
 from stripe_pay import *
 import stripe
+import os
 
 STRIPE_WEBHOOK = 'whsec_5f9146f9f271b5f3bd03d1c5bbd0e97880fcfda41ec69bdfd5b578bb0820399e'
 
 app = Flask(__name__)
 
 app.secret_key = "secret key"
-SERVER_NAME = 'http://127.0.0.1'
+
+SERVER_NAME = 'http://localhost:8081'
+SERVER_URL = 'http://localhost:5000'
+
 
 @app.route("/")
 def landing():
@@ -38,10 +42,6 @@ def shop():
     filter = request.args.get("search") if request.args.get("search") else None
     vehicles = getVehicles(server=SERVER_NAME)
     #print(vehicles)
-    for v in vehicles:
-        print(v)
-       
-    
     return render_template("shop.html",**locals())
 
 @app.route("/book")
@@ -139,11 +139,35 @@ def checkout():
             result = saveCheckout(id=None,user=session.get("user"),server=SERVER_NAME)
             #print(result)
             session_id = result.get("checkout")["id"]
+
             print("sessionid",session_id)
             if session_id != None:
                 pay = getCheckout(user=user,session_id=session_id)
                 if pay == False:
                     pay = createCheckout(data,checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_NAME)
+
+            print("got sessionid",session_id)
+            if not request.args.get("card"):
+                user_card = {}
+                if session_id != None:
+                    pay = getCheckout(user=user,session_id=session_id)
+                    if pay.get("payment_status"):
+                        msg = updateCheckout(pay,user=session.get("user"),server=SERVER_NAME)
+                        print(msg)
+                    if pay == False:
+                        pay = createCheckout(checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_URL)
+                else:
+                    pay = createCheckout(checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_URL)
+                #print(pay)
+                if pay:
+                    msg = "Checkout success"
+                    result = saveCheckout(id=pay["id"],user=session.get("user"),server=SERVER_NAME)
+                    msg = result.get("message") if result.get("message") else msg
+                    if pay.get("url"):
+                        return redirect(pay["url"] )
+                    if pay.get("payment_status") == "paid":
+                        return redirect("orders")
+
             else:
                 pay = createCheckout(data,checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_NAME)
             #print(pay)
@@ -336,11 +360,12 @@ def tourXml():
     
 @app.route("/tiles/f_on_closed/<string:filename>")
 def routeFile(filename):
-    return send_file("static\\tiles\\f_on_closed\\"+filename)
+    return send_file("static/tiles/f_on_closed/"+filename)
     
-node_command = ['node','server.js']
+
 
 if __name__ == '__main__':
+
     try:
         node_process = subprocess.Popen(node_command)
         result = node_process
@@ -348,4 +373,6 @@ if __name__ == '__main__':
     except Exception as e:
         print(str(e))
         pass
-    app.run("0.0.0.0",port =80, debug=False)
+
+    app.run("0.0.0.0",debug=False)
+
