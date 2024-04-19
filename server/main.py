@@ -18,6 +18,15 @@ SERVER_NAME = 'http://localhost:8081'
 SERVER_URL = 'http://localhost:5000'
 
 
+@app.route('/robots.txt')
+def robots_txt():
+    robots_txt_content = """
+    User-agent: *
+    """
+    return Response(robots_txt_content, mimetype='text/plain')
+
+
+
 @app.route("/")
 def landing():
     return redirect("/shop")
