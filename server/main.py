@@ -2,17 +2,19 @@ from flask import Flask,render_template, request, session, jsonify,redirect,send
 from db import Login,Register,getOrder,deleteOrder,getVehicles,getVehicle,getCategories,getServices,getUser,addCart,getCart,addWish,getWish,getReviews
 import json
 from keys import Key
-import subprocess
+
 import random
 from stripe_pay import *
 import stripe
+import os
 
 STRIPE_WEBHOOK = 'whsec_5f9146f9f271b5f3bd03d1c5bbd0e97880fcfda41ec69bdfd5b578bb0820399e'
 
 app = Flask(__name__)
 
 app.secret_key = "secret key"
-SERVER_NAME = 'http://localhost'
+SERVER_NAME = 'https://supercarstoreadmin-820c4e218a56.herokuapp.com'
+SERVER_URL = 'http://localhost'
 
 @app.route("/")
 def landing():
@@ -40,10 +42,6 @@ def shop():
     filter = request.args.get("search") if request.args.get("search") else None
     vehicles = getVehicles(server=SERVER_NAME)
     #print(vehicles)
-    for v in vehicles:
-        print(v)
-       
-    
     return render_template("shop.html",**locals())
 
 @app.route("/book")
@@ -92,7 +90,7 @@ def detailPage():
         return redirect("shop")
     vehicle_detail = vehicle.get("vehicle")
     user = getUser(user=session.get("user"),server=SERVER_NAME)
-    #print(user)
+    #print(vehicle_detail)
     if request.method == "POST" and "vehicle_id" in request.form:
         if user.get("_id") == None:
             return redirect("logout")
@@ -366,11 +364,26 @@ def tourXml():
     
 @app.route("/tiles/f_on_closed/<string:filename>")
 def routeFile(filename):
-    return send_file("static\\tiles\\f_on_closed\\"+filename)
+    return send_file("static/tiles/f_on_closed/"+filename)
+@app.route("/tiles/b_on_closed/<string:filename>")
+def routeFile2(filename):
+
+    return send_file("static/tiles/b_on_closed/"+filename)
+
+@app.route("/tiles/b_off_closed/<string:filename>")
+def routeFile3(filename):
     
-node_command = ['node','server.js']
+    return send_file("static/tiles/b_off_closed/"+filename)
+
+@app.route("/tiles/f_off_closed/<string:filename>")
+def routeFile4(filename):
+    
+    return send_file("static/tiles/f_off_closed/"+filename)
+    
+
 
 if __name__ == '__main__':
+
     try:
         #node_process = subprocess.Popen(node_command)
         #result = node_process

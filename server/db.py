@@ -3,9 +3,7 @@ from datetime import datetime
 import requests
 import json
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-
-mydb = myclient["carservice"]
+mydb={}
 
 class myDB:
     def __init__(self):
@@ -65,7 +63,7 @@ def bookService(server=None,user=None,book_data=None,id=None):
             'x-auth-token':user
         }
 
-        response = requests.post(server+":8081/api/models/user/Book",
+        response = requests.post(server+"/api/models/user/Book",
             json=book_data,
             headers = headers
         )
@@ -81,7 +79,7 @@ def Login(username,password,server=None):
         'password':password
     }
     if server != None:
-        response = requests.post(server+":8081/api/auth",json=data)
+        response = requests.post(server+"/api/auth",json=data)
         if response.status_code == 200:
             result = response.json()
             return result
@@ -98,7 +96,7 @@ def Register(username,password,email,phone,stripe_id=None,server=None):
             'stripe_id':stripe_id,
         }
     
-    response = requests.post(server+":8081/api/users/register",json=data)
+    response = requests.post(server+"/api/users/register",json=data)
     if response.status_code == 200:
         result = response.json()
         return result
@@ -106,7 +104,7 @@ def Register(username,password,email,phone,stripe_id=None,server=None):
     
 def getVehicles(server=None):
     categories =[]
-    response = requests.post(server+":8081/api/models/user/getVehicles")
+    response = requests.post(server+"/api/models/user/getVehicles")
     print(response.status_code)
     if response.status_code == 200:
         res = response.json()
@@ -119,7 +117,7 @@ def getVehicles(server=None):
 def getVehicle(server=None,id=None):
     categories =None
     if id:
-        response = requests.post(server+":8081/api/models/user/getVehicle/"+id)
+        response = requests.post(server+"/api/models/user/getVehicle/"+id)
         
         if response.status_code == 200:
             res = response.json()
@@ -133,7 +131,7 @@ def getUser(server=None,user=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.get(server+":8081/api/auth",headers=headers)
+        response = requests.get(server+"/api/auth",headers=headers)
         #print(response)
         if response.status_code == 200:
             res = response.json()
@@ -146,7 +144,7 @@ def getCategories(id=None,server=None,key=None):
         return []
     
     categories =[]
-    response = requests.post(server+":8081/api/models/user/getCategories/"+id)
+    response = requests.post(server+"/api/models/user/getCategories/"+id)
     if response.status_code == 200:
         res = response.json()
         for x in res["categories"]:
@@ -156,7 +154,7 @@ def getCategories(id=None,server=None,key=None):
         return False
 def getServices(server=None):
     db = myDB()
-    response = requests.post(server+":8081/api/models/user/getServices",json={})
+    response = requests.post(server+"/api/models/user/getServices",json={})
     services = []
     if response.status_code == 200:
         res = response.json()
@@ -171,7 +169,7 @@ def addWish(user=None,vehicle=None,server=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/addWish",json={'vehicle_id':vehicle},headers=headers)
+        response = requests.post(server+"/api/models/user/addWish",json={'vehicle_id':vehicle},headers=headers)
         print(response,response.json())
         if response.status_code == 200:
             return response.json()
@@ -183,7 +181,7 @@ def getWish(user=None,server=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/getWish",headers=headers)
+        response = requests.post(server+"/api/models/user/getWish",headers=headers)
         if response.status_code == 200:
             return response.json()
         return response.json()
@@ -194,7 +192,7 @@ def addCart(user=None,vehicle=None,server=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/addCart",json={'vehicle_id':vehicle},headers=headers)
+        response = requests.post(server+"/api/models/user/addCart",json={'vehicle_id':vehicle},headers=headers)
         print(response,response.json())
         if response.status_code == 200:
             
@@ -208,7 +206,7 @@ def getCart(user=None,server=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/getCart",json={},headers=headers)
+        response = requests.post(server+"/api/models/user/getCart",json={},headers=headers)
         if response.status_code == 200:
             #print(response.json())
             return response.json()
@@ -220,7 +218,7 @@ def addReview(data,user=None,id=None,server=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/addReview/"+id,json=data,headers=headers)
+        response = requests.post(server+"/api/models/user/addReview/"+id,json=data,headers=headers)
         if response.status_code == 200:
             return response.json()
         return response.json()
@@ -231,7 +229,7 @@ def getReviews(user=None,server=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/getReviews",json={},headers=headers)
+        response = requests.post(server+"/api/models/user/getReviews",json={},headers=headers)
         if response.status_code == 200:
             
             return response.json()
@@ -243,7 +241,7 @@ def getOrder(invoice=None,server=None,user=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/getOrder/"+invoice,json={},headers=headers)
+        response = requests.post(server+"/api/models/user/getOrder/"+invoice,json={},headers=headers)
         if response.status_code == 200:
             
             return response.json()
@@ -255,7 +253,7 @@ def deleteOrder(id=None,server=None,user=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/deleteBook/"+id,json={'delete':True},headers=headers)
+        response = requests.post(server+"/api/models/user/deleteBook/"+id,json={'delete':True},headers=headers)
         if response.status_code == 200:
             
             return response.json()
@@ -267,7 +265,7 @@ def getReviews(user=None,server=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/getReviews",headers=headers)
+        response = requests.post(server+"/api/models/user/getReviews",headers=headers)
         if response.status_code == 200:
             return response.json()
         return response.json()

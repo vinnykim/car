@@ -7,6 +7,8 @@ stripe.api_key = 'sk_test_51MBfXmHwqgFfBwcHuQUf60FfBBN0Pw0d5LELfDxCPm7kcstXQdSgI
 
 rate = 142
 
+server_url = "http://localhost"
+
 def updateUserStripe(stripe_id=None,user=None,server=None):
     if user:
         headers = {
@@ -16,7 +18,21 @@ def updateUserStripe(stripe_id=None,user=None,server=None):
         data = {
             "stripe_id":stripe_id,
         }
-        response = requests.post(server+":8081/api/models/user/updateStripe",json=data,headers=headers)
+        response = requests.post(server+"/api/models/user/updateStripe",json=data,headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+
+def updateUserCard(card=None,user=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        data = {
+            "stripe_id":stripe_id,
+        }
+        response = requests.post(server+"/api/models/user/updateCard",json=card,headers=headers)
         if response.status_code == 200:
             return response.json()
         return response.json()
@@ -104,7 +120,7 @@ def createIntent(user=None,card=None):
             receipt_email = user["email"],
             confirmation=True,
             automatic_payment_methods={"enabled": True},
-            return_url=server+'/checkout?checkout=success',
+            return_url=server_url+'/checkout?checkout=success',
         )
         print("intent => ",intent)
         return intent
@@ -166,8 +182,8 @@ def createCheckout(user=None,cart=None,server=None,checkout_id=None):
                 },
             ],
             mode='payment',
-            success_url=server+'/checkout?checkout=success',
-            cancel_url=server+'/cart?checkout=cancel',
+            success_url=server_url+'/checkout?checkout=success',
+            cancel_url=server_url+'/cart?checkout=cancel',
         )
         
         session_id = checkout_session.id
@@ -200,7 +216,7 @@ def saveCheckout(user=None,id=None,checkout_id=None,server=None,update=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/saveCheckout",json={'id':id,'update':update},headers=headers)
+        response = requests.post(server+"/api/models/user/saveCheckout",json={'id':id,'update':update},headers=headers)
         #print(response,response.json())
         if response.status_code == 200:
             return response.json()
@@ -212,7 +228,7 @@ def updateCheckout(data,user=None,checkout_id=None,server=None,update=None):
             'Content-Type': 'application/json',
             'x-auth-token':user
         }
-        response = requests.post(server+":8081/api/models/user/updateCheckout",json=data,headers=headers)
+        response = requests.post(server+"/api/models/user/updateCheckout",json=data,headers=headers)
         #print(response,response.json())
         if response.status_code == 200:
             return response.json()

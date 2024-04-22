@@ -39,9 +39,16 @@
                 
             </form>
             <div class="price">
+				<form style="display:none;" method="POST" id="cartForm" action="/update">
+					<input type="hidden" name="vehicle_id" value={{vehicle["_id"] if vehicle else null}}>
+					<input type="hidden" name="user_id" value={{user["_id"] if user else null}}>
+					
+				</form>
                 <p>KES &nbsp {{vehicle["description"]["vehiclePrice"]}}</p>
                 <a onclick='document.getElementById("cartForm{{vehicle['_id']}}").submit()'><button>Add to Cart</button></a>
+                {%if vehicle['live_view'] == True%}
 				<a href="/app/live/{{vehicle['_id']}}">Live View</a>
+				{%endif%}
             </div>
         </div>  
     {%endfor%}
