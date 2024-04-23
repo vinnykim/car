@@ -1,0 +1,74 @@
+{%extends 'main.html'%}
+
+{%block content%}
+<style>
+
+</style>
+
+<div class="container">
+	<div class="mbr-section-head">
+		<h3 class="mbr-section-title mbr-fonts-style mb-2 title-relative display-2">
+			Vehicle Price Alerts
+			<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" fill="currentColor" class="bi bi-arrow-down-short rotate" viewBox="0 0 16 16">
+				<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"></path>
+			</svg>
+		</h3>
+		<button data-toggle="modal" data-target="#newAlert">New Alert</button>
+	</div>
+	<div class="row mbr-gallery mt-4">
+		{%for vehicle in alerts%}
+        {%set img_file = vehicle["vehicle"]["description"]["vehicleFiles"] if vehicle["vehicle"]["description"]["vehicleFiles"] else "n/a.jpg"%}
+		<div class="col-12 col-md-6 col-lg-4 item gallery-image">
+			<div class="position" data-bs-toggle="modal">
+				<div class="item-wrapper" onclick="location.href='shop-single.html?id={{vehicle["vehicle"]["_id"]}}'">
+					<img class="w-100" src="static/arrivals/{{img_file.split(',')[0]}}" alt="" data-slide-to="0" data-bs-slide-to="0" data-target="#lb-taOxui8jjT" data-bs-target="#lb-taOxui8jjT">
+					<div class="icon-wrapper">
+						<span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
+					</div>
+
+					<div class="item-content">
+						<h5 class="item-title mbr-fonts-style mb-0 size display-5"><strong>{{vehicle.vehicle.description.vehicleModel}}</strong> | {{vehicle.vehicle.description.vehicleStatus}}</h5>
+						<p class="mbr-text mbr-fonts-style mb-0 mt-1 display-7">>KES {{vehicle.vehicle.description.vehiclePrice}}</p>
+						<p class="mbr-text mbr-fonts-style mb-0 mt-1 display-7">>{{vehicle.vehicle.description.vehicleCapacity}} Cc</p>
+						<p class="mbr-text mbr-fonts-style mb-0 mt-1 display-7">>{{vehicle.vehicle.description.vehicleFuel }} | {{vehicle.vehicle.description.vehicleMake }} </p>
+						<p class="mbr-text mbr-fonts-style"> <a href="/app/live/{{vehicle["vehicle"]["_id"]}}">Live View</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		{%endfor%}
+		
+	</div>
+	
+</div>
+<div class="modal" id="newAlert" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title" id="">Create New Alert</h4>
+		</div>
+		<div class="modal-body">
+		<form method="post">
+			<div class="form-group">
+				<label for="">Alert Name</label>
+				<input type="text" name="name" class="form-control hm-inpt-modal-s1" id="" placeholder="art">
+			</div>
+			<div class="form-group">
+				<label for="">Alert Price <small>(KES )</small></label>
+				<input type="number" name="price" min="4999" class="form-control hm-inpt-modal-s2" id="" placeholder="ie: items">
+			</div>
+			<div class="form-group">
+				<label for="">Description</small></label>
+				<textarea name="description" rows="6">Alert description</textarea>
+			</div>
+		</form>
+		</div>
+		<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-primary hm-btn-modal-s1" data-dismiss="modal"> Create Alert</button>
+		</div>
+	</div>
+	</div>
+</div>
+{%endblock%}

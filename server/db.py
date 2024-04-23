@@ -174,6 +174,39 @@ def addWish(user=None,vehicle=None,server=None):
         if response.status_code == 200:
             return response.json()
         return response.json()
+        
+def getAlerts(user=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+"/api/models/user/checkAlert",headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+        
+def newAlert(data,user=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+"/api/models/user/newAlert",json=data,headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+        
+def deleteAlert(id,user=None,server=None):
+    if user:
+        headers = {
+            'Content-Type': 'application/json',
+            'x-auth-token':user
+        }
+        response = requests.post(server+"/api/models/user/deleteAlert/"+id,json={},headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
 
 def getWish(user=None,server=None):
     if user:

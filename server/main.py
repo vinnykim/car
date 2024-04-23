@@ -36,6 +36,37 @@ def logout():
     session.clear()
     session["user"] = None
     return redirect("/login")
+    
+@app.route("/alerts",methods=["GET","POST"])
+def alerts():
+    if session.get("user") == None:
+        return redirect("logout")
+    alerts = getAlerts(user=session.get("user"),server=SERVER_NAME)
+    print("alerts",alerts)
+    msg = None
+    if request.method == "POST":
+        price = request.form["price"]
+        name = request.form["name"]
+        description = request.form["description"]
+        data = {
+            "name": name,
+            "price":price,
+            "description":description,
+        }
+        
+        result = newAlert(data,user=session.get("user"),server=SERVER_NAME)
+        print("new alert",result)
+        msg = result.message
+    if request.args.get("delete") != None:
+        id = request.args.get("id")
+        
+        if id:
+            result = deleteAlert(id,user=session.get("user"),server=SERVER_NAME)
+            print("delete alert",result)
+            msg = result.message
+        return redirect("alerts?msg="+msg)
+    #print(wishlist)
+    return render_template("alerts.html",**locals())
 
 @app.route("/compare")
 def compare():
