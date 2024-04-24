@@ -66,13 +66,13 @@
     {%set img_file = vehicle_detail['description']['vehicleFiles'] if vehicle_detail['description']['vehicleFiles'] else "n/a.jpg"%}
     <div class="left" onclick="location.href='/app/live/{{vehicle_detail.get("_id")}}'">
         <img class="main" src="/static/arrivals/{{img_file.split(',')[0]}}" alt="">
-		
+		<div class="image-gallery">
+			{% for image_source in img_file.split(",")[1:] %}
+				<img width="115px" height=" 99px" style="margin-top: 5px;" src="{{ url_for('static', filename='/arrivals/'+image_source) }}" alt="Image">
+			{% endfor %}
+		</div>
         <div class="col" style="width: 100%;text-align:center;">
-			<div class="image-gallery">
-				{% for image_source in img_file.split(",")[1:] %}
-					<img width="115px" height=" 99px" style="margin-top: 5px;" src="{{ url_for('static', filename='/arrivals/'+image_source) }}" alt="Image">
-				{% endfor %}
-			</div>
+			
 				{%if vehicle_detail["live_view"] != false%}
 					<a href="/app/live/{{vehicle['_id']}}"><button class="button-3">Live View</button></a>
 				{%endif%}
