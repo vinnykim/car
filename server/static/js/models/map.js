@@ -25,8 +25,9 @@ async function initMap(loc,id) {
     position.lat= -1.315926
 	position.lng= 36.8255 
   }
-  if(loc){
-	  console.log("locations")
+  if(loc !== undefined && loc !== null){
+	  position = loc
+	  console.log("locations",loc)
   }
   const zoom = 11
   const locations = [
