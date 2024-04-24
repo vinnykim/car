@@ -13,7 +13,8 @@ STRIPE_WEBHOOK = 'whsec_5f9146f9f271b5f3bd03d1c5bbd0e97880fcfda41ec69bdfd5b578bb
 app = Flask(__name__)
 
 app.secret_key = "secret key"
-SERVER_NAME = 'https://supercarstoreadmin-820c4e218a56.herokuapp.com'
+#SERVER_NAME = 'https://supercarstoreadmin-820c4e218a56.herokuapp.com'
+SERVER_NAME = "http://localhost:8081"
 SERVER_URL = 'http://localhost'
 
 @app.route("/")
@@ -278,9 +279,9 @@ def orders():
     user = getUser(user=session.get("user"),server=SERVER_NAME)
     if user.get("user") == None:
         return redirect("logout")
-    print(cart)
+    #print(cart)
     cart = cart.get("cart") if cart.get("cart") else {}
-    print(order)
+    #print(order)
     return render_template("orders.html",**locals())
 
 
