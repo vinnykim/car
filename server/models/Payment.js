@@ -1,34 +1,22 @@
 const mongoose = require('mongoose');
 
 const paymentSchema = mongoose.Schema({
-	company: {
+	user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'company'
+        ref: 'user'
     },
 	
-    name: {
-        type: String,
-        required: true,
-    },
-    card: {
-        type: String,
-		required: true,
-    },
-	cvv: {
-        type: String,
-    },
-	
-    expiry: {
+    id: {
         type: String,
 		
     },
+	
 	type: {
         type: String,
 		default:"card",
     },
-	identification: {
-        type: String,
-		
+	description:{
+        type: mongoose.Schema.Types.Object,
     },
     date: {
         type: Date,

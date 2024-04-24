@@ -16,7 +16,10 @@ const checkoutSchema = mongoose.Schema({
         type:Boolean,
         default:false
     },
-  
+    invoices:{
+        type:Array,
+        default:[]
+    },
     date: {
         type: Date,
         default: Date.now(),

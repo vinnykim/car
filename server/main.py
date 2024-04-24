@@ -13,19 +13,8 @@ STRIPE_WEBHOOK = 'whsec_5f9146f9f271b5f3bd03d1c5bbd0e97880fcfda41ec69bdfd5b578bb
 app = Flask(__name__)
 
 app.secret_key = "secret key"
-
-SERVER_NAME = 'http://localhost:8081'
-SERVER_URL = 'http://localhost:5000'
-
-
-@app.route('/robots.txt')
-def robots_txt():
-    robots_txt_content = """
-    User-agent: *
-    """
-    return Response(robots_txt_content, mimetype='text/plain')
-
-
+SERVER_NAME = 'https://supercarstoreadmin-820c4e218a56.herokuapp.com'
+SERVER_URL = 'http://localhost'
 
 @app.route("/")
 def landing():
@@ -71,6 +60,8 @@ def alerts():
 
 @app.route("/compare")
 def compare():
+    if session.get("user") == None:
+        return redirect("logout")
     vehicles = getVehicles(server=SERVER_NAME)
     wishlist = getWish(user=session.get("user"),server=SERVER_NAME)
     print(wishlist)
@@ -86,8 +77,12 @@ def shop():
     if filter != None:
         vehicle = []
         for v in vehicles:
-            if filter in v["name"] or filter in v["description"]["vehicleDescription"] or filter in v["description"]["vehicleMake"]:
-                vehicle.append(v)
+            try:
+                if filter in v["name"] or filter in v["description"]["vehicleDescription"] or filter in v["description"]["vehicleMake"]:
+                    vehicle.append(v)
+            except Exception as e:
+                print(str(e))
+                pass
     vehicles = vehicle if vehicle != None else vehicles
     
     #print(vehicles)
@@ -113,20 +108,20 @@ def reviews():
 @app.route("/update",methods=["post"])
 def update():
     user = getUser(user=session.get("user"),server=SERVER_NAME)
-    print(user)
+    
     if request.method == "POST" and "vehicle_id" in request.form:
         if user.get("user") == None:
             return redirect("logout")
         vehicle_id = request.form["vehicle_id"] 
         user_id = request.form["user_id"] if "user_id" in request.form else None
-        print(request.form)
+        
         if "compare" not in request.form:
             x = addCart(vehicle=vehicle_id,user=session.get("user"),server=SERVER_NAME)
         else:
             x = addWish(vehicle=vehicle_id,user=session.get("user"),server=SERVER_NAME)
 
         msg = x.get("message") if x else x 
-        
+        print(x)
         return redirect("shop-single.html?id="+vehicle_id+"&msg="+msg)
 @app.route("/shop-single.html",methods=["GET","POST"])
 def detailPage():
@@ -165,36 +160,45 @@ def checkout():
     user = user.get("user") if user.get("user") else {}
     cart = cart.get("cart") if cart.get("cart") else {}
     customer = getCustomer(user=user)
-    print(customer)
+    #print(user)
+    user_card = getCard(user=session.get("user"),server=SERVER_NAME)
+    print("user card =>",user_card)
+    
     update_user = updateUserStripe(user=session.get("user"),server=SERVER_NAME,stripe_id = customer.get("id"))
+    if request.args.get("checkout")=="success":
+        result = saveCheckout(id=None,user=session.get("user"),server=SERVER_NAME)
+        session_id = result.get("checkout")["id"]
+        print("got sessionid",session_id)
+        if session_id != None:
+            #pay = getCheckout(user=user,session_id=session_id)
+            pay = getIntent(user=user,id=session_id)
+            if pay.get("payment_status") or pay.get("status"):
+                msg = updateCheckout(pay,user=session.get("user"),server=SERVER_NAME)
+                print(msg)
+    if not request.args.get("card"):
+        user_card = {}
     if request.method == "POST":# and "cardNumber" in request.form and "cardCvv" in request.form:
         try:
-            
-            cardNumber = request.form["cardNumber"]
-            cardCvv = request.form["cardCvv"]
-            
-            cardExpiry = request.form["cardExpiry"]
-            country = request.form["country"]
-            city = request.form["state"]
-            data = {
-                'cardNumber':cardNumber,
-                'cardCvv':cardCvv,
-                'cardNumber':cardNumber,
-                'cardExpiry':cardExpiry,
-                'country':country,
-                'city':city,
-            }
+            if user_card == False:
+                cardNumber = request.form["cardNumber"]
+                cardCvv = request.form["cardCvv"]
+                
+                cardExpiry = request.form["cardExpiry"]
+                country = request.form["country"]
+                city = request.form["state"]
+                data = {
+                    'number':cardNumber,
+                    'cvc':cardCvv,
+                    'month':cardExpiry.split("/")[0],
+                    'year':cardExpiry.split("/")[-1],
+                    'country':country,
+                    'city':city,
+                }
+                user_card = createCard(data,user=session.get("user"),server=SERVER_NAME)
             #print(cart)
             result = saveCheckout(id=None,user=session.get("user"),server=SERVER_NAME)
             #print(result)
             session_id = result.get("checkout")["id"]
-
-            print("sessionid",session_id)
-            if session_id != None:
-                pay = getCheckout(user=user,session_id=session_id)
-                if pay == False:
-                    pay = createCheckout(data,checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_NAME)
-
             print("got sessionid",session_id)
             if not request.args.get("card"):
                 user_card = {}
@@ -204,9 +208,9 @@ def checkout():
                         msg = updateCheckout(pay,user=session.get("user"),server=SERVER_NAME)
                         print(msg)
                     if pay == False:
-                        pay = createCheckout(checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_URL)
+                        pay = createCheckout(checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_NAME)
                 else:
-                    pay = createCheckout(checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_URL)
+                    pay = createCheckout(checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_NAME)
                 #print(pay)
                 if pay:
                     msg = "Checkout success"
@@ -216,15 +220,20 @@ def checkout():
                         return redirect(pay["url"] )
                     if pay.get("payment_status") == "paid":
                         return redirect("orders")
-
             else:
-                pay = createCheckout(data,checkout_id=result["checkout"]["_id"],user=user,cart=cart,server=SERVER_NAME)
-            #print(pay)
-            if pay:
-                msg = "Checkout success"
-                result = saveCheckout(id=pay["id"],user=session.get("user"),server=SERVER_NAME)
-                msg = result.get("message") if result.get("message") else msg
-                return redirect(pay["url"])
+                if session_id != None:
+                    pay = getIntent(user=user,id=session_id)
+                    if pay == False:
+                        pay = createIntent(user=user,card=user_card,checkout_id=result["checkout"]["_id"])
+                else:
+                    pay = createIntent(user=user,card=user_card,checkout_id=result["checkout"]["_id"])
+                if pay:
+                    msg = "Checkout success, Charge will be automatically made on your card"
+                    result = saveCheckout(id=pay["id"],user=session.get("user"),server=SERVER_NAME)
+                    if pay.get("url"):
+                        return redirect(pay["url"] )
+                    if pay.get("payment_status") == "paid":
+                        return redirect("orders")
             msg = "Checkout Incomplete"
         except Exception as e:
             msg = str(e)
@@ -252,6 +261,8 @@ def cart():
     #print(cart)
     cart = cart.get("cart") if cart.get("cart") else {}
     empty = cart.get("total") if cart.get("total") else 0
+    if cart.get("amount") == None:
+        return redirect("cart")
     return render_template("shop_cart.html",**locals())
 
 @app.route("/history")
@@ -341,8 +352,10 @@ def webhook():
             payload, sig_header, STRIPE_WEBHOOK
         )
     except ValueError as e:
+        print('Invalid payload',str(e))
         return 'Invalid payload', 400
     except stripe.error.SignatureVerificationError as e:
+        print('Invalid signature',str(e))
         return 'Invalid signature', 400
 
     if event['type'] == 'checkout.session.completed':
@@ -369,21 +382,7 @@ def webhook():
       source = event['data']['object']
     elif event['type'] == 'customer.source.updated':
       source = event['data']['object']
-    elif event['type'] == 'customer.subscription.created':
-      subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.deleted':
-      subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.paused':
-      subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.pending_update_applied':
-      subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.pending_update_expired':
-      subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.resumed':
-      subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.trial_will_end':
-      subscription = event['data']['object']
-    elif event['type'] == 'customer.subscription.updated':
+    
       subscription = event['data']['object']
     elif event['type'] == 'customer.tax_id.created':
       tax_id = event['data']['object']
@@ -410,18 +409,34 @@ def tourXml():
 @app.route("/tiles/f_on_closed/<string:filename>")
 def routeFile(filename):
     return send_file("static/tiles/f_on_closed/"+filename)
+@app.route("/tiles/b_on_closed/<string:filename>")
+def routeFile2(filename):
+
+    return send_file("static/tiles/b_on_closed/"+filename)
+
+@app.route("/tiles/b_off_closed/<string:filename>")
+def routeFile3(filename):
+    
+    return send_file("static/tiles/b_off_closed/"+filename)
+
+@app.route("/tiles/f_off_closed/<string:filename>")
+def routeFile4(filename):
+    
+    return send_file("static/tiles/f_off_closed/"+filename)
     
 
 
 if __name__ == '__main__':
 
     try:
-        node_process = subprocess.Popen(node_command)
-        result = node_process
-        print(result)
+        #node_process = subprocess.Popen(node_command)
+        #result = node_process
+        #print(result)
+        pass
     except Exception as e:
         print(str(e))
         pass
 
-    app.run("0.0.0.0",debug=True)
+    app.run("0.0.0.0",port=80,debug=True)
+
 

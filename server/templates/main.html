@@ -121,12 +121,14 @@
     </div>
 
     <script src="{{url_for('static',filename='js/popper.min.js')}}"></script>
-    <script src="{{url_for('static',filename='bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static',filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     
     <!-- Swiper JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- Custom JS File -->
     <script src="{{url_for('static',filename='script.js')}}"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEMWRGDnjpOs-aPsph65S0Bhpxsxapjlo" async defer></script>
+	<script src="static/js/models/map.js"></script>
     <script>
         var msg = "{{msg}}"
         console.log(msg)
