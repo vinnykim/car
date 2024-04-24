@@ -15,7 +15,9 @@
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='app.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
     <script src="{{url_for('static',filename='models.js')}}"></script>
+		<script src="{{url_for('static',filename='js/jquery.bundle.js')}}"></script>
     <!-- BoxIcon CDN -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -67,6 +69,7 @@
                             <ul class="drop-down">
                                 <li><a href="/">Store</a></li>
                                 <li><a href="cart">Cart</a></li>
+								<li><a href="alerts">Alerts</a></li>
                                 <li><a href="compare">Compare</a></li>
                                 <li><a href="orders">History</a></li>
                                 <li><a href="review">Review</a></li>
@@ -117,9 +120,8 @@
         </a>
     </div>
 
-
-
-
+    <script src="{{url_for('static',filename='js/popper.min.js')}}"></script>
+    <script src="{{url_for('static',filename='bootstrap/js/bootstrap.min.js')}}"></script>
     
     <!-- Swiper JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -128,16 +130,20 @@
     <script>
         var msg = "{{msg}}"
         console.log(msg)
-        if(msg !== "False" && msg != ""){
-            Swal.fire({
-                title: 'Message!',
-                text: msg,
-                icon: 'info',
-                confirmButtonText: 'OK'
-            });
-            setTimeout(function(){
-                location.search = location.search.split("&")[0]
-            },799)
+        if(msg !== "False" && msg != "" && msg != "None"){
+			try{
+				Swal.fire({
+					title: 'Message!',
+					text: msg,
+					icon: 'info',
+					confirmButtonText: 'OK'
+				});
+			}catch(e){
+				console.log(e)
+			}
+			setTimeout(function(){
+				location.search = location.search.split("&")[0]
+			},799)
            
         }
     </script>

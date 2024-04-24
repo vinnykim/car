@@ -1,5 +1,5 @@
 from flask import Flask,render_template, request, session, jsonify,redirect,send_file
-from db import Login,Register,getOrder,deleteOrder,getVehicles,getVehicle,getCategories,getServices,getUser,addCart,getCart,addWish,getWish,getReviews
+from db import *
 import json
 from keys import Key
 
@@ -42,6 +42,7 @@ def alerts():
     if session.get("user") == None:
         return redirect("logout")
     alerts = getAlerts(user=session.get("user"),server=SERVER_NAME)
+    alerts = alerts["alerts"]
     print("alerts",alerts)
     msg = None
     if request.method == "POST":
@@ -56,14 +57,14 @@ def alerts():
         
         result = newAlert(data,user=session.get("user"),server=SERVER_NAME)
         print("new alert",result)
-        msg = result.message
+        msg = result["message"]
     if request.args.get("delete") != None:
         id = request.args.get("id")
         
         if id:
             result = deleteAlert(id,user=session.get("user"),server=SERVER_NAME)
             print("delete alert",result)
-            msg = result.message
+            msg = result["message"]
         return redirect("alerts?msg="+msg)
     #print(wishlist)
     return render_template("alerts.html",**locals())
@@ -81,6 +82,14 @@ def compare():
 def shop():
     filter = request.args.get("search") if request.args.get("search") else None
     vehicles = getVehicles(server=SERVER_NAME)
+    vehicle = None
+    if filter != None:
+        vehicle = []
+        for v in vehicles:
+            if filter in v["name"] or filter in v["description"]["vehicleDescription"] or filter in v["description"]["vehicleMake"]:
+                vehicle.append(v)
+    vehicles = vehicle if vehicle != None else vehicles
+    
     #print(vehicles)
     return render_template("shop.html",**locals())
 
@@ -414,5 +423,5 @@ if __name__ == '__main__':
         print(str(e))
         pass
 
-    app.run("0.0.0.0",debug=False)
+    app.run("0.0.0.0",debug=True)
 
