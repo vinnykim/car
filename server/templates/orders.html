@@ -216,7 +216,7 @@ $(document).ready(function(){
 	$(".toggle-map").click(function(){
 		{%if order != None and order.get("order")%}
 			let current = {{order.get('order')['address'].join(',')}}
-			console.log(current)
+			console.log("current",current)
 			current = current.split(",")
 			current = current[current.length-1]
 			if(current){
