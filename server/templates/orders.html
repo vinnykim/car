@@ -215,7 +215,7 @@ padding-top: 15px;
 $(document).ready(function(){
 	$(".toggle-map").click(function(){
 		{%if order != None and order.get("order")%}
-			let current = {{order.get('order')['address'].join(',')}}
+			let current = {{order.get('order')['address']|join(', ')}}
 			console.log("current",current)
 			current = current.split(",")
 			current = current[current.length-1]
