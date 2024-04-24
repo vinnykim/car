@@ -11,7 +11,6 @@ import os
 STRIPE_WEBHOOK = 'whsec_5f9146f9f271b5f3bd03d1c5bbd0e97880fcfda41ec69bdfd5b578bb0820399e'
 
 app = Flask(__name__)
-
 app.secret_key = "secret key"
 SERVER_NAME = 'https://supercarstoreadmin-820c4e218a56.herokuapp.com'
 #SERVER_NAME = "http://localhost:8081"
@@ -56,7 +55,7 @@ def alerts():
             print("delete alert",result)
             msg = result["message"]
         return redirect("alerts?msg="+msg)
-    #print(wishlist)
+    
     return render_template("alerts.html",**locals())
 
 @app.route("/compare")
