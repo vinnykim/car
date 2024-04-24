@@ -68,7 +68,7 @@
         <img class="main" src="/static/arrivals/{{img_file.split(',')[0]}}" alt="">
 		<div class="image-gallery">
 			{% for image_source in img_file.split(",")[1:] %}
-				<img width="115px" height=" 99px" style="margin-top: 5px;" src="{{ url_for('static', filename='/arrivals/'+image_source) }}" alt="Image">
+				<img width="115px" height=" 99px" style="margin-top: 5px;" src="{{ url_for('static', filename='/arrivals/'+image_source) }}" alt="Image"/>
 			{% endfor %}
 		</div>
         <div class="col" style="width: 100%;text-align:center;">
