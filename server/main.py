@@ -164,7 +164,7 @@ def checkout():
     user_card = getCard(user=session.get("user"),server=SERVER_NAME)
     print("user card =>",user_card)
     
-    update_user = updateUserStripe(user=session.get("user"),server=SERVER_NAME,stripe_id = customer.get("id"))
+    update_user = updateUserStripe(user=session.get("user"),server=SERVER_NAME,stripe_id = customer.get("stripe_id"))
     if request.args.get("checkout")=="success":
         result = saveCheckout(id=None,user=session.get("user"),server=SERVER_NAME)
         session_id = result.get("checkout")["id"]
