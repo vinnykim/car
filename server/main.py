@@ -170,8 +170,8 @@ def checkout():
         session_id = result.get("checkout")["id"]
         print("got sessionid",session_id)
         if session_id != None:
-            #pay = getCheckout(user=user,session_id=session_id)
-            pay = getIntent(user=user,id=session_id)
+            pay = getCheckout(user=user,session_id=session_id)
+            #pay = getIntent(user=user,id=session_id)
             if pay.get("payment_status") or pay.get("status"):
                 msg = updateCheckout(pay,user=session.get("user"),server=SERVER_NAME)
                 print(msg)
@@ -194,7 +194,7 @@ def checkout():
                     'country':country,
                     'city':city,
                 }
-                user_card = createCard(data,user=session.get("user"),server=SERVER_NAME)
+                #user_card = createCard(data,user=session.get("user"),server=SERVER_NAME)
             #print(cart)
             result = saveCheckout(id=None,user=session.get("user"),server=SERVER_NAME)
             #print(result)
@@ -254,7 +254,7 @@ def cart():
         if invoice.get("invoice") and request.args.get("delete") == "true":
             booking = invoice.get("invoice")
             dell = deleteOrder(id=booking.get("booking"),server=SERVER_NAME,user=session.get("user"))
-            print(invoice.get("invoice"),dell)
+            #print(invoice.get("invoice"),dell)
             msg = dell.get("message")
             return redirect("cart?msg="+msg)
     cart = getCart(user=session.get("user"),server=SERVER_NAME)
