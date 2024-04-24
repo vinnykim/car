@@ -68,6 +68,11 @@
         <img class="main" src="/static/arrivals/{{img_file.split(',')[0]}}" alt="">
 		
         <div class="col" style="width: 100%;text-align:center;">
+			<div class="image-gallery">
+				{% for image_source in img_file.split(",")[1:] %}
+					<img width="115px" height=" 99px" style="margin-top: 5px;" src="{{ url_for('static', filename='/arrivals/'+image_source) }}" alt="Image">
+				{% endfor %}
+			</div>
 				{%if vehicle_detail["live_view"] != false%}
 					<a href="/app/live/{{vehicle['_id']}}"><button class="button-3">Live View</button></a>
 				{%endif%}
@@ -99,7 +104,7 @@
             <div class="col">
                 <p>Quantity:</p>
                 <span>
-                    <input type="number" value="1">
+                    <input type="number" value={{vehicle_detail["description"]["vehicleMax"]}}>
                 </span>
             </div>
            
