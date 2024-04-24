@@ -2,11 +2,11 @@
 {%block content%}
 <section class=" arrivals show " style="width:100%;position:relative;text-align: left;margin-bottom: 45px;">
     <div class="row">
-        <div class="flexdisplay">
+        <div class="flexdisplay" style="width:100%;flex-wrap:wrap;">
             
 		{%for vehicle in vehicles %}
             {%set img_file = vehicle['description']['vehicleFiles'] if vehicle['description']['vehicleFiles'] else "n/a.jpg"%}
-			<div class="arr-col" onclick="" style="max-width: 88%;box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;position: relative;width: 28%;margin-left: 12px;border-radius: 8px;cursor: pointer;">
+			<div class="arr-col" onclick="" style="max-width: 88%;box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;margin-bottom: 12.4px;position: relative;width: 28%;margin-left: 12px;border-radius: 8px;cursor: pointer;">
             <div class="image product-image" style="width: 100%;" onclick='location.href="shop-single.html?id={{vehicle['_id']}}"'>
                 <img src="/static/arrivals/{{img_file.split(',')[0]}}" alt="" style="object-fit:cover;width: 222PX;height:144px;">
             </div>
