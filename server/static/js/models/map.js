@@ -102,10 +102,10 @@ async function initMap(loc,id) {
       infoWindow.setContent("NEW LOCATION<br>"+position.lat + ", " + position.lng);
       infoWindow.open(map, marker);
     });
-	map.addListener('click', function(e) {
+	if(loc !== undefined && loc !== null) {
 	  const data = {}
-	  data.lat = e.latLng.lat();
-	  data.lng = e.latLng.lng();
+	  data.lat = loc.lat;
+	  data.lng = loc.lng;
 	  //document.getElementsByName()
 	  marker.position = data
 	  geocoder.geocode({ location: data })
@@ -120,10 +120,8 @@ async function initMap(loc,id) {
 		  }
 		})
 		.catch((e) => window.alert("Geocoder failed due to: " + e));
-	  
-	  if(document.getElementById("select-address"))document.getElementById("select-address").value = data.lat+ ":" + data.lng
-	  if(document.getElementById("accountlocation"))document.getElementById("accountlocation").innerText = data.lat+ ":" + data.lng
-	});
+	 
+	};
 
 
 }

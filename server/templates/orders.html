@@ -214,7 +214,17 @@ padding-top: 15px;
 <script>
 $(document).ready(function(){
 	$(".toggle-map").click(function(){
-		initMap(null,"map")
+		{%if order != None and order.get("order")%}
+			let current = {{order.get('order')['address']}}
+			console.log(current)
+			if(current.includes(":")){
+				let loc = {};
+				current = current.split(":")
+				loc.lat = current[0]
+				loc.lng = current[1]
+				initMap(loc,"map")
+			}
+		{%endif%}
 	})
 })
 

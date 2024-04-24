@@ -278,8 +278,9 @@ def orders():
     user = getUser(user=session.get("user"),server=SERVER_NAME)
     if user.get("user") == None:
         return redirect("logout")
-    cart = cart.get("cart") if cart.get("cart") else {}
     print(cart)
+    cart = cart.get("cart") if cart.get("cart") else {}
+    print(order)
     return render_template("orders.html",**locals())
 
 
