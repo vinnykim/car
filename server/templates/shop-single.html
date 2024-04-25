@@ -73,41 +73,33 @@
 		</div>
         <div class="col" style="width: 100%;text-align:center;">
 			
-			{%if vehicle_detail["live_view"] !== false%}
+			{%if vehicle_detail["live_view"] != false%}
 				<a href="/app/live/{{vehicle_detail['_id']}}"><button class="button-3">Live View</button></a>
 			{%endif%}
+
             
         </div>
     </div>
 
     <div class="right">
         <h2>{{vehicle_detail["name"] if vehicle_detail else "Vehicle Name" }}</h2>
-        <div class="rate">
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star-half"></i>
-            <p>(0 Customer Review)</p>
-        </div>
+
         <p class="price" style="padding: 0;">{{vehicle_detail["description"]["vehicleMarketvalue"] if vehicle_detail else "Vehicle Price"}} <span>{{vehicle_detail["description"]["vehiclePrice"] if vehicle_detail else "Market Value"}}</span></p>
-        <p class="text">{{vehicle_detail["description"]["vehicleDescription"] if vehicle_detail else "Vehicle Description"}}</p>
-        <div class="details">
+          <div class="details">
             <div class="col">
                 <p>Stock: {{vehicle_detail["description"]["vehicleMax"] if vehicle_detail else "Vehicle Max Orders"}}</p>
                 <span>Available</span>
             </div>
             <div class="col">
-                <p>VIN:</p>
+                <p>ENGINE CAPACITY:</p>
                 <span>{{vehicle_detail["description"]["vehicleVin"] if vehicle_detail else "Vehicle Vin"}}</span>
             </div>
             <div class="col">
-                <p>Quantity:</p>
-                <span>
-                    <input type="number" value={{vehicle_detail["description"]["vehicleMax"]}}>
+                <p>Description:</p>
+                <span>{{vehicle_detail["description"]["vehicleDescription"] if vehicle_detail else "Vehicle Description"}}
                 </span>
             </div>
-           
+            
             <div class="col social">
                 <p>SHARE:</p>
                 <i class="bx bxl-facebook"></i>

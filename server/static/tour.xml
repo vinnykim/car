@@ -1,0 +1,138 @@
+<tour appversion="5.2.0" start="node4" apprev="15969">
+<panorama hideabout="1" id="node4">
+<input levelingpitch="0" height="4096" levelbiashidpi="0.400" levelingroll="0" leveltileurl="tiles/f_on_closed/c%c_l%r_%y_%x.jpg" width="4096" overlap="1" levelbias="0.400" leveltilesize="512">
+<level predecode="0" height="4096" width="4096" preload="0"/>
+<level predecode="0" height="2048" width="2048" preload="0"/>
+<level predecode="1" height="1024" width="1024" preload="1"/>
+<preview strip="1" color="0xffffff"/>
+</input>
+<view pannorth="0" fovmode="0">
+<start pan="21.99" tilt="-27.41" fov="67" projection="4"/>
+<flyin pan="0" tilt="-90" fov="170" projection="9"/>
+<min pan="0" tilt="-90" fov="35"/>
+<max pan="360" fovfisheye="360" tilt="90" fov="100" fovstereographic="270" scaletofit="1"/>
+</view>
+<userdata datetime="2016:11:17 21:45:08" latitude="" source="" tags="fon" title="Mercedes Maybach S 600 Virtual tour 360" description="" copyright="" info="" comment="" longitude="" customnodeid="" author=""/>
+<hotspots height="20" width="180" wordwrap="1">
+<label height="20" border="1" textcolor="0x000000" width="180" backgroundcolor="0xffffff" wordwrap="1" textalpha="1" borderalpha="1" enabled="0" bordercolor="0x000000" backgroundalpha="1" background="1" borderradius="1"/>
+<polystyle mode="0" backgroundcolor="0x0000ff" borderalpha="1" bordercolor="0x0000ff" handcursor="1" backgroundalpha="0.2509803921568627"/>
+<hotspot pan="-102" target="" tilt="-11" title="" description="" id="Point01" skinid="ht_node" url="{node2}"/>
+<hotspot pan="350" target="" tilt="-29" title="" description="" id="Point02" skinid="bar_on" url=""/>
+<hotspot pan="302" target="" tilt="-47" title="" description="" id="Point03" skinid="lok_on" url=""/>
+<hotspot pan="4" target="" tilt="-45" title="" description="" id="Point04" skinid="kas_on" url=""/>
+<hotspot pan="-10" target="" tilt="-22" title="" description="" id="Point05" skinid="baron" url=""/>
+<hotspot pan="-45" target="" tilt="-55" title="" description="" id="Point07" skinid="lokon" url=""/>
+<hotspot pan="3" target="" tilt="-45" title="" description="" id="Point06" skinid="kason" url=""/>
+</hotspots>
+<media/>
+<transition zoomfov="20" type="crossdissolve" zoomspeed="2" zoomoutpause="1" blendtime="1" softedge="0" blendcolor="0xffffff" enabled="1" zoomout="0" zoomin="0"/>
+<autorotate speed="0.050" useanimation="0" noderandom="1" returntohorizon="0.000" delay="10.00" enabled="1" startloaded="0" nodedelay="0.00"/>
+<control simulatemass="1" dblclickfullscreen="0" invertcontrol="1" speedwheel="1" hideabout="1" lockedkeyboardzoom="0" rubberband="1" lockedkeyboard="0" contextfullscreen="0" contextprojections="1" lockedwheel="0" lockedmouse="0" invertwheel="1" sensitivity="10">
+<menulink text="&lt;img src=&quot;logo.jpg&quot; alt=&quot;logo&quot; height=&quot;77&quot; width=&quot;213&quot;&gt;" url="http://pindora.com/"/>
+</control>
+</panorama>
+<panorama hideabout="1" id="node3">
+<input levelingpitch="0" height="4096" levelbiashidpi="0.400" levelingroll="0" leveltileurl="tiles/f_off_closed/c%c_l%r_%y_%x.jpg" width="4096" overlap="1" levelbias="0.400" leveltilesize="512">
+<level predecode="0" height="4096" width="4096" preload="0"/>
+<level predecode="0" height="2048" width="2048" preload="0"/>
+<level predecode="1" height="1024" width="1024" preload="1"/>
+<preview strip="1" color="0xffffff"/>
+</input>
+<view pannorth="0" fovmode="0">
+<start pan="21.99" tilt="-27.41" fov="67" projection="4"/>
+<flyin pan="0" tilt="-90" fov="170" projection="9"/>
+<min pan="0" tilt="-90" fov="35"/>
+<max pan="360" fovfisheye="360" tilt="90" fov="120" fovstereographic="270" scaletofit="1"/>
+</view>
+<userdata datetime="2016:11:17 21:43:39" latitude="" source="" tags="fof" title="" description="" copyright="" info="" comment="" longitude="" customnodeid="" author=""/>
+<hotspots height="20" width="180" wordwrap="1">
+<label height="20" border="1" textcolor="0x000000" width="180" backgroundcolor="0xffffff" wordwrap="1" textalpha="1" borderalpha="1" enabled="0" bordercolor="0x000000" backgroundalpha="1" background="1" borderradius="1"/>
+<polystyle mode="0" backgroundcolor="0x0000ff" borderalpha="1" bordercolor="0x0000ff" handcursor="1" backgroundalpha="0.2509803921568627"/>
+<hotspot pan="-102" target="" tilt="-11" title="" description="" id="Point01" skinid="ht_node" url="{node1}"/>
+<hotspot pan="350" target="" tilt="-29" title="" description="" id="Point02" skinid="bar_off" url=""/>
+<hotspot pan="302" target="" tilt="-47" title="" description="" id="Point03" skinid="lok_off" url=""/>
+<hotspot pan="4" target="" tilt="-45" title="" description="" id="Point04" skinid="kas_off" url=""/>
+<hotspot pan="-10" target="" tilt="-22" title="" description="" id="Point05" skinid="baroff" url=""/>
+<hotspot pan="3" target="" tilt="-45" title="" description="" id="Point06" skinid="kasoff" url=""/>
+<hotspot pan="-45" target="" tilt="-55" title="" description="" id="Point07" skinid="lokoff" url=""/>
+</hotspots>
+<media/>
+<transition zoomfov="20" type="crossdissolve" zoomspeed="2" zoomoutpause="1" blendtime="1" softedge="0" blendcolor="0xffffff" enabled="1" zoomout="0" zoomin="0"/>
+<autorotate speed="0.050" useanimation="0" noderandom="1" returntohorizon="0.000" delay="10.00" enabled="1" startloaded="0" nodedelay="0.00"/>
+<control simulatemass="1" dblclickfullscreen="0" invertcontrol="1" speedwheel="1" hideabout="1" lockedkeyboardzoom="0" rubberband="1" lockedkeyboard="0" contextfullscreen="0" contextprojections="1" lockedwheel="0" lockedmouse="0" invertwheel="1" sensitivity="10">
+<menulink text="&lt;img src=&quot;logo.jpg&quot; alt=&quot;logo&quot; height=&quot;77&quot; width=&quot;213&quot;&gt;" url="http://pindora.com/"/>
+</control>
+</panorama>
+<panorama hideabout="1" id="node2">
+<input levelingpitch="0" height="4096" levelbiashidpi="0.400" levelingroll="0" leveltileurl="tiles/b_on_closed/c%c_l%r_%y_%x.jpg" width="4096" overlap="1" levelbias="0.400" leveltilesize="512">
+<level predecode="0" height="4096" width="4096" preload="0"/>
+<level predecode="0" height="2048" width="2048" preload="0"/>
+<level predecode="1" height="1024" width="1024" preload="1"/>
+<preview strip="1" color="0xffffff"/>
+</input>
+<view pannorth="0" fovmode="0">
+<start pan="30" tilt="-3" fov="67" projection="4"/>
+<flyin pan="0" tilt="-90" fov="170" projection="9"/>
+<min pan="0" tilt="-90" fov="35"/>
+<max pan="360" fovfisheye="360" tilt="90" fov="120" fovstereographic="270" scaletofit="1"/>
+</view>
+<userdata datetime="2016:11:17 23:32:15" latitude="" source="" tags="bon" title="" description="" copyright="" info="" comment="" longitude="" customnodeid="" author=""/>
+<hotspots height="20" width="180" wordwrap="1">
+<label height="20" border="1" textcolor="0x000000" width="180" backgroundcolor="0xffffff" wordwrap="1" textalpha="1" borderalpha="1" enabled="0" bordercolor="0x000000" backgroundalpha="1" background="1" borderradius="1"/>
+<polystyle mode="0" backgroundcolor="0x0000ff" borderalpha="1" bordercolor="0x0000ff" handcursor="1" backgroundalpha="0.2509803921568627"/>
+<hotspot pan="25" target="" tilt="-16" title="" description="" id="Point01" skinid="ht_node" url="{node4}"/>
+<hotspot pan="54" target="" tilt="14" title="" description="" id="Point02" skinid="zrc_l" url=""/>
+<hotspot pan="130" target="" tilt="-35" title="" description="" id="Point04" skinid="poh_on" url=""/>
+<hotspot pan="40" target="" tilt="-43" title="" description="" id="Point05" skinid="poh" url=""/>
+<hotspot pan="55.5" target="" tilt="15.5" title="" description="" id="Point06" skinid="zrc" url=""/>
+<hotspot pan="142" target="" tilt="-18" title="" description="" id="Point08" skinid="pohon" url=""/>
+<hotspot pan="36.65" target="" tilt="-42.27" title="" description="" id="Point09" skinid="poha" url=""/>
+<hotspot pan="7" target="" tilt="22" title="" description="" id="Point03" skinid="zrc_on" url=""/>
+<hotspot pan="8" target="" tilt="25" title="" description="" id="Point07" skinid="zrcon" url=""/>
+</hotspots>
+<media>
+<video rotz="9.000" fov="13.030" roty="49.000" height="360" pan="49.950" loop="-1" ambientlevel="0.000" field="90.000" tilt="-8.690" pansize="10.000" tiltsize="10.000" handcursor="1" stretch="0.960" width="640" mode="1" clickmode="2" id="Element01" rotx="-12.000" level="0.000">
+<source url="video.mp4"/>
+</video>
+</media>
+<transition zoomfov="20" type="crossdissolve" zoomspeed="2" zoomoutpause="1" blendtime="1" softedge="0" blendcolor="0xffffff" enabled="1" zoomout="0" zoomin="0"/>
+<autorotate speed="0.050" useanimation="0" noderandom="1" returntohorizon="0.000" delay="10.00" enabled="1" startloaded="0" nodedelay="0.00"/>
+<control simulatemass="1" dblclickfullscreen="0" invertcontrol="1" speedwheel="1" hideabout="1" lockedkeyboardzoom="0" rubberband="1" lockedkeyboard="0" contextfullscreen="0" contextprojections="1" lockedwheel="0" lockedmouse="0" invertwheel="1" sensitivity="10">
+<menulink text="&lt;img src=&quot;logo.jpg&quot; alt=&quot;logo&quot; height=&quot;77&quot; width=&quot;213&quot;&gt;" url="http://pindora.com/"/>
+</control>
+</panorama>
+<panorama hideabout="1" id="node1">
+<input levelingpitch="0" height="4096" levelbiashidpi="0.400" levelingroll="0" leveltileurl="tiles/b_off_closed/c%c_l%r_%y_%x.jpg" width="4096" overlap="1" levelbias="0.400" leveltilesize="512">
+<level predecode="0" height="4096" width="4096" preload="0"/>
+<level predecode="0" height="2048" width="2048" preload="0"/>
+<level predecode="1" height="1024" width="1024" preload="1"/>
+<preview strip="1" color="0xffffff"/>
+</input>
+<view pannorth="0" fovmode="0">
+<start pan="30" tilt="-3" fov="67" projection="4"/>
+<flyin pan="0" tilt="-90" fov="170" projection="9"/>
+<min pan="0" tilt="-90" fov="35"/>
+<max pan="360" fovfisheye="360" tilt="90" fov="120" fovstereographic="270" scaletofit="1"/>
+</view>
+<userdata datetime="2016:07:28 19:01:46" latitude="" source="" tags="bof" title="" description="" copyright="" info="" comment="" longitude="" customnodeid="" author=""/>
+<hotspots height="20" width="180" wordwrap="1">
+<label height="20" border="1" textcolor="0x000000" width="180" backgroundcolor="0xffffff" wordwrap="1" textalpha="1" borderalpha="1" enabled="0" bordercolor="0x000000" backgroundalpha="1" background="1" borderradius="1"/>
+<polystyle mode="0" backgroundcolor="0x0000ff" borderalpha="1" bordercolor="0x0000ff" handcursor="1" backgroundalpha="0.2509803921568627"/>
+<hotspot pan="25" target="" tilt="-16" title="" description="" id="Point01" skinid="ht_node" url="{node3}"/>
+<hotspot pan="7" target="" tilt="22" title="" description="" id="Point02" skinid="zrc_off" url=""/>
+<hotspot pan="130" target="" tilt="-35" title="" description="" id="Point03" skinid="poh_off" url=""/>
+<hotspot pan="49" target="" tilt="-46" title="" description="" id="Point04" skinid="tel" url=""/>
+<hotspot pan="8" target="" tilt="25" title="" description="" id="Point05" skinid="zrcoff" url=""/>
+<hotspot pan="142" target="" tilt="-18" title="" description="" id="Point06" skinid="pohoff" url=""/>
+<hotspot pan="48.32" target="" tilt="-47.95" title="" description="" id="Point07" skinid="tele" url=""/>
+<hotspot pan="54" target="" tilt="14" title="" description="" id="Point09" skinid="zrc_l" url=""/>
+<hotspot pan="55.5" target="" tilt="15.5" title="" description="" id="Point08" skinid="zrc" url=""/>
+</hotspots>
+<media/>
+<transition zoomfov="20" type="crossdissolve" zoomspeed="2" zoomoutpause="1" blendtime="1" softedge="0" blendcolor="0xffffff" enabled="1" zoomout="0" zoomin="0"/>
+<autorotate speed="0.050" useanimation="0" noderandom="1" returntohorizon="0.000" delay="10.00" enabled="1" startloaded="0" nodedelay="0.00"/>
+<control simulatemass="1" dblclickfullscreen="0" invertcontrol="1" speedwheel="1" hideabout="1" lockedkeyboardzoom="0" rubberband="1" lockedkeyboard="0" contextfullscreen="0" contextprojections="1" lockedwheel="0" lockedmouse="0" invertwheel="1" sensitivity="10">
+<menulink text="&lt;img src=&quot;logo.jpg&quot; alt=&quot;logo&quot; height=&quot;77&quot; width=&quot;213&quot;&gt;" url="http://pindora.com/"/>
+</control>
+</panorama>
+</tour>

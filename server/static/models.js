@@ -80,3 +80,29 @@ async function fetchFunction(apiUrl, payload, method,nextFunction,token) {
 function createAlert(data){
     alert(data.message)
 }
+
+const modules = {}
+
+$(document).ready(function()){
+	modules.addReview = (id,elm) =>{
+		$(".new-review").submit(function(e){
+			e.preventDefault()
+			fetchFunction("/api/models/user/addReview/"id,{rating:$(".review").val(),description:$(".desc").val)},"post",function(data){
+				
+			},token='{{session.get["user"]}}')
+			return false;
+		})
+		$("#"+elm).html(`
+			<form class='new-review' >
+				<div class="form-group">
+					<input type="number" clas="form-control review" min="1" max="5" />
+				</div>
+				<div class="form-group">
+					<textarea class="form-control desc" >Your review Description</textarea>
+				</div>
+				<button type="submit" clas="btn btn-primary">Submit</button>
+			</form>
+		`)
+	}
+}
+

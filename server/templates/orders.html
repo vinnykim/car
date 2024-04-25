@@ -36,7 +36,7 @@ padding-top: 15px;
 
 <section class="vh-100" style="margin-bottom:165px;">
     <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="row d-flex justify-content-center align-items-center h-80">
         {%if order != None and order.get("invoice")%}
         <section class="h-50 h-custom" style="background-color: #eee;">
           <div class="container py-5 h-100">
@@ -113,7 +113,7 @@ padding-top: 15px;
                     </div>
 
                     <p class="mt-4 pt-2 mb-0">Back to ? <a href="orders" style="color: #f37a27;">Orders</a></p>
-					<p class="mt-4 pt-2 mb-0"><a href="javascript:void(0)" style="color: #f37a27;" data-toggle="modal" data-target="#addReview">Review</a> 
+					<p class="mt-4 pt-2 mb-0"><a href="javascript:void(0)" style="color: #f37a27;" data-toggle="modal" data-target="#addReview" onclick="modules.addReview('{{order['order']['_id']}}','new-review')">Review</a> 
 					<a href="javascript:void(0)" class="toggle-map" data-toggle="modal" data-target="#showMap" style="color: #f37a27;position:absolute;right: 2.5%;">Show in Map</a></p>
 
                   </div>
@@ -209,10 +209,40 @@ padding-top: 15px;
 	</div>
 	</div>
 </div>
+<div class="modal" id="addReview" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title" id="">Add a review for your order</h4>
+		</div>
+		
+		<div class="modal-body" id="new-review" >
+		
+		
+		</div>
+		<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+		</div>
+		
+	</div>
+	</div>
+</div>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEMWRGDnjpOs-aPsph65S0Bhpxsxapjlo" async defer></script>
 <script src="static/js/models/map.js"></script>
 <script>
-$(document).ready(function(){
+
+		{%if order != None and order.get("order")%}
+			console.log("current","order.get('order')")
+			let current = "{{order.get('order')['address'][-1]}}"
+			console.log("current",current)
+			
+			if(current){
+				let loc = current;
+			}
+		{%endif%}
 	$(".toggle-map").click(function(){
 		{%if order != None and order.get("order")%}
 			let current = {{order.get('order')['address']|join(', ')}}
@@ -228,7 +258,7 @@ $(document).ready(function(){
 			initMap(null,"map")
 		{%endif%}
 	})
-})
+
 
 </script>
   {%endblock%}
